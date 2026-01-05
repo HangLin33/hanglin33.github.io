@@ -91,64 +91,19 @@
     <!-- 
       Greeting section
      -->
-    <div class="m-neg-4-5 m-neg-md-5 d-flex flex-column overflow-hidden">
-  <div class="scrolling-wrapper py-4">
-    <div class="scrolling-content">
-      <span>Hello</span>
-      <span>你好</span>
-      <span>Bonjour</span>
-      <span>Hola</span>
-      <span>こんにちは</span>
-      <span>안녕하세요</span>
-      <span>Ciao</span>
-      <span>Guten Tag</span>
-      <span>Olá</span>
-      <span>Привет</span>
-      <span>Hello</span>
-      <span>你好</span>
-      <span>Bonjour</span>
-      <span>Hola</span>
-      <span>こんにちは</span>
-      <span>안녕하세요</span>
-      <span>Ciao</span>
-      <span>Guten Tag</span>
-      <span>Olá</span>
-      <span>Привет</span>
+    <div id="greeting" class="container-fluid d-flex flex-column justify-content-center p-5 pd-lr-3">
+      <div class="mb-3">
+        <div class="memoji-container text-center">
+          <img src="assets/img/memojis/memoji-phone-grey.png" alt="memoji-phone" class="initially-hidden memoji">
+        </div>
+        <h1 class="initially-hidden text-white text-center display-1 fw-kinda-bold"></h1>
+        <p class="initially-hidden text-white text-center fs-5 fw-light"></p>
+        <!-- <p id="learn-more" class="initially-hidden text-muted text-center fs-5 fw-normal">
+          Have a scroll <i class="bi bi-chevron-down"></i>
+        </p> -->
+      </div>
     </div>
-  </div>
-</div>
-
-<style>
-  .scrolling-wrapper {
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    position: relative;
-  }
-
-  .scrolling-content {
-    display: inline-block;
-    animation: scroll-left 20s linear infinite;
-  }
-
-  .scrolling-content span {
-    font-size: 2.5rem; /* 苹果风的大标题感 */
-    font-weight: 700;
-    margin-right: 3rem;
-    color: var(--grey);
-    letter-spacing: -0.02em;
-  }
-
-  @keyframes scroll-left {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); } /* 滚动到一半时正好衔接 */
-  }
-
-  /* 悬停时稍微减速，增加互动感 */
-  .scrolling-wrapper:hover .scrolling-content {
-    animation-play-state: paused;
-  }
-</style>
+    <!-- 
       Intro section
      -->
     <div id="intro" class="section container-fluid bg-light">
