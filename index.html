@@ -8,6 +8,50 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+<style>
+  /* 滚动容器样式 */
+  .logos-scroller {
+    width: 100%;
+    overflow: hidden;
+    padding: 10px 0;
+    white-space: nowrap;
+  }
+
+  /* 动画轨道 */
+  .logos-track {
+    display: flex;
+    width: max-content;
+    animation: scroll-left 25s linear infinite;
+  }
+
+  /* 单个图标样式 */
+  .logos-track img {
+    height: 55px; /* 调整图标高度 */
+    margin: 0 40px; /* 调整图标间距 */
+    filter: grayscale(100%); /* 默认黑白，符合苹果简约风 */
+    opacity: 0.6;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* 鼠标悬停效果 */
+  .logos-track img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.15);
+  }
+
+  /* 循环动画定义 */
+  @keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* 滚动到一半（即第一组结束）时瞬间回到开头 */
+  }
+
+  /* 手机端适配 */
+  @media (max-width: 768px) {
+    .logos-track img { height: 40px; margin: 0 20px; }
+  }
+</style>
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
