@@ -10,62 +10,77 @@
 
 
 <style>
-  .skills-row {
+  /* 滚动行的间距 */
+  .scroll-row {
     width: 100%;
     overflow: hidden;
-    display: flex;
-  }
-
-  .skills-track {
-    display: flex;
-    align-items: center;
-    gap: 60px; /* 图标间距 */
+    margin-bottom: 25px; /* 行与行之间的距离 */
     padding: 10px 0;
+    /* 给每一行加一个极淡的橙色背景，如果你想要更明显的框框感，可以调整这里 */
+    border-radius: 12px; 
+    background-color: rgba(255, 149, 0, 0.03); 
   }
 
-  .skills-track img {
-    height: 45px; /* 图标高度，可根据实际效果微调 */
-    width: auto;
-    filter: grayscale(100%);
-    opacity: 0.6;
-    transition: all 0.3s ease;
+  /* 轨道设定 */
+  .scroll-track {
+    display: flex;
+    width: max-content; /* 自动适应内容宽度 */
+    align-items: center;
   }
 
-  .skills-track img:hover {
+  /* 图片通用样式 */
+  .scroll-track img {
+    height: 50px; /* Logo 大小，可调整 */
+    margin: 0 40px; /* Logo 左右间距 */
+    filter: grayscale(100%); /* 默认黑白 */
+    opacity: 0.7;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+  }
+
+  /* 鼠标悬停时变彩色并放大 */
+  .scroll-track img:hover {
     filter: grayscale(0%);
     opacity: 1;
-    transform: scale(1.1);
+    transform: scale(1.2);
   }
 
-  /* 第一行：向左滚，速度中等 */
+  /* --- 动画定义 --- */
+
+  /* 向左滚动 */
   .track-left {
-    animation: scroll-l 25s linear infinite;
+    animation: scroll-left 30s linear infinite;
   }
-
-  /* 第二行：向右滚，速度稍快 */
+  
+  /* 向右滚动 (增加视觉动感) */
   .track-right {
-    animation: scroll-r 20s linear infinite;
+    animation: scroll-right 25s linear infinite;
   }
 
-  /* 第三行：向左滚，速度较慢 */
+  /* 慢速向左滚动 */
   .track-left-slow {
-    animation: scroll-l 35s linear infinite;
+    animation: scroll-left 35s linear infinite;
   }
 
-  @keyframes scroll-l {
+  @keyframes scroll-left {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
   }
 
-  @keyframes scroll-r {
+  @keyframes scroll-right {
     0% { transform: translateX(-50%); }
     100% { transform: translateX(0); }
   }
 
-  /* 手机端适配：缩小图标和间距 */
+  /* 手机端优化 */
   @media (max-width: 768px) {
-    .skills-track img { height: 30px; }
-    .skills-track { gap: 30px; }
+    .scroll-track img {
+      height: 35px;
+      margin: 0 20px;
+    }
+    .scroll-row {
+      margin-bottom: 15px;
+    }
   }
 </style>
 <head>
