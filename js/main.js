@@ -37,28 +37,38 @@ fetchJSON("assets/data.json").then(data => {
     })
 
     // Skills
-    const rows = $$(".technologies-row");
-    const languages = ["html", "css", "js", "php", "java", "python", "swift", "c"];
-    const technologies = ["node", "react", "docker", "gcp", "pg", "mysql", "mongodb", "ios-sdk"];
-    const tools = ["github", "postman", "vscode", "eclipse", "android-studio", "intellij", "xcode", "terminal"];
-    for (let i = 0; i < 2; i++) {
-        for (const language of languages)
-            rows[0].insertAdjacentHTML("beforeend", `<img src="assets/img/technology-icons/${language}.png" alt="${language}">`);
-        for (const technology of technologies)
-            rows[1].insertAdjacentHTML("beforeend", `<img src="assets/img/technology-icons/${technology}.png" alt="${technology}">`);
-        for (const tool of tools)
-            rows[2].insertAdjacentHTML("beforeend", `<img src="assets/img/technology-icons/${tool}.png" alt="${tool}">`);
-    }
-    rows[1].insertAdjacentHTML("beforeend", `<img src="assets/img/technology-icons/${technologies[0]}.png" alt="${technologies[0]}">`);
-    $("#skills .tile-content p:first-of-type").innerText = data.skills.description;
-    data.skills.list.forEach(item =>
-        $("#skills>.section-inner-container>.row").insertAdjacentHTML("beforeend",
-            Tile(item, data.skills.color, data.skills.muted_color)
-        )
+// =======================
+const rows = $$(".technologies-row");
+
+if (rows.length === 3) {
+  const languages = ["python", "sql", "r", "matlab", "stata"];
+  const dataTools = ["bloomberg", "capitaliq", "factset", "dealogic"];
+  const officeTools = ["excel", "powerpoint", "word", "tableau"];
+
+  // 插入两遍，用于无缝滚动
+  for (let i = 0; i < 2; i++) {
+    languages.forEach(item =>
+      rows[0].insertAdjacentHTML(
+        "beforeend",
+        `<img src="assets/img/technology-icons/${item}.png" alt="${item}">`
+      )
     );
 
-    let projectTiles = [];
-    let projectPromises = [];
+    dataTools.forEach(item =>
+      rows[1].insertAdjacentHTML(
+        "beforeend",
+        `<img src="assets/img/technology-icons/${item}.png" alt="${item}">`
+      )
+    );
+
+    officeTools.forEach(item =>
+      rows[2].insertAdjacentHTML(
+        "beforeend",
+        `<img src="assets/img/technology-icons/${item}.png" alt="${item}">`
+      )
+    );
+  }
+}
 
     // Fetch projects and make tiles
     data.projects.list.forEach(project => {
