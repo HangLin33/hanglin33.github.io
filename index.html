@@ -217,14 +217,98 @@
     <!-- 
       Skills section
     -->
-<div class="tile rounded-5 d-flex flex-column p-4 p-md-5 h-100" style="overflow: hidden;">
-    <h5 style="color: var(--orange); margin-bottom: 1.5rem; font-weight: 600;">Professional Toolkit</h5>
+<!-- Skills section -->
+<div id="skills" class="section container-fluid bg-light">
+  <div class="section-inner-container">
+
+    <h2 class="p-4 p-md-5 pd-tb-1-5-rem" style="color: var(--orange);">
+      Skills
+    </h2>
+
+    <!-- 滚动裁剪容器 -->
     <div class="skills-wrapper">
-        <div class="technologies-row" id="row-0"></div>
-        <div class="technologies-row" id="row-1"></div>
-        <div class="technologies-row" id="row-2"></div>
+
+      <!-- 三条滚动轨道（JS 会往里面塞 img） -->
+      <div class="technologies-row scroll-left" id="row-0"></div>
+      <div class="technologies-row scroll-right" id="row-1"></div>
+      <div class="technologies-row scroll-left slow" id="row-2"></div>
+
     </div>
+  </div>
 </div>
+<style>
+/* Skills 外层：裁掉溢出 */
+.skills-wrapper {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 20px 0 60px;
+}
+
+/* 每一行技能 */
+.technologies-row {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  width: max-content;
+  will-change: transform;
+}
+
+/* 图标大小 */
+.technologies-row img {
+  height: 48px;
+  opacity: 0.85;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.technologies-row img:hover {
+  transform: translateY(-4px) scale(1.05);
+  opacity: 1;
+}
+
+/* 动画定义 */
+@keyframes scroll-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes scroll-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* 动画应用 */
+.scroll-left {
+  animation: scroll-left 40s linear infinite;
+}
+
+.scroll-right {
+  animation: scroll-right 50s linear infinite;
+}
+
+.slow {
+  animation-duration: 65s;
+}
+
+/* hover 才动（高级感，避免干扰滚动） */
+.skills-wrapper .technologies-row {
+  animation-play-state: paused;
+}
+
+.skills-wrapper:hover .technologies-row {
+  animation-play-state: running;
+}
+
+/* 手机端关闭动画 */
+@media (max-width: 768px) {
+  .technologies-row {
+    animation: none !important;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+</style>
     <!-- 
       Projects section
      -->
