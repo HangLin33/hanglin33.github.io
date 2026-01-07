@@ -161,27 +161,27 @@ window.requestResume = function () {
 }
 
 // 在 js/main.js 末尾添加
-const skillIcons = [
-  ['python.png', 'sql.png', 'r.png', 'matlab.png', 'stata.png'],
-  ['bloomberg.png', 'capitaliq.png', 'factset.png', 'dealogic.png'],
-  ['excel.png', 'powerpoint.png', 'word.png', 'tableau.png']
+const skillSets = [
+  ['python.png', 'sql.png', 'r.png', 'tableau.png', 'excel.png'], // 第一行
+  ['stata.png', 'powerbi.png', 'google-analytics.png', 'office.png'] // 第二行
 ];
 
-skillIcons.forEach((icons, index) => {
-  const row = document.getElementById(`row-${index}`);
-  if (row) {
-    // 1. 将一组图标转为 HTML
-    const iconListHtml = icons.map(img => `<img src="assets/img/technology-icons/${img}" alt="skill">`).join('');
+skillSets.forEach((icons, index) => {
+  const rowElement = document.getElementById(`skill-row-${index + 1}`);
+  if (rowElement) {
+    // 1. 生成单组图标的 HTML
+    const iconGroupHtml = icons.map(img => 
+      `<img src="assets/img/skills/${img}" alt="skill">`
+    ).join('');
+
+    // 2. 注入两组完全一样的 HTML (inner-group) 到轨道中
+    const directionClass = index === 0 ? 'scroll-left' : 'scroll-right';
     
-    // 2. 决定滚动方向
-    const animClass = index === 1 ? 'scroll-right' : 'scroll-left';
-    
-    // 3. 注入双倍内容：这是解决“离场消失”的关键
-    // 轨道内必须包含两个完全一样的 inner-group
-    row.innerHTML = `
-      <div class="scroll-track ${animClass}">
-        <div class="inner-group">${iconListHtml}</div>
-        <div class="inner-group">${iconListHtml}</div>
-      </div>`;
+    rowElement.innerHTML = `
+      <div class="scroll-track ${directionClass}">
+        <div class="inner-group">${iconGroupHtml}</div>
+        <div class="inner-group">${iconGroupHtml}</div>
+      </div>
+    `;
   }
 });
