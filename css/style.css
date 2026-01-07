@@ -167,69 +167,61 @@ i.bi.bi-chevron-down {
 }
 
 /* 2. 每一行的背景和基础布局 */
+/* 橙色方框容器 */
 .technologies-row {
   width: 100%;
-  overflow: hidden; 
-  background: rgba(255, 149, 0, 0.03); /* 极淡的橙色，符合 Apple 审美 */
-  margin-bottom: 20px;
-  padding: 20px 0;
-  border-radius: 16px;
+  overflow: hidden; /* 关键：切断超出方框的图标 */
+  background: rgba(255, 149, 0, 0.08); /* 淡淡的橙色背景 */
+  border: 1px solid rgba(255, 149, 0, 0.2);
+  margin-bottom: 24px;
+  padding: 25px 0;
+  border-radius: 20px;
   display: flex;
   position: relative;
 }
 
-/* 3. 滚动轨道 */
+/* 滚动轨道：确保不换行，宽度自适应 */
 .scroll-track {
   display: flex;
-  width: max-content; /* 强制内容不换行且宽度由内容决定 */
-  align-items: center;
+  width: max-content; 
   flex-wrap: nowrap;
+  will-change: transform;
 }
 
+/* 图标样式 */
 .scroll-track img {
-  height: 50px;       /* 增加一点高度感 */
-  width: auto;        /* 关键：宽度自适应，解决比例问题 */
-  margin: 0 45px;     /* 增加图标间距，看起来更高级 */
-  filter: grayscale(100%);
-  opacity: 0.4;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  object-fit: contain; /* 保证不拉伸 */
+  height: 55px; /* 统一高度 */
+  width: auto;
+  margin: 0 40px; /* 图标之间的间距 */
+  object-fit: contain;
+  filter: grayscale(100%); /* 默认灰色，悬停变色 */
+  opacity: 0.6;
+  transition: all 0.3s ease;
 }
 
-/* 悬停交互：彩色并放大 */
 .scroll-track img:hover {
   filter: grayscale(0%);
   opacity: 1;
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
-/* 4. 无缝滚动核心动画 */
+/* 无缝滚动动画逻辑 */
+/* 核心原理：[Group A][Group B] 滚动完 A 后，瞬间跳回起点，因为 B 和 A 一样，视觉上无缝 */
 @keyframes infinite-scroll {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); } /* 滚动到一半时，第二组正好完全重合第一组起点 */
+  to { transform: translateX(-50%); } 
 }
 
 .scroll-left {
-  animation: infinite-scroll 30s linear infinite;
+  animation: infinite-scroll 25s linear infinite;
 }
 
 .scroll-right {
-  animation: infinite-scroll 30s linear infinite reverse;
+  /* 使用 reverse 实现反向滚动 */
+  animation: infinite-scroll 25s linear infinite reverse;
 }
 
-/* 鼠标移入整个行时暂停滚动，方便用户查看 */
+/* 鼠标移入方框时暂停，方便点击 */
 .technologies-row:hover .scroll-track {
   animation-play-state: paused;
-}
-
-/* 5. 手机端适配 */
-@media (max-width: 768px) {
-  .scroll-track img { 
-    height: 35px; 
-    margin: 0 25px; 
-  }
-  .technologies-row { 
-    padding: 15px 0; 
-    margin-bottom: 12px;
-  }
 }
