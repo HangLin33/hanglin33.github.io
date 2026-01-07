@@ -169,67 +169,49 @@ i.bi.bi-chevron-down {
 }
 
 /* --- Skills 滚动容器：模仿 Greeting 风格 --- */
+/* 修改或覆盖原有样式 */
 .technologies-row {
-  width: 100vw;           /* 宽度撑满视口 */
-  margin-left: calc(-50vw + 50%); /* 强制水平居中（溢出容器） */
+  width: 100%;
   overflow: hidden;
   display: flex;
-  padding: 20px 0;
-  background: transparent; /* 去掉橙色背景，改用透明 */
+  padding: 10px 0;
+  background: transparent;
   user-select: none;
+  pointer-events: none; /* 让背景层不响应鼠标，除非你想让图标变色 */
 }
 
-/* 滚动轨道：确保是两组内容并排 */
+/* 如果你希望图标能被 hover 变色，需改回 auto 并调整层级 */
+#skills:hover .technologies-row {
+  pointer-events: auto;
+}
+
 .scroll-track {
   display: flex;
   width: max-content;
-  flex-wrap: nowrap;
   will-change: transform;
 }
 
-/* 动画类名：直接使用 Greeting 的动画逻辑 */
-.scroll-left {
-  animation: scroll-l 35s linear infinite;
-}
-
-.scroll-right {
-  animation: scroll-r 35s linear infinite;
-}
-
-/* 关键帧：必须确保有这两个动画 */
-@keyframes scroll-l {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes scroll-r {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
-}
-
-/* 图标样式：模仿 Greeting 的大字背景感 */
 .inner-group {
   display: flex;
   align-items: center;
 }
 
 .inner-group img {
-  height: 80px;      /* 增大图标，模仿大字体感 */
+  height: 120px;     /* 调大图标尺寸 */
   width: auto;
-  margin: 0 60px;    /* 增加间距 */
-  filter: grayscale(100%); 
-  opacity: 0.1;      /* 极低透明度，像 Greeting 背景一样 */
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  margin: 0 50px;    /* 增加水平间距 */
+  filter: grayscale(100%) brightness(0); /* 纯黑灰色调 */
+  opacity: 0.15;
+  transition: all 0.5s ease;
 }
 
-/* 鼠标悬停在整个行时，稍微亮一点 */
-.technologies-row:hover img {
-  opacity: 0.25;
-}
-
-/* 单个图标悬停：变彩色并放大 */
+/* 交互效果 */
 .inner-group img:hover {
-  filter: grayscale(0%);
+  filter: grayscale(0%) brightness(1);
   opacity: 1 !important;
-  transform: scale(1.3) rotate(5deg);
+  transform: scale(1.2);
 }
+
+/* 滚动动画速度微调 */
+.scroll-left { animation: scroll-l 30s linear infinite; }
+.scroll-right { animation: scroll-r 30s linear infinite; }
