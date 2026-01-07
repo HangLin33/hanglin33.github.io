@@ -159,69 +159,62 @@ i.bi.bi-chevron-down {
 
 /* --- 在 style.css 原有内容下方追加或替换 --- */
 
-/* 1. 容器自适应 */
-#skills .tile {
-  min-height: unset !important;
-  height: auto !important;
-  overflow: hidden;
-}
-
-/* 2. 每一行的背景和基础布局 */
 /* 橙色方框容器 */
 .technologies-row {
   width: 100%;
-  overflow: hidden; /* 关键：切断超出方框的图标 */
-  background: rgba(255, 149, 0, 0.08); /* 淡淡的橙色背景 */
-  border: 1px solid rgba(255, 149, 0, 0.2);
-  margin-bottom: 24px;
-  padding: 25px 0;
-  border-radius: 20px;
+  overflow: hidden; /* 隐藏超出方框的部分 */
+  background: rgba(255, 149, 0, 0.05); /* 淡淡的橙色背景 */
+  border: 1px solid rgba(255, 149, 0, 0.15); /* 橙色边框 */
+  margin-bottom: 20px;
+  padding: 20px 0;
+  border-radius: 18px; /* Apple 风格圆角 */
   display: flex;
-  position: relative;
 }
 
-/* 滚动轨道：确保不换行，宽度自适应 */
+/* 滚动轨道：包含两组完全一样的图标 */
 .scroll-track {
   display: flex;
-  width: max-content; 
+  width: max-content; /* 关键：由内容撑开宽度 */
   flex-wrap: nowrap;
-  will-change: transform;
 }
 
-/* 图标样式 */
+/* 图标所在的组 */
+.inner-group {
+  display: flex;
+  align-items: center;
+}
+
 .scroll-track img {
-  height: 55px; /* 统一高度 */
+  height: 45px; /* 图标高度 */
   width: auto;
-  margin: 0 40px; /* 图标之间的间距 */
-  object-fit: contain;
-  filter: grayscale(100%); /* 默认灰色，悬停变色 */
-  opacity: 0.6;
-  transition: all 0.3s ease;
+  margin: 0 40px; /* 图标之间的水平间距 */
+  filter: grayscale(100%); /* 默认灰色更高级 */
+  opacity: 0.5;
+  transition: all 0.4s ease;
 }
 
+/* 悬停时变色放大 */
 .scroll-track img:hover {
   filter: grayscale(0%);
   opacity: 1;
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
-/* 无缝滚动动画逻辑 */
-/* 核心原理：[Group A][Group B] 滚动完 A 后，瞬间跳回起点，因为 B 和 A 一样，视觉上无缝 */
+/* 无缝滚动动画 */
 @keyframes infinite-scroll {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); } 
+  to { transform: translateX(-50%); } /* 滚到一半时正好接上第二组 */
 }
 
 .scroll-left {
-  animation: infinite-scroll 25s linear infinite;
+  animation: infinite-scroll 20s linear infinite;
 }
 
 .scroll-right {
-  /* 使用 reverse 实现反向滚动 */
-  animation: infinite-scroll 25s linear infinite reverse;
+  animation: infinite-scroll 25s linear infinite reverse; /* 反向滚动 */
 }
 
-/* 鼠标移入方框时暂停，方便点击 */
+/* 悬停时整个轨道暂停 */
 .technologies-row:hover .scroll-track {
   animation-play-state: paused;
 }
