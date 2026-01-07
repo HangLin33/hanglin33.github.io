@@ -9,7 +9,60 @@
 <html lang="en">
 
 
+<style>
+/* 容器样式 */
+.technologies-row {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    /* 这里的背景可以根据你的喜好调整 */
+    background: rgba(0, 0, 0, 0.02); 
+    border-radius: 12px;
+}
 
+/* 滚动轨道 */
+.scroll-track {
+    display: flex;
+    width: max-content; /* 自动撑开宽度 */
+}
+
+/* 图标样式 */
+.scroll-track img {
+    height: 40px; /* 图标高度 */
+    width: auto;
+    margin: 0 40px; /* 图标之间的间距 */
+    filter: grayscale(100%);
+    opacity: 0.5;
+    transition: 0.3s;
+}
+
+.scroll-track img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* 向左滚动的动画 */
+@keyframes slide-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* 滚动到一半时，第二组图片正好衔接上 */
+}
+
+.anim-left {
+    animation: slide-left 25s linear infinite;
+}
+
+/* 向右滚动的动画 */
+.anim-right {
+    animation: slide-left 25s linear infinite reverse;
+}
+
+/* 鼠标悬停时停止 */
+.scroll-track:hover {
+    animation-play-state: paused;
+}
+</style>
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
