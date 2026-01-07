@@ -160,7 +160,7 @@ window.requestResume = function () {
     checkbox.dispatchEvent(new Event("change"));
 }
 
-// js/main.js
+// 在 js/main.js 末尾添加
 const skillIcons = [
   ['python.png', 'sql.png', 'r.png', 'matlab.png', 'stata.png'],
   ['bloomberg.png', 'capitaliq.png', 'factset.png', 'dealogic.png'],
@@ -170,18 +170,17 @@ const skillIcons = [
 skillIcons.forEach((icons, index) => {
   const row = document.getElementById(`row-${index}`);
   if (row) {
-    // 1. 生成单组图标的 HTML
-    const singleSet = icons.map(img => `<img src="assets/img/technology-icons/${img}" alt="skill">`).join('');
+    // 关键：生成一个足够长的列表，并复制一份实现无缝切换
+    const singleGroup = icons.map(img => `<img src="assets/img/technology-icons/${img}" alt="skill">`).join('');
     
-    // 2. 决定方向
-    const animClass = index === 1 ? 'tech-scroll-right' : 'tech-scroll-left';
+    // 决定方向类
+    const moveClass = index === 1 ? 'track-move-reverse' : 'track-move';
     
-    // 3. 注入结构：轨道包含两个完全一样的 Set
-    // 这样当第一组移出屏幕时，第二组正好完全接替，实现无缝
+    // 注入两组完全一样的内容
     row.innerHTML = `
-      <div class="scroll-track ${animClass}">
-        <div class="icon-set">${singleSet}</div>
-        <div class="icon-set">${singleSet}</div>
+      <div class="scroll-track ${moveClass}">
+        <div class="group">${singleGroup}</div>
+        <div class="group">${singleGroup}</div>
       </div>`;
   }
 });
