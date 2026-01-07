@@ -160,6 +160,7 @@ window.requestResume = function () {
     checkbox.dispatchEvent(new Event("change"));
 }
 
+// js/main.js
 const skillIcons = [
   ['python.png', 'sql.png', 'r.png', 'matlab.png', 'stata.png'],
   ['bloomberg.png', 'capitaliq.png', 'factset.png', 'dealogic.png'],
@@ -169,17 +170,18 @@ const skillIcons = [
 skillIcons.forEach((icons, index) => {
   const row = document.getElementById(`row-${index}`);
   if (row) {
-    // 技巧：如果图标很少，就多重复几次。这里我们重复 6 次确保安全
-    const repeatedIcons = [];
-    for (let i = 0; i < 6; i++) {
-      repeatedIcons.push(...icons);
-    }
+    // 1. 生成单组图标的 HTML
+    const singleSet = icons.map(img => `<img src="assets/img/technology-icons/${img}" alt="skill">`).join('');
     
-    const trackClass = index === 1 ? 'track-right' : 'track-left';
+    // 2. 决定方向
+    const animClass = index === 1 ? 'tech-scroll-right' : 'tech-scroll-left';
     
+    // 3. 注入结构：轨道包含两个完全一样的 Set
+    // 这样当第一组移出屏幕时，第二组正好完全接替，实现无缝
     row.innerHTML = `
-      <div class="scroll-track ${trackClass}">
-        ${repeatedIcons.map(img => `<img src="assets/img/technology-icons/${img}" alt="skill">`).join('')}
+      <div class="scroll-track ${animClass}">
+        <div class="icon-set">${singleSet}</div>
+        <div class="icon-set">${singleSet}</div>
       </div>`;
   }
 });
