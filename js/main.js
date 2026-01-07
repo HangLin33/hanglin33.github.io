@@ -38,20 +38,17 @@ fetchJSON("assets/data.json").then(data => {
 
     // Skills
     // Skills 逻辑修正
+// --- 1. Skills 渲染 (放在 Projects 之前，确保不受干扰) ---
     const rows = $$(".technologies-row");
-    // 替换为你自己的图标文件名（确保 assets/img/technology-icons/ 文件夹下有这些图）
     const languages = ["python", "sql", "r", "matlab", "stata"]; 
     const technologies = ["bloomberg", "capitaliq", "factset", "dealogic"];
     const tools = ["excel", "powerpoint", "word", "tableau"];
 
     const renderRow = (rowElement, items) => {
-        // 将图标组复制 2 次实现无缝拼接
-        const doubleItems = [...items, ...items]; 
-        doubleItems.forEach(item => {
-            rowElement.insertAdjacentHTML("beforeend", 
-                `<img src="assets/img/technology-icons/${item}.png" alt="${item}">`
-            );
-        });
+        if (!rowElement) return;
+        // 复制多份确保在超宽屏幕下也不会有断层
+        const content = items.map(item => `<img src="assets/img/technology-icons/${item}.png" alt="${item}">`).join('');
+        rowElement.innerHTML = `<div class="scroll-track">${content}${content}${content}</div>`;
     };
 
     if (rows.length >= 3) {
@@ -60,6 +57,24 @@ fetchJSON("assets/data.json").then(data => {
         renderRow(rows[2], tools);
     }
 
+    // --- 2. Projects 逻辑 (补全变量防止报错) ---
+    let projectTiles = [];
+    let projectPromises = [];
+
+    if (data.projects && data.projects.list) {
+        data.projects.list.forEach(project => {
+            let customCoverDescriptionHTML = `<a target="_blank" href="${project.custom_url ?? "https://github.com/" + data.github_username + "/" + project.heading}" class="fs-6 link-primary d-block" style="margin-top: 4px; margin-bottom: 10px; width: fit-content;"><span class="link-text fw-normal">${project.custom_url_text ?? "View on GitHub"}</span> <i class="bi bi-chevron-right"></i></a><p>`;
+            project.topics?.forEach(topic => {
+                customCoverDescriptionHTML += `<span class="topic-badge m-1" style="color:${data.projects.color}; border-color: ${data.projects.color};">${topic}</span>`;
+            });
+            customCoverDescriptionHTML += `</p>`;
+            projectTiles.push(Tile(project, data.projects.color, data.projects.muted_color, customCoverDescriptionHTML));
+        });
+    }
+    projectTiles.forEach(tile => {
+        const container = $("#projects .row");
+        if(container) container.insertAdjacentHTML("beforeend", tile);
+    });
     // Fetch projects and make tiles
     data.projects.list.forEach(project => {
         let customCoverDescriptionHTML = `
