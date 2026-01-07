@@ -12,33 +12,39 @@ import { refreshAppearance } from "./appearance.js";
 
 // Load data
 fetchJSON("assets/data.json").then(data => {
-    // Greeting
-    $("#greeting h1").innerText = data.greeting.heading;
-    $("#greeting p").innerText = data.greeting.description;
+    // 1. Greeting
+    if ($("#greeting h1")) $("#greeting h1").innerText = data.greeting.heading;
+    if ($("#greeting p")) $("#greeting p").innerText = data.greeting.description;
 
-    // Introduction
-    $("#intro .tile h2").innerHTML = data.intro.heading;
-    data.intro.description.split("\n").forEach(line =>
-        $("#intro .tile-overlay div>p").insertAdjacentHTML("beforeend", `<p>${line}</p>`)
-    );
-    data.intro.timeline.forEach(milestone => {
-        $("#timeline>.row").insertAdjacentHTML("beforeend", `
-            <div class="col-md-4 col-lg-4 p-4">
-              <div class="d-flex flex-column align-items-center text-center gap-3 px-3">
-                <img src="${milestone.img}" alt="${milestone.img.split(".") + "-logo"}" class="app-icon">
-                <p>
-                  <span class="fw-kinda-bold">${milestone.title}</span><br>
-                  <span>${milestone.subtitle}</span><br>
-                  <span class="text-matte-light">${milestone.date}</span><br>
-                </p>
-              </div>
-            </div>
-        `);
-    })
+    // 2. Introduction
+    if ($("#intro .tile h2")) $("#intro .tile h2").innerHTML = data.intro.heading;
+    
+    const introOverlay = $("#intro .tile-overlay div>p");
+    if (introOverlay) {
+        data.intro.description.split("\n").forEach(line =>
+            introOverlay.insertAdjacentHTML("beforeend", `<p>${line}</p>`)
+        );
+    }
 
-    // Skills
-    // Skills 逻辑修正
-// --- 1. Skills 渲染 (放在 Projects 之前，确保不受干扰) ---
+    const timelineRow = $("#timeline>.row");
+    if (timelineRow) {
+        data.intro.timeline.forEach(milestone => {
+            timelineRow.insertAdjacentHTML("beforeend", `
+                <div class="col-md-4 col-lg-4 p-4">
+                  <div class="d-flex flex-column align-items-center text-center gap-3 px-3">
+                    <img src="${milestone.img}" alt="${milestone.img.split(".") + "-logo"}" class="app-icon">
+                    <p>
+                      <span class="fw-kinda-bold">${milestone.title}</span><br>
+                      <span>${milestone.subtitle}</span><br>
+                      <span class="text-matte-light">${milestone.date}</span><br>
+                    </p>
+                  </div>
+                </div>
+            `);
+        });
+    }
+
+    // 3. Skills 渲染 (确保在 Projects 之前)
     const rows = $$(".technologies-row");
     const languages = ["python", "sql", "r", "matlab", "stata"]; 
     const technologies = ["bloomberg", "capitaliq", "factset", "dealogic"];
@@ -46,8 +52,8 @@ fetchJSON("assets/data.json").then(data => {
 
     const renderRow = (rowElement, items) => {
         if (!rowElement) return;
-        // 复制多份确保在超宽屏幕下也不会有断层
         const content = items.map(item => `<img src="assets/img/technology-icons/${item}.png" alt="${item}">`).join('');
+        // 复制三份确保滚动无缝
         rowElement.innerHTML = `<div class="scroll-track">${content}${content}${content}</div>`;
     };
 
@@ -57,120 +63,66 @@ fetchJSON("assets/data.json").then(data => {
         renderRow(rows[2], tools);
     }
 
-    // --- 2. Projects 逻辑 (补全变量防止报错) ---
+    // 4. Projects 逻辑
     let projectTiles = [];
-    let projectPromises = [];
-
     if (data.projects && data.projects.list) {
         data.projects.list.forEach(project => {
-            let customCoverDescriptionHTML = `<a target="_blank" href="${project.custom_url ?? "https://github.com/" + data.github_username + "/" + project.heading}" class="fs-6 link-primary d-block" style="margin-top: 4px; margin-bottom: 10px; width: fit-content;"><span class="link-text fw-normal">${project.custom_url_text ?? "View on GitHub"}</span> <i class="bi bi-chevron-right"></i></a><p>`;
+            let customCoverDescriptionHTML = `
+            <a target="_blank" href="${project.custom_url ?? "https://github.com/" + data.github_username + "/" + project.heading}" class="fs-6 link-primary d-block" style="margin-top: 4px; margin-bottom: 10px; width: fit-content;">
+                <span class="link-text fw-normal">${project.custom_url_text ?? "View on GitHub"}</span>
+                <i class="bi bi-chevron-right"></i>
+            </a>
+            <p>`;
             project.topics?.forEach(topic => {
                 customCoverDescriptionHTML += `<span class="topic-badge m-1" style="color:${data.projects.color}; border-color: ${data.projects.color};">${topic}</span>`;
             });
             customCoverDescriptionHTML += `</p>`;
+            
             projectTiles.push(Tile(project, data.projects.color, data.projects.muted_color, customCoverDescriptionHTML));
         });
     }
-    projectTiles.forEach(tile => {
-        const container = $("#projects .row");
-        if(container) container.insertAdjacentHTML("beforeend", tile);
-    });
-    // Fetch projects and make tiles
-    data.projects.list.forEach(project => {
-        let customCoverDescriptionHTML = `
-        <!-- URL -->
-        <a target="_blank"
-            href="${project.custom_url ?? "https://github.com/" + data.github_username + "/" + project.heading}"
-            class="fs-6 link-primary d-block" role="button"
-            style="margin-top: 4px; margin-bottom: 10px; width: fit-content;"
-        >
-            <span class="link-text fw-normal">
-                ${project.custom_url_text ?? "View on GitHub"}
-            </span>
-            <i class="bi bi-chevron-right"></i>
-        </a>
-        ${project.custom_url_2 ? `
-        <a target="_blank"
-            href="${project.custom_url_2.url}"
-            class="fs-6 link-primary d-block" role="button"
-            style="margin-top: -5px; margin-bottom: 10px; width: fit-content;"
-        >
-            <span class="link-text fw-normal">
-                ${project.custom_url_2.text}
-            </span>
-            <i class="bi bi-chevron-right"></i>
-        </a>
-        ` : ""}
-        <!-- Topics -->
-        <p>`;
-        // Grab project topics from data.json
-        project.topics?.forEach(topic => customCoverDescriptionHTML += `
-            <span class="topic-badge m-1" style="color:${data.projects.color}; border-color: ${data.projects.color};">
-                ${topic}
-            </span>`); customCoverDescriptionHTML += `
-        </p>`;
-        projectTiles.push(Tile(project, data.projects.color, data.projects.muted_color, customCoverDescriptionHTML));
 
-        return; // Not using GitHub API because of the rate limit (60 requests/hour)
+    const projectsContainer = $("#projects .row");
+    if (projectsContainer) {
+        projectTiles.forEach(tile => projectsContainer.insertAdjacentHTML("beforeend", tile));
+    }
 
-        // Fetch project topics from GitHub API
-        const promise = fetchJSON(`https://api.github.com/repos/${data.github_username}/${project.heading}`)
-            .then(json => {
-                project.cover_description = json.description;
-                json.topics.forEach(topic => customCoverDescriptionHTML += `
-                    <span class="topic-badge m-1" style="color:${data.projects.color}; border-color: ${data.projects.color};">
-                        ${topic}
-                    </span>`);
-                customCoverDescriptionHTML += `</p>`;
-                return Tile(project, data.projects.color, data.projects.muted_color, customCoverDescriptionHTML);
-            })
-            .catch(error => console.error(error))
-        projectPromises.push(promise);
-    });
-
-    projectTiles.forEach(tile => $("#projects .row").insertAdjacentHTML("beforeend", tile));
-
-    // Successfully fetched data from GitHub API
-    // Promise.all(projectPromises).then(tiles => {
-    //     tiles.forEach(tile => $("#source-code").insertAdjacentHTML("beforebegin", tile));
-    //     refreshAppearanceForProgrammaticallyAddedElements();
-    // }).catch(error => console.error(error));
-
-    // Socials
-    data.socials.forEach(item => {
-        const username = item.username_prefix ? `${item.username_prefix}${item.username}` : item.username;
-        $("#contact #socials-container").insertAdjacentHTML("beforeend", `
-            <a href="https://www.${item.platform}.com/${username}" target="_blank"
-                class="social-link text-light d-flex flex-row align-items-center m-1"
-            >
-                <img src="assets/img/app-icons/app-icon-${item.platform}.png" alt="${item.platform}-icon" class="app-icon m-2">
-                ${item.username_prefix ? username : "@" + item.username}
-            </a>
-        `);
-    });
+    // 5. Socials
+    const socialsContainer = $("#contact #socials-container");
+    if (socialsContainer) {
+        data.socials.forEach(item => {
+            const username = item.username_prefix ? `${item.username_prefix}${item.username}` : item.username;
+            socialsContainer.insertAdjacentHTML("beforeend", `
+                <a href="https://www.${item.platform}.com/${username}" target="_blank" class="social-link text-light d-flex flex-row align-items-center m-1">
+                    <img src="assets/img/app-icons/app-icon-${item.platform}.png" alt="${item.platform}-icon" class="app-icon m-2">
+                    ${item.username_prefix ? username : "@" + item.username}
+                </a>
+            `);
+        });
+    }
 
     refreshAppearance();
-}).catch(error => console.error(error));
+}).catch(error => console.error("Error loading data:", error));
 
 async function fetchJSON(url) {
-    const json = await fetch(url, {
+    const response = await fetch(url, {
         method: "GET",
         mode: "cors",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
-        .then(response => response.json())
-        .catch(error => console.error(error));
-    return json;
+        headers: { "Content-Type": "application/json" }
+    });
+    return await response.json();
 }
 
 window.requestResume = function () {
-    $("#contact").scrollIntoView(scrollIntoViewOptions);
-    const checkbox = $("#contact .plus-go-x>input");
-    const message = $("#contact #message");
-    message.value = "Hello, I'd like to take a look at your resume.";
-    if (checkbox.checked) return;
-    checkbox.checked = true;
-    checkbox.dispatchEvent(new Event("change"));
+    const contactSection = $("#contact");
+    if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+        const checkbox = $("#contact .plus-go-x>input");
+        const message = $("#contact #message");
+        if (message) message.value = "Hello, I'd like to take a look at your resume.";
+        if (checkbox && !checkbox.checked) {
+            checkbox.checked = true;
+            checkbox.dispatchEvent(new Event("change"));
+        }
+    }
 }
