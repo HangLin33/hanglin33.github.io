@@ -156,3 +156,28 @@ i.bi.bi-chevron-down {
 .shadow1 {
   filter: drop-shadow(0px 1px 2px rgb(0, 0, 0, 0.3));
 }
+
+/* --- Hang's Custom Styles --- */
+
+/* 滚动文字背景 (Greeting) */
+.scrolling-bg-layer { user-select: none; }
+.scroll-row { white-space: nowrap; font-size: 12rem; font-weight: 900; line-height: 1.1; display: flex; }
+
+/* Skills 滚动轨道 */
+.technologies-row { width: 100%; overflow: hidden; margin-bottom: 25px; display: flex; }
+.scroll-track { display: flex; width: max-content; align-items: center; }
+.scroll-track img { height: 50px; margin: 0 40px; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s ease; }
+.scroll-track img:hover { filter: grayscale(0%); opacity: 1; transform: scale(1.2); }
+
+/* 动画定义 */
+.track-left { animation: scroll-left 30s linear infinite; }
+.track-right { animation: scroll-right 25s linear infinite; }
+
+@keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+@keyframes scroll-right { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+
+/* 手机适配 */
+@media (max-width: 768px) {
+  .scroll-row { font-size: 4rem; }
+  .scroll-track img { height: 35px; margin: 0 20px; }
+}
