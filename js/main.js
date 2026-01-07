@@ -170,17 +170,17 @@ const skillIcons = [
 skillIcons.forEach((icons, index) => {
   const row = document.getElementById(`row-${index}`);
   if (row) {
-    // 关键：生成一个足够长的列表，并复制一份实现无缝切换
-    const singleGroup = icons.map(img => `<img src="assets/img/technology-icons/${img}" alt="skill">`).join('');
+    // 1. 生成一组图标
+    const iconContent = icons.map(img => `<img src="assets/img/technology-icons/${img}" alt="skill">`).join('');
     
-    // 决定方向类
-    const moveClass = index === 1 ? 'track-move-reverse' : 'track-move';
+    // 2. 决定滚动方向
+    const directionClass = index === 1 ? 'track-move-right' : 'track-move-left';
     
-    // 注入两组完全一样的内容
+    // 3. 核心：必须放两个相同的内容块，动画移动到 -50% 时，第二个块正好对齐第一个块的位置
     row.innerHTML = `
-      <div class="scroll-track ${moveClass}">
-        <div class="group">${singleGroup}</div>
-        <div class="group">${singleGroup}</div>
+      <div class="scroll-track ${directionClass}">
+        ${iconContent}
+        ${iconContent}
       </div>`;
   }
 });
