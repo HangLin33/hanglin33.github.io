@@ -159,28 +159,3 @@ window.requestResume = function () {
     checkbox.checked = true;
     checkbox.dispatchEvent(new Event("change"));
 }
-
-
-const skillIcons = [
-  ['python.png', 'sql.png', 'r.png', 'matlab.png', 'stata.png'],
-  ['bloomberg.png', 'capitaliq.png', 'factset.png', 'dealogic.png'],
-  ['excel.png', 'powerpoint.png', 'word.png', 'tableau.png']
-];
-
-skillIcons.forEach((icons, index) => {
-  const row = document.getElementById(`row-${index}`);
-  if (row) {
-    // 技巧：循环拼接，确保总数足够多（例如重复 8 次）
-    let combinedIcons = "";
-    const repeatCount = 8; 
-    
-    for (let i = 0; i < repeatCount; i++) {
-      icons.forEach(img => {
-        combinedIcons += `<img src="assets/img/technology-icons/${img}" alt="skill">`;
-      });
-    }
-
-    const trackClass = index === 1 ? 'track-right' : 'track-left';
-    row.innerHTML = `<div class="scroll-track ${trackClass}">${combinedIcons}</div>`;
-  }
-});
