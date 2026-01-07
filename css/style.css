@@ -157,74 +157,59 @@ i.bi.bi-chevron-down {
   filter: drop-shadow(0px 1px 2px rgb(0, 0, 0, 0.3));
 }
 
-/* --- Hang's Custom Styles 最终优化版 --- */
+/* --- Skills Section Styles (Author-Style) --- */
 
-/* 1. 解决橙色框过大：强制自适应高度 */
+/* 1. 核心容器：确保它不会被强制撑大 */
 #skills .tile {
-  min-height: 0 !important; 
-  height: auto !important;
-  padding-top: 2rem !important;
-  padding-bottom: 2rem !important;
-  display: block !important; 
+  min-height: auto !important;
+  display: flex;
+  flex-direction: column;
 }
 
-/* 2. 每一行的基础容器 */
+/* 2. 模拟作者的滚动行 */
 .technologies-row {
   width: 100%;
   overflow: hidden;
-  background: rgba(255, 149, 0, 0.05); 
-  margin-bottom: 15px; 
-  padding: 10px 0;    
+  margin-bottom: 1rem;
+  padding: 10px 0;
+  background: rgba(var(--bs-orange-rgb), 0.05); /* 使用 Bootstrap 变量风格 */
   border-radius: 12px;
-  display: flex;
-  user-select: none;
+  position: relative;
 }
 
-/* 3. 轨道：复用 Greeting 的无缝平移逻辑 */
+/* 3. 模仿 Greeting 的轨道逻辑 */
 .scroll-track {
   display: flex;
-  flex-wrap: nowrap;
-  width: max-content; /* 必须保留，让内部两组内容水平排开 */
+  width: max-content;
   align-items: center;
+  /* 初始状态不需要 opacity，由动画控制 */
 }
 
 .scroll-track img {
-  height: 38px;  
+  height: 35px; /* 原作者喜欢的精致尺寸 */
   width: auto;
-  margin: 0 35px; 
+  margin: 0 40px;
   filter: grayscale(100%);
-  opacity: 0.5;
-  transition: all 0.3s ease;
+  opacity: 0.4;
+  transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
 .scroll-track img:hover {
   filter: grayscale(0%);
   opacity: 1;
-  transform: scale(1.1);
 }
 
-/* 4. 动画模组：完全对应 Greeting 的动画关键帧 (-50%) */
-/* 假设你的 Greeting 使用的关键帧名称是 scroll-l 和 scroll-r */
-.tech-scroll-left {
-  animation: scroll-l 35s linear infinite;
+/* 4. 动画：直接使用平移 50% 的标准模组 */
+@keyframes tech-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
-.tech-scroll-right {
-  animation: scroll-r 35s linear infinite;
+.track-move {
+  animation: tech-scroll 30s linear infinite;
 }
 
-/* 确保你的 CSS 中有这两个关键帧定义 */
-@keyframes scroll-l {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes scroll-r {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
-}
-
-/* 手机端适配 */
-@media (max-width: 768px) {
-  .scroll-track img { height: 28px; margin: 0 15px; }
+/* 如果是第二行，反向运动 */
+.track-move-reverse {
+  animation: tech-scroll 35s linear infinite reverse;
 }
