@@ -170,17 +170,18 @@ const skillIcons = [
 skillIcons.forEach((icons, index) => {
   const row = document.getElementById(`row-${index}`);
   if (row) {
-    // 1. 生成一组图标
-    const iconContent = icons.map(img => `<img src="assets/img/technology-icons/${img}" alt="skill">`).join('');
+    // 1. 将一组图标转为 HTML
+    const iconListHtml = icons.map(img => `<img src="assets/img/technology-icons/${img}" alt="skill">`).join('');
     
     // 2. 决定滚动方向
-    const directionClass = index === 1 ? 'track-move-right' : 'track-move-left';
+    const animClass = index === 1 ? 'scroll-right' : 'scroll-left';
     
-    // 3. 核心：必须放两个相同的内容块，动画移动到 -50% 时，第二个块正好对齐第一个块的位置
+    // 3. 注入双倍内容：这是解决“离场消失”的关键
+    // 轨道内必须包含两个完全一样的 inner-group
     row.innerHTML = `
-      <div class="scroll-track ${directionClass}">
-        ${iconContent}
-        ${iconContent}
+      <div class="scroll-track ${animClass}">
+        <div class="inner-group">${iconListHtml}</div>
+        <div class="inner-group">${iconListHtml}</div>
       </div>`;
   }
 });
