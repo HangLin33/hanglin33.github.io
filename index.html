@@ -316,177 +316,137 @@
     
     <div class="p-4 p-md-5 pd-tb-1-5-rem">
       <h2 style="color: var(--azure)">Research & Projects</h2>
-      <p class="text-matte-light">Click on each card to explore project details and methodologies.</p>
+      <p class="text-matte-light">A collection of academic research and analytical projects at Cornell.</p>
     </div>
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 g-md-4">
       
-      <div class="col">
-        <div class="tile rounded-5 about-card-custom project-trigger" 
-             style="min-height: 350px; position: relative; overflow: hidden; cursor: pointer; background:#000;"
-             data-bs-toggle="collapse" data-bs-target="#detail1">
-          <div class="about-bg-image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-               background-image: url('assets/img/projects/behavioral.jpg'); background-size: cover; opacity: 0.6; z-index: 1;"></div>
-          <div style="position: relative; z-index: 2; color: white; padding: 2rem; height: 100%; display: flex; flex-direction: column; justify-content: flex-end;">
-            <h5 style="color: var(--azure); font-size: 0.8rem;">Capstone Research</h5>
-            <h4 class="fw-bold">Digital Purchasing & Well-being</h4>
+      <div class="col-md-12 col-lg-8">
+        <div class="tile rounded-5 p-4-5 p-md-5 d-flex flex-column justify-content-between h-100 about-card-custom" 
+             style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 320px; border: 1px solid rgba(0,0,0,0.05);">
+          <div>
+            <span class="badge mb-2" style="background: var(--azure); color: white;">Behavioral Economics</span>
+            <h3 class="fw-bold">Digital Purchasing, Consumption Behavior, and Well-being</h3>
+            <p class="text-secondary mt-2">Capstone Research examining impulse buying and mediaton mechanisms using OLS & R.</p>
+          </div>
+          <div class="mt-3">
+             <span class="topic-badge" style="color:var(--azure); border-color:var(--azure);">Cornell Capstone</span>
           </div>
         </div>
       </div>
 
       <div class="col">
-        <div class="tile rounded-5 about-card-custom project-trigger" 
-             style="min-height: 350px; position: relative; overflow: hidden; cursor: pointer; background:#000;"
-             data-bs-toggle="collapse" data-bs-target="#detail2">
-          <div class="about-bg-image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-               background-image: url('assets/img/projects/housing.jpg'); background-size: cover; opacity: 0.6; z-index: 1;"></div>
-          <div style="position: relative; z-index: 2; color: white; padding: 2rem; height: 100%; display: flex; flex-direction: column; justify-content: flex-end;">
-            <h5 style="color: var(--azure); font-size: 0.8rem;">Data Mining & ML</h5>
-            <h4 class="fw-bold">Forecasting Housing Transactions</h4>
+        <div class="tile rounded-5 p-4 d-flex flex-column justify-content-between h-100 about-card-custom" 
+             style="background: #ffffff; border: 1px solid rgba(0,0,0,0.08);">
+          <div>
+            <h6 style="color: var(--azure); text-transform: uppercase; letter-spacing: 1px; font-size: 0.75rem;">Machine Learning</h6>
+            <h5 class="fw-bold">Forecasting China Housing Transactions</h5>
+            <p class="small text-muted">XGBoost & Time-series forecasting for real-estate market dynamics.</p>
+          </div>
+          <div class="mt-auto">
+            <span class="topic-badge py-0 px-2" style="font-size: 0.7rem;">Python</span>
           </div>
         </div>
       </div>
 
       <div class="col">
-        <div class="tile rounded-5 about-card-custom project-trigger" 
-             style="min-height: 350px; position: relative; overflow: hidden; cursor: pointer; background:#000;"
-             data-bs-toggle="collapse" data-bs-target="#detail3">
-          <div class="about-bg-image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-               background-image: url('assets/img/projects/esg.jpg'); background-size: cover; opacity: 0.6; z-index: 1;"></div>
-          <div style="position: relative; z-index: 2; color: white; padding: 2rem; height: 100%; display: flex; flex-direction: column; justify-content: flex-end;">
-            <h5 style="color: var(--azure); font-size: 0.8rem;">Financial Analytics</h5>
-            <h4 class="fw-bold">ESG & Stock Performance</h4>
+        <div class="tile rounded-5 p-4 d-flex flex-column justify-content-between h-100 about-card-custom" 
+             style="background: #ffffff; border: 1px solid rgba(0,0,0,0.08);">
+          <div>
+            <h6 style="color: var(--azure); text-transform: uppercase; letter-spacing: 1px; font-size: 0.75rem;">Finance & Analytics</h6>
+            <h5 class="fw-bold">ESG, Stock Performance & Controversies</h5>
+            <p class="small text-muted">Global automaker analysis using USD-adjusted metrics and R.</p>
+          </div>
+          <div class="mt-auto">
+            <span class="topic-badge py-0 px-2" style="font-size: 0.7rem;">Financial Ratios</span>
           </div>
         </div>
       </div>
 
-      </div>
-
-    <div class="mt-4">
-      
-      <div class="collapse mt-3" id="detail1" data-bs-parent="#projects">
-        <div class="card card-body rounded-5 border-0 shadow-sm p-4 p-md-5" style="background: rgba(0,122,255,0.03);">
-          <h3 style="color: var(--azure);">Digital Purchasing Environment & Well-being</h3>
-          <p class="fw-bold text-secondary">Capstone Research · Cornell University</p>
-          <hr>
-          <ul>
-            <li>Developed a conceptual framework linking digital purchasing convenience to financial stress.</li>
-            <li>Designed and deployed a 40-item survey targeting U.S. young adults.</li>
-            <li>Applied OLS regression models with bootstrap resampling (1,000 iterations).</li>
-            <li><strong>Methods:</strong> R · Regression Analysis · Behavioral Economics · LOOCV</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="collapse mt-3" id="detail2" data-bs-parent="#projects">
-        <div class="card card-body rounded-5 border-0 shadow-sm p-4 p-md-5" style="background: rgba(0,122,255,0.03);">
-          <h3 style="color: var(--azure);">Forecasting New Housing Transactions in China</h3>
-          <p class="fw-bold text-secondary">STSCI 5740 · Data Mining & Machine Learning</p>
-          <hr>
-          <ul>
-            <li>Integrated 5,000+ sector–month observations combining sales and land data.</li>
-            <li>Implemented gradient boosting regression (XGBoost) to capture demand–supply dynamics.</li>
-            <li><strong>Methods:</strong> Python · XGBoost · Time-Series Cross-Validation</li>
-          </ul>
-        </div>
-      </div>
-
-      </div>
-  </div>
-</div>
-       <!-- 
-      Skills section
-     -->
-<div id="skills" class="section container-fluid bg-light">
-  <div class="section-inner-container">
-    <h2 class="p-4 p-md-5 pd-tb-1-5-rem" style="color: var(--orange);">Skills</h2>
-    <div class="row row-cols-1 g-3 g-md-4">
       <div class="col">
-        <div class="tile rounded-5 d-flex flex-column p-4-5 p-md-5 h-100" style="min-height: unset!important; background: white; overflow: hidden;">
-          <h5 style="color: var(--orange); margin-bottom: 2rem;">Professional Toolkit</h5>
-
-          <style>
-            /* 定义无缝循环动画 */
-            @keyframes infinite-scroll {
-              0% { transform: translateX(0); }
-              100% { transform: translateX(-25%); } /* 移动正好一组的距离 */
-            }
-            .skill-item {
-              height: 40px; 
-              width: auto; 
-              margin: 0 40px; 
-              filter: grayscale(100%); 
-              opacity: 0.5; 
-              transition: 0.3s;
-              flex-shrink: 0; /* 防止图片被挤压 */
-            }
-            .skill-item:hover { 
-              filter: grayscale(0%); 
-              opacity: 1; 
-              transform: scale(1.1); 
-            }
-            /* 强制容器为横向排列且不换行 */
-            .marquee-track {
-              display: flex !important;
-              flex-direction: row !important;
-              flex-wrap: nowrap !important;
-              width: max-content !important;
-            }
-          </style>
-
-          <div style="width: 100%; overflow: hidden; margin: 15px 0;">
-            <div class="marquee-track" style="animation: infinite-scroll 20s linear infinite;">
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/python.png" class="skill-item"><img src="assets/img/technology-icons/sql.png" class="skill-item"><img src="assets/img/technology-icons/r.png" class="skill-item"><img src="assets/img/technology-icons/matlab.png" class="skill-item"><img src="assets/img/technology-icons/stata.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/python.png" class="skill-item"><img src="assets/img/technology-icons/sql.png" class="skill-item"><img src="assets/img/technology-icons/r.png" class="skill-item"><img src="assets/img/technology-icons/matlab.png" class="skill-item"><img src="assets/img/technology-icons/stata.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/python.png" class="skill-item"><img src="assets/img/technology-icons/sql.png" class="skill-item"><img src="assets/img/technology-icons/r.png" class="skill-item"><img src="assets/img/technology-icons/matlab.png" class="skill-item"><img src="assets/img/technology-icons/stata.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/python.png" class="skill-item"><img src="assets/img/technology-icons/sql.png" class="skill-item"><img src="assets/img/technology-icons/r.png" class="skill-item"><img src="assets/img/technology-icons/matlab.png" class="skill-item"><img src="assets/img/technology-icons/stata.png" class="skill-item">
-              </div>
-            </div>
+        <div class="tile rounded-5 p-4 d-flex flex-column justify-content-between h-100 about-card-custom" 
+             style="background: #ffffff; border: 1px solid rgba(0,0,0,0.08);">
+          <div>
+            <h6 style="color: var(--azure); text-transform: uppercase; letter-spacing: 1px; font-size: 0.75rem;">Digital Strategy</h6>
+            <h5 class="fw-bold">Virtual Cornell Campus Platform</h5>
+            <p class="small text-muted">VR/AI enabled platform concept and governance strategy.</p>
           </div>
-
-          <div style="width: 100%; overflow: hidden; margin: 15px 0;">
-            <div class="marquee-track" style="animation: infinite-scroll 25s linear infinite reverse;">
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/bloomberg.png" class="skill-item"><img src="assets/img/technology-icons/capitaliq.png" class="skill-item"><img src="assets/img/technology-icons/factset.png" class="skill-item"><img src="assets/img/technology-icons/dealogic.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/bloomberg.png" class="skill-item"><img src="assets/img/technology-icons/capitaliq.png" class="skill-item"><img src="assets/img/technology-icons/factset.png" class="skill-item"><img src="assets/img/technology-icons/dealogic.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/bloomberg.png" class="skill-item"><img src="assets/img/technology-icons/capitaliq.png" class="skill-item"><img src="assets/img/technology-icons/factset.png" class="skill-item"><img src="assets/img/technology-icons/dealogic.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/bloomberg.png" class="skill-item"><img src="assets/img/technology-icons/capitaliq.png" class="skill-item"><img src="assets/img/technology-icons/factset.png" class="skill-item"><img src="assets/img/technology-icons/dealogic.png" class="skill-item">
-              </div>
-            </div>
+          <div class="mt-auto">
+            <span class="topic-badge py-0 px-2" style="font-size: 0.7rem;">Platform Economics</span>
           </div>
-
-          <div style="width: 100%; overflow: hidden; margin: 15px 0;">
-            <div class="marquee-track" style="animation: infinite-scroll 22s linear infinite;">
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/excel.png" class="skill-item"><img src="assets/img/technology-icons/powerpoint.png" class="skill-item"><img src="assets/img/technology-icons/word.png" class="skill-item"><img src="assets/img/technology-icons/tableau.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/excel.png" class="skill-item"><img src="assets/img/technology-icons/powerpoint.png" class="skill-item"><img src="assets/img/technology-icons/word.png" class="skill-item"><img src="assets/img/technology-icons/tableau.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/excel.png" class="skill-item"><img src="assets/img/technology-icons/powerpoint.png" class="skill-item"><img src="assets/img/technology-icons/word.png" class="skill-item"><img src="assets/img/technology-icons/tableau.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/excel.png" class="skill-item"><img src="assets/img/technology-icons/powerpoint.png" class="skill-item"><img src="assets/img/technology-icons/word.png" class="skill-item"><img src="assets/img/technology-icons/tableau.png" class="skill-item">
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
+
+      <div class="col">
+        <div class="tile rounded-5 p-4 d-flex flex-column justify-content-between h-100 about-card-custom" 
+             style="background: #ffffff; border: 1px solid rgba(0,0,0,0.08);">
+          <div>
+            <h6 style="color: var(--azure); text-transform: uppercase; letter-spacing: 1px; font-size: 0.75rem;">Fixed Income</h6>
+            <h5 class="fw-bold">Bond Pricing & Interest Rate Risk</h5>
+            <p class="small text-muted">Valuation, Macaulay duration, and convexity analysis.</p>
+          </div>
+          <div class="mt-auto">
+            <span class="topic-badge py-0 px-2" style="font-size: 0.7rem;">Financial Math</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="tile rounded-5 p-4 d-flex flex-column justify-content-between h-100 about-card-custom" 
+             style="background: #ffffff; border: 1px solid rgba(0,0,0,0.08);">
+          <div>
+            <h6 style="color: var(--azure); text-transform: uppercase; letter-spacing: 1px; font-size: 0.75rem;">Econometrics</h6>
+            <h5 class="fw-bold">Determinants of Wine Prices</h5>
+            <p class="small text-muted">OLS regression with interaction effects and diagnostics.</p>
+          </div>
+          <div class="mt-auto">
+            <span class="topic-badge py-0 px-2" style="font-size: 0.7rem;">Stata/R</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="tile rounded-5 p-4 d-flex flex-column justify-content-between h-100 about-card-custom" 
+             style="background: #ffffff; border: 1px solid rgba(0,0,0,0.08);">
+          <div>
+            <h6 style="color: var(--azure); text-transform: uppercase; letter-spacing: 1px; font-size: 0.75rem;">Macroeconomics</h6>
+            <h5 class="fw-bold">Solow Growth Model: India Case</h5>
+            <p class="small text-muted">Analyzing convergence and capital accumulation dynamics.</p>
+          </div>
+          <div class="mt-auto">
+            <span class="topic-badge py-0 px-2" style="font-size: 0.7rem;">Economic Modeling</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="tile rounded-5 p-4 d-flex flex-column justify-content-between h-100 about-card-custom" 
+             style="background: #ffffff; border: 1px solid rgba(0,0,0,0.08);">
+          <div>
+            <h6 style="color: var(--azure); text-transform: uppercase; letter-spacing: 1px; font-size: 0.75rem;">Monetary Economics</h6>
+            <h5 class="fw-bold">Structural Monetary Policy in China</h5>
+            <p class="small text-muted">VAR model and impulse response analysis on industrial output.</p>
+          </div>
+          <div class="mt-auto">
+            <span class="topic-badge py-0 px-2" style="font-size: 0.7rem;">Time-Series Analysis</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="tile rounded-5 p-4 d-flex flex-column justify-content-between h-100 about-card-custom" 
+             style="background: #ffffff; border: 1px solid rgba(0,0,0,0.08);">
+          <div>
+            <h6 style="color: var(--azure); text-transform: uppercase; letter-spacing: 1px; font-size: 0.75rem;">EdTech & AI</h6>
+            <h5 class="fw-bold">AI Agents vs. Search Engines</h5>
+            <p class="small text-muted">Qualitative interviews and thematic coding for student learning.</p>
+          </div>
+          <div class="mt-auto">
+            <span class="topic-badge py-0 px-2" style="font-size: 0.7rem;">Qualitative Methods</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
