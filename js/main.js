@@ -161,27 +161,30 @@ window.requestResume = function () {
 }
 
 // 在 js/main.js 末尾添加
-const skillSets = [
-  ['python.png', 'sql.png', 'r.png', 'tableau.png', 'excel.png'], // 第一行
-  ['stata.png', 'powerbi.png', 'google-analytics.png', 'office.png'] // 第二行
+// 1. 定义三行图标数据
+const skillIcons = [
+  ['python.png', 'sql.png', 'r.png', 'matlab.png', 'stata.png'],
+  ['bloomberg.png', 'capitaliq.png', 'factset.png', 'dealogic.png'],
+  ['excel.png', 'powerpoint.png', 'word.png', 'tableau.png']
 ];
 
-skillSets.forEach((icons, index) => {
-  const rowElement = document.getElementById(`skill-row-${index + 1}`);
-  if (rowElement) {
-    // 1. 生成单组图标的 HTML
-    const iconGroupHtml = icons.map(img => 
-      `<img src="assets/img/skills/${img}" alt="skill">`
+// 2. 执行渲染逻辑
+skillIcons.forEach((icons, index) => {
+  const row = document.getElementById(`skill-row-${index}`);
+  if (row) {
+    // 将该组图标生成 HTML 字符串
+    const iconListHtml = icons.map(img => 
+        `<img src="assets/img/skills/${img}" alt="skill">`
     ).join('');
-
-    // 2. 注入两组完全一样的 HTML (inner-group) 到轨道中
-    const directionClass = index === 0 ? 'scroll-left' : 'scroll-right';
     
-    rowElement.innerHTML = `
-      <div class="scroll-track ${directionClass}">
-        <div class="inner-group">${iconGroupHtml}</div>
-        <div class="inner-group">${iconGroupHtml}</div>
-      </div>
-    `;
+    // 决定滚动方向：0和2向左，1向右
+    const animClass = (index === 1) ? 'scroll-right' : 'scroll-left';
+    
+    // 核心：注入两组完全一样的 inner-group
+    row.innerHTML = `
+      <div class="scroll-track ${animClass}">
+        <div class="inner-group">${iconListHtml}</div>
+        <div class="inner-group">${iconListHtml}</div>
+      </div>`;
   }
 });
