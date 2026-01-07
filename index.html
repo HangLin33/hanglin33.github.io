@@ -279,70 +279,82 @@
           <h5 style="color: var(--orange); margin-bottom: 2rem;">Professional Toolkit</h5>
 
           <style>
-            @keyframes local-scroll {
+            /* 定义无缝循环动画 */
+            @keyframes infinite-scroll {
               0% { transform: translateX(0); }
-              100% { transform: translateX(-33.333%); }
+              100% { transform: translateX(-25%); } /* 移动正好一组的距离 */
             }
-            .skill-img {
-              height: 40px; width: auto; margin: 0 40px;
-              filter: grayscale(100%); opacity: 0.5; transition: 0.3s;
+            .skill-item {
+              height: 40px; 
+              width: auto; 
+              margin: 0 40px; 
+              filter: grayscale(100%); 
+              opacity: 0.5; 
+              transition: 0.3s;
+              flex-shrink: 0; /* 防止图片被挤压 */
             }
-            .skill-img:hover { filter: grayscale(0%); opacity: 1; transform: scale(1.1); }
-            /* 强制覆盖可能的外部干扰 */
-            .custom-track { display: flex !important; width: max-content !important; background: transparent !important; }
+            .skill-item:hover { 
+              filter: grayscale(0%); 
+              opacity: 1; 
+              transform: scale(1.1); 
+            }
+            /* 强制容器为横向排列且不换行 */
+            .marquee-track {
+              display: flex !important;
+              flex-direction: row !important;
+              flex-wrap: nowrap !important;
+              width: max-content !important;
+            }
           </style>
 
-          <div style="width: 100%; overflow: hidden; margin: 10px 0;">
-            <div class="custom-track" style="animation: local-scroll 25s linear infinite;">
-              <img src="assets/img/technology-icons/python.png" class="skill-img" alt="python">
-              <img src="assets/img/technology-icons/sql.png" class="skill-img" alt="sql">
-              <img src="assets/img/technology-icons/r.png" class="skill-img" alt="r">
-              <img src="assets/img/technology-icons/matlab.png" class="skill-img" alt="matlab">
-              <img src="assets/img/technology-icons/stata.png" class="skill-img" alt="stata">
-              <img src="assets/img/technology-icons/python.png" class="skill-img" alt="python">
-              <img src="assets/img/technology-icons/sql.png" class="skill-img" alt="sql">
-              <img src="assets/img/technology-icons/r.png" class="skill-img" alt="r">
-              <img src="assets/img/technology-icons/matlab.png" class="skill-img" alt="matlab">
-              <img src="assets/img/technology-icons/stata.png" class="skill-img" alt="stata">
-              <img src="assets/img/technology-icons/python.png" class="skill-img" alt="python">
-              <img src="assets/img/technology-icons/sql.png" class="skill-img" alt="sql">
-              <img src="assets/img/technology-icons/r.png" class="skill-img" alt="r">
-              <img src="assets/img/technology-icons/matlab.png" class="skill-img" alt="matlab">
-              <img src="assets/img/technology-icons/stata.png" class="skill-img" alt="stata">
+          <div style="width: 100%; overflow: hidden; margin: 15px 0;">
+            <div class="marquee-track" style="animation: infinite-scroll 20s linear infinite;">
+              <div style="display: flex;">
+                <img src="assets/img/technology-icons/python.png" class="skill-item"><img src="assets/img/technology-icons/sql.png" class="skill-item"><img src="assets/img/technology-icons/r.png" class="skill-item"><img src="assets/img/technology-icons/matlab.png" class="skill-item"><img src="assets/img/technology-icons/stata.png" class="skill-item">
+              </div>
+              <div style="display: flex;">
+                <img src="assets/img/technology-icons/python.png" class="skill-item"><img src="assets/img/technology-icons/sql.png" class="skill-item"><img src="assets/img/technology-icons/r.png" class="skill-item"><img src="assets/img/technology-icons/matlab.png" class="skill-item"><img src="assets/img/technology-icons/stata.png" class="skill-item">
+              </div>
+              <div style="display: flex;">
+                <img src="assets/img/technology-icons/python.png" class="skill-item"><img src="assets/img/technology-icons/sql.png" class="skill-item"><img src="assets/img/technology-icons/r.png" class="skill-item"><img src="assets/img/technology-icons/matlab.png" class="skill-item"><img src="assets/img/technology-icons/stata.png" class="skill-item">
+              </div>
+              <div style="display: flex;">
+                <img src="assets/img/technology-icons/python.png" class="skill-item"><img src="assets/img/technology-icons/sql.png" class="skill-item"><img src="assets/img/technology-icons/r.png" class="skill-item"><img src="assets/img/technology-icons/matlab.png" class="skill-item"><img src="assets/img/technology-icons/stata.png" class="skill-item">
+              </div>
             </div>
           </div>
 
-          <div style="width: 100%; overflow: hidden; margin: 10px 0;">
-            <div class="custom-track" style="animation: local-scroll 25s linear infinite reverse;">
-              <img src="assets/img/technology-icons/bloomberg.png" class="skill-img" alt="bloomberg">
-              <img src="assets/img/technology-icons/capitaliq.png" class="skill-img" alt="capitaliq">
-              <img src="assets/img/technology-icons/factset.png" class="skill-img" alt="factset">
-              <img src="assets/img/technology-icons/dealogic.png" class="skill-img" alt="dealogic">
-              <img src="assets/img/technology-icons/bloomberg.png" class="skill-img" alt="bloomberg">
-              <img src="assets/img/technology-icons/capitaliq.png" class="skill-img" alt="capitaliq">
-              <img src="assets/img/technology-icons/factset.png" class="skill-img" alt="factset">
-              <img src="assets/img/technology-icons/dealogic.png" class="skill-img" alt="dealogic">
-              <img src="assets/img/technology-icons/bloomberg.png" class="skill-img" alt="bloomberg">
-              <img src="assets/img/technology-icons/capitaliq.png" class="skill-img" alt="capitaliq">
-              <img src="assets/img/technology-icons/factset.png" class="skill-img" alt="factset">
-              <img src="assets/img/technology-icons/dealogic.png" class="skill-img" alt="dealogic">
+          <div style="width: 100%; overflow: hidden; margin: 15px 0;">
+            <div class="marquee-track" style="animation: infinite-scroll 25s linear infinite reverse;">
+              <div style="display: flex;">
+                <img src="assets/img/technology-icons/bloomberg.png" class="skill-item"><img src="assets/img/technology-icons/capitaliq.png" class="skill-item"><img src="assets/img/technology-icons/factset.png" class="skill-item"><img src="assets/img/technology-icons/dealogic.png" class="skill-item">
+              </div>
+              <div style="display: flex;">
+                <img src="assets/img/technology-icons/bloomberg.png" class="skill-item"><img src="assets/img/technology-icons/capitaliq.png" class="skill-item"><img src="assets/img/technology-icons/factset.png" class="skill-item"><img src="assets/img/technology-icons/dealogic.png" class="skill-item">
+              </div>
+              <div style="display: flex;">
+                <img src="assets/img/technology-icons/bloomberg.png" class="skill-item"><img src="assets/img/technology-icons/capitaliq.png" class="skill-item"><img src="assets/img/technology-icons/factset.png" class="skill-item"><img src="assets/img/technology-icons/dealogic.png" class="skill-item">
+              </div>
+              <div style="display: flex;">
+                <img src="assets/img/technology-icons/bloomberg.png" class="skill-item"><img src="assets/img/technology-icons/capitaliq.png" class="skill-item"><img src="assets/img/technology-icons/factset.png" class="skill-item"><img src="assets/img/technology-icons/dealogic.png" class="skill-item">
+              </div>
             </div>
           </div>
 
-          <div style="width: 100%; overflow: hidden; margin: 10px 0;">
-            <div class="custom-track" style="animation: local-scroll 25s linear infinite;">
-              <img src="assets/img/technology-icons/excel.png" class="skill-img" alt="excel">
-              <img src="assets/img/technology-icons/powerpoint.png" class="skill-img" alt="powerpoint">
-              <img src="assets/img/technology-icons/word.png" class="skill-img" alt="word">
-              <img src="assets/img/technology-icons/tableau.png" class="skill-img" alt="tableau">
-              <img src="assets/img/technology-icons/excel.png" class="skill-img" alt="excel">
-              <img src="assets/img/technology-icons/powerpoint.png" class="skill-img" alt="powerpoint">
-              <img src="assets/img/technology-icons/word.png" class="skill-img" alt="word">
-              <img src="assets/img/technology-icons/tableau.png" class="skill-img" alt="tableau">
-              <img src="assets/img/technology-icons/excel.png" class="skill-img" alt="excel">
-              <img src="assets/img/technology-icons/powerpoint.png" class="skill-img" alt="powerpoint">
-              <img src="assets/img/technology-icons/word.png" class="skill-img" alt="word">
-              <img src="assets/img/technology-icons/tableau.png" class="skill-img" alt="tableau">
+          <div style="width: 100%; overflow: hidden; margin: 15px 0;">
+            <div class="marquee-track" style="animation: infinite-scroll 22s linear infinite;">
+              <div style="display: flex;">
+                <img src="assets/img/technology-icons/excel.png" class="skill-item"><img src="assets/img/technology-icons/powerpoint.png" class="skill-item"><img src="assets/img/technology-icons/word.png" class="skill-item"><img src="assets/img/technology-icons/tableau.png" class="skill-item">
+              </div>
+              <div style="display: flex;">
+                <img src="assets/img/technology-icons/excel.png" class="skill-item"><img src="assets/img/technology-icons/powerpoint.png" class="skill-item"><img src="assets/img/technology-icons/word.png" class="skill-item"><img src="assets/img/technology-icons/tableau.png" class="skill-item">
+              </div>
+              <div style="display: flex;">
+                <img src="assets/img/technology-icons/excel.png" class="skill-item"><img src="assets/img/technology-icons/powerpoint.png" class="skill-item"><img src="assets/img/technology-icons/word.png" class="skill-item"><img src="assets/img/technology-icons/tableau.png" class="skill-item">
+              </div>
+              <div style="display: flex;">
+                <img src="assets/img/technology-icons/excel.png" class="skill-item"><img src="assets/img/technology-icons/powerpoint.png" class="skill-item"><img src="assets/img/technology-icons/word.png" class="skill-item"><img src="assets/img/technology-icons/tableau.png" class="skill-item">
+              </div>
             </div>
           </div>
 
