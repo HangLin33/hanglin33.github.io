@@ -157,64 +157,68 @@ i.bi.bi-chevron-down {
   filter: drop-shadow(0px 1px 2px rgb(0, 0, 0, 0.3));
 }
 
-/* --- 在 style.css 原有内容下方追加或替换 --- */
+/* --- 统一滚动动画 --- */
+@keyframes scroll-l {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 
-/* 橙色方框容器 */
+@keyframes scroll-r {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* --- 修改 Skills 容器，模仿 Greeting 的背景感 --- */
 .technologies-row {
   width: 100%;
-  overflow: hidden; /* 隐藏超出方框的部分 */
-  background: rgba(255, 149, 0, 0.05); /* 淡淡的橙色背景 */
-  border: 1px solid rgba(255, 149, 0, 0.15); /* 橙色边框 */
-  margin-bottom: 20px;
-  padding: 20px 0;
-  border-radius: 18px; /* Apple 风格圆角 */
+  overflow: hidden;
+  /* 橙色方框微调：去掉生硬的边框，改用更高级的浅色调 */
+  background: rgba(255, 149, 0, 0.03); 
+  margin-bottom: 30px;
+  padding: 40px 0;
+  border-radius: 24px;
   display: flex;
+  position: relative;
 }
 
-/* 滚动轨道：包含两组完全一样的图标 */
+/* 滚动轨道：确保它是两组内容并排，总长度是 200% */
 .scroll-track {
   display: flex;
-  width: max-content; /* 关键：由内容撑开宽度 */
-  flex-wrap: nowrap;
+  width: max-content;
+  will-change: transform;
 }
 
-/* 图标所在的组 */
+/* 统一应用 Greeting 的动画类名 */
+.scroll-left {
+  animation: scroll-l 30s linear infinite;
+}
+
+.scroll-right {
+  animation: scroll-r 30s linear infinite; /* 注意这里直接用 scroll-r */
+}
+
+/* 图标样式：模仿文字滚动的平铺感 */
 .inner-group {
   display: flex;
   align-items: center;
 }
 
-.scroll-track img {
-  height: 45px; /* 图标高度 */
+.inner-group img {
+  height: 60px; /* 适当增大图标，更有视觉张力 */
   width: auto;
-  margin: 0 40px; /* 图标之间的水平间距 */
-  filter: grayscale(100%); /* 默认灰色更高级 */
-  opacity: 0.5;
-  transition: all 0.4s ease;
+  margin: 0 50px; /* 增加间距，让呼吸感更强 */
+  filter: grayscale(100%);
+  opacity: 0.3; /* 降低初始透明度，更像背景 */
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 悬停时变色放大 */
-.scroll-track img:hover {
+/* 悬停效果：模仿 Apple 官网那种高亮 */
+.technologies-row:hover img {
+  opacity: 0.6; /* 整体亮起 */
+}
+
+.inner-group img:hover {
   filter: grayscale(0%);
-  opacity: 1;
-  transform: scale(1.15);
-}
-
-/* 无缝滚动动画 */
-@keyframes infinite-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); } /* 滚到一半时正好接上第二组 */
-}
-
-.scroll-left {
-  animation: infinite-scroll 20s linear infinite;
-}
-
-.scroll-right {
-  animation: infinite-scroll 25s linear infinite reverse; /* 反向滚动 */
-}
-
-/* 悬停时整个轨道暂停 */
-.technologies-row:hover .scroll-track {
-  animation-play-state: paused;
+  opacity: 1 !important;
+  transform: scale(1.2);
 }
