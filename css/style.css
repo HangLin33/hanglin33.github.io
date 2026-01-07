@@ -164,13 +164,48 @@ i.bi.bi-chevron-down {
 .scroll-row { white-space: nowrap; font-size: 12rem; font-weight: 900; line-height: 1.1; display: flex; }
 
 /* Skills 滚动轨道 */
-.technologies-row { width: 100%; overflow: hidden; margin-bottom: 25px; display: flex; }
-.scroll-track { display: flex; width: max-content; align-items: center; }
-.scroll-track img { height: 50px; margin: 0 40px; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s ease; }
-.scroll-track img:hover { filter: grayscale(0%); opacity: 1; transform: scale(1.2); }
+/* 容器 */
+.technologies-row {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  background: rgba(255, 149, 0, 0.05); /* 淡淡的橙色 */
+  margin-bottom: 20px;
+  padding: 15px 0;
+  border-radius: 15px;
+  display: flex;
+}
 
-/* 动画定义 */
-.track-left { animation: scroll-left 30s linear infinite; }
+/* 轨道 */
+.scroll-track {
+  display: flex;
+  flex-shrink: 0; /* 防止内容被压缩 */
+  width: max-content;
+  align-items: center;
+}
+
+.scroll-track img {
+  height: 45px; /* 统一高度 */
+  width: auto;  /* 宽度自适应，解决分辨率不一的问题 */
+  margin: 0 35px; /* 间距 */
+  filter: grayscale(100%);
+  opacity: 0.6;
+  transition: 0.3s;
+}
+
+/* 向左滚动：从 0 移到一半位移 */
+@keyframes scroll-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* 向右滚动：从一半位移移到 0 */
+@keyframes scroll-right {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+.track-left { animation: scroll-left 25s linear infinite; }
 .track-right { animation: scroll-right 25s linear infinite; }
 
 @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
