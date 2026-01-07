@@ -1,6 +1,9 @@
-/* style.css
+/* 
+    style.css
     portfolio
-    Modified for Hang Lin - 2026
+
+    Created by Foxster on 2022-09-23.
+    Copyright (c) 2022 Foxster. All rights reserved.
 */
 
 @import url("tile.css");
@@ -17,7 +20,6 @@
   scroll-behavior: smooth;
 }
 
-/* --- 全局样式优化 --- */
 img.pfp {
   border-radius: 50%;
   width: 1.25em;
@@ -31,133 +33,120 @@ img.pfp {
   padding-left: calc(var(--bs-gutter-x) * .25);
 }
 
-/* --- 背景滚动文字样式 (Greeting Section) --- */
-.scrolling-bg-layer {
-  user-select: none;
+#title>span:after {
+  content: '|';
+  color: var(--azure);
+  font-size: 1.275rem;
+  font-weight: 400;
+  margin-left: -2px;
 }
 
-.scroll-row {
-  white-space: nowrap;
-  font-size: 12rem; 
-  font-weight: 900;
-  line-height: 1.1;
-  display: flex;
+#title>span.not-typing:after {
+  animation: blink 1s steps(1) infinite;
 }
 
-.left-to-right {
-  animation: scroll-l 40s linear infinite;
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }
 
-.right-to-left {
-  animation: scroll-r 45s linear infinite;
-}
-
-@keyframes scroll-l {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes scroll-r {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
-}
-
-/* --- Skills 滚动动画 (关键部分) --- */
-.technologies-row {
-  width: 100%;
-  overflow: hidden;
-  background: rgba(255, 149, 0, 0.05); /* 淡淡的橙色背景 */
-  margin: 10px 0;
-  padding: 20px 0;
-  border-radius: 15px;
-  display: flex;
-}
-
-.scroll-track {
-  display: flex;
-  width: max-content;
-  animation: tech-slide-left 35s linear infinite;
-}
-
-/* 第二行图标反向滚动 */
-#row-1 .scroll-track {
-  animation-direction: reverse;
-}
-
-.scroll-track img {
-  height: 45px; /* 图标高度 */
-  width: auto;
-  margin: 0 35px; /* 图标左右间距 */
-  filter: grayscale(100%);
-  opacity: 0.5;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.scroll-track:hover {
-  animation-play-state: paused; /* 鼠标悬停时滚动暂停 */
-}
-
-.scroll-track img:hover {
-  filter: grayscale(0%);
-  opacity: 1;
-  transform: scale(1.2); /* 悬停放大效果 */
-}
-
-@keyframes tech-slide-left {
-  from { transform: translateX(0); }
-  /* 因为 JS 复制了 3 份内容，移动到 -33.33% 实现无缝循环 */
-  to { transform: translateX(-33.333%); }
-}
-
-/* --- Apple 风格 About 卡片 --- */
-.about-card-custom {
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s ease;
-  z-index: 1;
-}
-
-.about-card-custom:hover {
-  transform: scale(1.01);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
-}
-
-.about-bg-image {
-  transition: transform 0.8s ease;
-}
-
-.about-card-custom:hover .about-bg-image {
-  transform: scale(1.05);
-}
-
-/* --- 响应式适配 --- */
-@media (max-width: 768px) {
-  .scroll-row { font-size: 4rem; }
-  #Greeting h1 { font-size: 4rem !important; }
-  .about-card-custom h2 { font-size: 2.2rem !important; }
-  .scroll-track img { height: 35px; margin: 0 20px; }
-}
-
-@media (max-width: 575px) {
-  .foot-div { justify-content: center !important; }
-  #appearance-toggle-container { margin-bottom: 0.5rem; }
-  
-  #navbar-content .nav-item a {
-    font-size: 1.65rem !important;
-    font-weight: 550;
-  }
-}
-
-/* 基础 UI 元素 */
 #appearance-toggle {
   border: 1px solid var(--bs-blue);
   width: fit-content;
   padding: 2px;
-  border-radius: 50px;
+  border-radius: 7vw;
 }
 
 #appearance-toggle ul li a {
-  border-radius: 50px;
-  padding: 2px 12px;
-  cursor: pointer;
+  border-radius: 7vw;
+  padding: 2px 10px 2px 10px;
+}
+
+/* Chevron */
+i.bi.bi-chevron-right,
+i.bi.bi-chevron-down {
+  -webkit-text-stroke: 1px;
+  font-size: 12px;
+  vertical-align: text-bottom;
+}
+
+/* Form required field */
+.form-label.required::after {
+  content: "*";
+  font-weight: normal;
+}
+
+/* Mobile settings */
+@media (max-width: 575px) {
+  .foot-div {
+    justify-content: center !important;
+  }
+
+  #appearance-toggle-container {
+    margin-bottom: 0.5rem;
+  }
+
+  #navbar-content {
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+
+  #navbar-content #filler {
+    height: 75vh;
+  }
+
+  .navbar-collapse.collapsing {
+    transition: height 0.45s ease-in-out;
+  }
+
+  #navbar-content.collapsing-in .nav-item {
+    animation: fade_in 0.5s ease-in-out forwards;
+  }
+  
+  #navbar-content.collapsing-in .nav-item:nth-child(1) {
+    animation-delay: 0.05s;
+  }
+  
+  #navbar-content.collapsing-in .nav-item:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+  
+  #navbar-content.collapsing-in .nav-item:nth-child(3) {
+    animation-delay: 0.15s;
+  }
+  
+  #navbar-content.collapsing-in .nav-item:nth-child(4) {
+    animation-delay: 0.2s;
+  }
+  
+  #navbar-content.collapsing-in .nav-item:nth-child(5) {
+    animation-delay: 0.25s;
+  }
+  
+  #navbar-content .nav-item {
+    opacity: 0;
+    padding-left: 2rem;
+  }
+
+  #navbar-content .nav-item a {
+    font-size: 1.65rem !important;
+    font-weight: 550;
+  }
+  
+  #navbar-content.collapsing-out .nav-item {
+    animation: fade_out 0.25s ease-in-out forwards;
+  }
+
+  #main-container {
+    transition: opacity 0.5s ease 0.125s;
+  }
+}
+
+/* lg */
+@media (max-width: 991px) {
+  #navbar {
+    padding: calc(var(--bs-navbar-padding-y) * .5) var(--bs-navbar-padding-x);
+  }
 }
 
 .initially-hidden {
@@ -165,5 +154,5 @@ img.pfp {
 }
 
 .shadow1 {
-  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0px 1px 2px rgb(0, 0, 0, 0.3));
 }
