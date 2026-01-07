@@ -159,3 +159,24 @@ window.requestResume = function () {
     checkbox.checked = true;
     checkbox.dispatchEvent(new Event("change"));
 }
+
+const skillIcons = [
+  ['python.png', 'sql.png', 'r.png', 'matlab.png', 'stata.png'],
+  ['bloomberg.png', 'capitaliq.png', 'factset.png', 'dealogic.png'],
+  ['excel.png', 'powerpoint.png', 'word.png', 'tableau.png']
+];
+
+skillIcons.forEach((icons, index) => {
+  const row = document.getElementById(`row-${index}`);
+  if (row) {
+    // 关键：复制 3 遍实现无缝循环
+    const doubleIcons = [...icons, ...icons, ...icons];
+    const trackClass = index === 1 ? 'track-right' : 'track-left';
+    
+    const html = `
+      <div class="scroll-track ${trackClass}">
+        ${doubleIcons.map(img => `<img src="assets/img/technology-icons/${img}" alt="icon">`).join('')}
+      </div>`;
+    row.innerHTML = html;
+  }
+});
