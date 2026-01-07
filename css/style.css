@@ -168,57 +168,68 @@ i.bi.bi-chevron-down {
   100% { transform: translateX(0); }
 }
 
-/* --- 修改 Skills 容器，模仿 Greeting 的背景感 --- */
+/* --- Skills 滚动容器：模仿 Greeting 风格 --- */
 .technologies-row {
-  width: 100%;
+  width: 100vw;           /* 宽度撑满视口 */
+  margin-left: calc(-50vw + 50%); /* 强制水平居中（溢出容器） */
   overflow: hidden;
-  /* 橙色方框微调：去掉生硬的边框，改用更高级的浅色调 */
-  background: rgba(255, 149, 0, 0.03); 
-  margin-bottom: 30px;
-  padding: 40px 0;
-  border-radius: 24px;
   display: flex;
-  position: relative;
+  padding: 20px 0;
+  background: transparent; /* 去掉橙色背景，改用透明 */
+  user-select: none;
 }
 
-/* 滚动轨道：确保它是两组内容并排，总长度是 200% */
+/* 滚动轨道：确保是两组内容并排 */
 .scroll-track {
   display: flex;
   width: max-content;
+  flex-wrap: nowrap;
   will-change: transform;
 }
 
-/* 统一应用 Greeting 的动画类名 */
+/* 动画类名：直接使用 Greeting 的动画逻辑 */
 .scroll-left {
-  animation: scroll-l 30s linear infinite;
+  animation: scroll-l 35s linear infinite;
 }
 
 .scroll-right {
-  animation: scroll-r 30s linear infinite; /* 注意这里直接用 scroll-r */
+  animation: scroll-r 35s linear infinite;
 }
 
-/* 图标样式：模仿文字滚动的平铺感 */
+/* 关键帧：必须确保有这两个动画 */
+@keyframes scroll-l {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scroll-r {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* 图标样式：模仿 Greeting 的大字背景感 */
 .inner-group {
   display: flex;
   align-items: center;
 }
 
 .inner-group img {
-  height: 60px; /* 适当增大图标，更有视觉张力 */
+  height: 80px;      /* 增大图标，模仿大字体感 */
   width: auto;
-  margin: 0 50px; /* 增加间距，让呼吸感更强 */
-  filter: grayscale(100%);
-  opacity: 0.3; /* 降低初始透明度，更像背景 */
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  margin: 0 60px;    /* 增加间距 */
+  filter: grayscale(100%); 
+  opacity: 0.1;      /* 极低透明度，像 Greeting 背景一样 */
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 悬停效果：模仿 Apple 官网那种高亮 */
+/* 鼠标悬停在整个行时，稍微亮一点 */
 .technologies-row:hover img {
-  opacity: 0.6; /* 整体亮起 */
+  opacity: 0.25;
 }
 
+/* 单个图标悬停：变彩色并放大 */
 .inner-group img:hover {
   filter: grayscale(0%);
   opacity: 1 !important;
-  transform: scale(1.2);
+  transform: scale(1.3) rotate(5deg);
 }
