@@ -168,50 +168,56 @@ i.bi.bi-chevron-down {
   100% { transform: translateX(0); }
 }
 
-/* --- Skills 滚动容器：模仿 Greeting 风格 --- */
-/* 修改或覆盖原有样式 */
+/* --- Hang's Custom Styles 修正版 --- */
+
+/* 1. 解决橙色框过大的核心：重置 Skills 容器高度 */
+#skills .tile {
+  min-height: 0 !important; /* 强制取消 600px 的限制 */
+  height: auto !important;
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
+  display: block !important; /* 改为 block 布局，让高度由内容撑开 */
+}
+
+/* 2. 优化每一行的容器 */
 .technologies-row {
   width: 100%;
   overflow: hidden;
-  display: flex;
-  padding: 10px 0;
-  background: transparent;
-  user-select: none;
-  pointer-events: none; /* 让背景层不响应鼠标，除非你想让图标变色 */
-}
-
-/* 如果你希望图标能被 hover 变色，需改回 auto 并调整层级 */
-#skills:hover .technologies-row {
-  pointer-events: auto;
-}
-
-.scroll-track {
-  display: flex;
-  width: max-content;
-  will-change: transform;
-}
-
-.inner-group {
+  background: rgba(255, 149, 0, 0.05); 
+  margin-bottom: 12px; /* 行与行之间的间距 */
+  padding: 8px 0;      /* 进一步压缩垂直高度 */
+  border-radius: 12px;
   display: flex;
   align-items: center;
 }
 
-.inner-group img {
-  height: 120px;     /* 调大图标尺寸 */
+/* 3. 轨道：确保左右覆盖的核心 */
+.scroll-track {
+  display: flex;
+  flex-wrap: nowrap; /* 强制不换行 */
+  width: max-content; /* 这一步必须保留，确保宽度无限延伸 */
+  align-items: center;
+}
+
+.scroll-track img {
+  height: 38px;  /* 稍微再缩小一点点，更精致 */
   width: auto;
-  margin: 0 50px;    /* 增加水平间距 */
-  filter: grayscale(100%) brightness(0); /* 纯黑灰色调 */
-  opacity: 0.15;
-  transition: all 0.5s ease;
+  margin: 0 35px; /* 增加间距，让滚动看起来更疏朗 */
+  filter: grayscale(100%);
+  opacity: 0.5;
+  transition: all 0.3s ease;
 }
 
-/* 交互效果 */
-.inner-group img:hover {
-  filter: grayscale(0%) brightness(1);
-  opacity: 1 !important;
-  transform: scale(1.2);
+/* 4. 动画保持不变 */
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-/* 滚动动画速度微调 */
-.scroll-left { animation: scroll-l 30s linear infinite; }
-.scroll-right { animation: scroll-r 30s linear infinite; }
+@keyframes scroll-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.track-left { animation: scroll-left 35s linear infinite; }
+.track-right { animation: scroll-right 35s linear infinite; }
