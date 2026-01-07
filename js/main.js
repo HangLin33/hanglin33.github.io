@@ -169,14 +169,13 @@ const skillIcons = [
 skillIcons.forEach((icons, index) => {
   const row = document.getElementById(`row-${index}`);
   if (row) {
-    // 关键：复制 3 遍实现无缝循环
-    const doubleIcons = [...icons, ...icons, ...icons];
+    // 复制 4 次，确保足够长填满容器
+    const quadrupleIcons = [...icons, ...icons, ...icons, ...icons];
     const trackClass = index === 1 ? 'track-right' : 'track-left';
     
-    const html = `
+    row.innerHTML = `
       <div class="scroll-track ${trackClass}">
-        ${doubleIcons.map(img => `<img src="assets/img/technology-icons/${img}" alt="icon">`).join('')}
+        ${quadrupleIcons.map(img => `<img src="assets/img/technology-icons/${img}" alt="skill">`).join('')}
       </div>`;
-    row.innerHTML = html;
   }
 });
