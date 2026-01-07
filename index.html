@@ -248,6 +248,46 @@
         </div>
       </div>
     </div>
+
+      <style>
+  .scrolling-bg-layer {
+    user-select: none;
+  }
+
+  .scroll-row {
+    white-space: nowrap;
+    font-size: 12rem; /* 超大背景字 */
+    font-weight: 900;
+    line-height: 1.1;
+    display: flex;
+  }
+
+  /* 向左滚动动画 */
+  .left-to-right {
+    animation: scroll-l 40s linear infinite;
+  }
+
+  /* 向右滚动动画 */
+  .right-to-left {
+    animation: scroll-r 45s linear infinite;
+  }
+
+  @keyframes scroll-l {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes scroll-r {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
+  /* 响应式调整：手机端字号减小 */
+  @media (max-width: 768px) {
+    .scroll-row { font-size: 4rem; }
+    h1 { font-size: 3rem !important; }
+  }
+</style>
     <!-- 
       Projects section
      -->
