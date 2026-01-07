@@ -157,41 +157,42 @@ i.bi.bi-chevron-down {
   filter: drop-shadow(0px 1px 2px rgb(0, 0, 0, 0.3));
 }
 
-/* --- Skills Section Styles (Author-Style) --- */
+/* --- Skills Section 精简版 --- */
 
-/* 1. 核心容器：确保它不会被强制撑大 */
+/* 1. 强制 tile 高度随内容自适应，解决橙色框过大的问题 */
 #skills .tile {
   min-height: auto !important;
-  display: flex;
-  flex-direction: column;
+  height: auto !important;
+  padding: 2.5rem !important; /* 统一内边距 */
+  display: block !important;
 }
 
-/* 2. 模拟作者的滚动行 */
+/* 2. 行容器：确保溢出隐藏且背景淡淡的 */
 .technologies-row {
   width: 100%;
   overflow: hidden;
-  margin-bottom: 1rem;
-  padding: 10px 0;
-  background: rgba(var(--bs-orange-rgb), 0.05); /* 使用 Bootstrap 变量风格 */
-  border-radius: 12px;
-  position: relative;
+  background: rgba(255, 149, 0, 0.05); 
+  margin-bottom: 12px;
+  padding: 12px 0;
+  border-radius: 15px;
+  display: flex;
 }
 
-/* 3. 模仿 Greeting 的轨道逻辑 */
+/* 3. 轨道：这是解决“离场”变空的核心 */
 .scroll-track {
   display: flex;
-  width: max-content;
+  width: max-content; /* 极其重要：让宽度由内容决定 */
   align-items: center;
-  /* 初始状态不需要 opacity，由动画控制 */
+  will-change: transform; /* 提升性能，减少闪烁 */
 }
 
 .scroll-track img {
-  height: 35px; /* 原作者喜欢的精致尺寸 */
+  height: 35px; /* 调整为更精致的大小 */
   width: auto;
-  margin: 0 40px;
+  margin: 0 35px;
   filter: grayscale(100%);
-  opacity: 0.4;
-  transition: opacity 0.3s ease, filter 0.3s ease;
+  opacity: 0.5;
+  transition: all 0.3s ease;
 }
 
 .scroll-track img:hover {
@@ -199,17 +200,16 @@ i.bi.bi-chevron-down {
   opacity: 1;
 }
 
-/* 4. 动画：直接使用平移 50% 的标准模组 */
-@keyframes tech-scroll {
+/* 4. 无缝滚动动画：移动到一半（-50%）立刻跳回 0% */
+@keyframes tech-infinite-scroll {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
 
-.track-move {
-  animation: tech-scroll 30s linear infinite;
+.track-move-left {
+  animation: tech-infinite-scroll 30s linear infinite;
 }
 
-/* 如果是第二行，反向运动 */
-.track-move-reverse {
-  animation: tech-scroll 35s linear infinite reverse;
+.track-move-right {
+  animation: tech-infinite-scroll 30s linear infinite reverse;
 }
