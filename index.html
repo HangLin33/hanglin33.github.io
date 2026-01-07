@@ -316,141 +316,225 @@
     
     <div class="p-4 p-md-5 pd-tb-1-5-rem">
       <h2 style="color: var(--azure)">Research & Projects</h2>
-      <p class="text-matte-light">Click on a card to expand details.</p>
+      <p class="text-matte-light">Click on each card to view research methodologies and key findings.</p>
     </div>
 
-    <style>
-      /* 紧凑型卡片自定义样式 */
-      .compact-project-card {
-        background: white;
-        border: 1px solid rgba(0,0,0,0.08);
-        padding: 1.5rem;
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-      }
-      .compact-project-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0,122,255,0.1);
-        border-color: var(--azure);
-      }
-      .detail-drawer {
-        background: rgba(0, 122, 255, 0.02);
-        border-radius: 20px;
-        margin-top: 1rem;
-        border-left: 4px solid var(--azure);
-      }
-      .category-tag {
-        font-size: 0.65rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        color: var(--azure);
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-        display: block;
-      }
-    </style>
-
-    <div class="row row-cols-1 row-cols-md-3 row-cols-xl-4 g-3" id="project-grid">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
       
       <div class="col">
-        <div class="compact-project-card rounded-4" data-bs-toggle="collapse" data-bs-target="#p1">
-          <div>
-            <span class="category-tag">Behavioral Economics</span>
-            <h6 class="fw-bold mb-0">Digital Purchasing & Well-being</h6>
-          </div>
-          <div class="mt-2 d-flex justify-content-between align-items-center">
-            <span class="badge bg-light text-dark fw-normal border" style="font-size: 0.6rem;">Capstone</span>
-            <i class="bi bi-plus-circle text-azure"></i>
+        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc1">
+          <span class="category-tag">Behavioral Economics</span>
+          <h6 class="fw-bold">Digital Purchasing & Well-being</h6>
+          <div class="card-footer-mini"><span class="badge">R</span><i class="bi bi-chevron-down"></i></div>
+        </div>
+        <div class="collapse detail-box" id="desc1" data-bs-parent="#projects">
+          <div class="p-3">
+            <p class="small text-secondary mb-2">Capstone Research · Cornell University</p>
+            <ul class="list-unstyled small">
+              <li>• Examined digital convenience vs. impulse buying.</li>
+              <li>• 40-item survey for U.S. young adults.</li>
+              <li>• OLS regression & bootstrap (1,000 iterations).</li>
+            </ul>
           </div>
         </div>
       </div>
 
       <div class="col">
-        <div class="compact-project-card rounded-4" data-bs-toggle="collapse" data-bs-target="#p2">
-          <div>
-            <span class="category-tag">Machine Learning</span>
-            <h6 class="fw-bold mb-0">China Housing Forecasting</h6>
-          </div>
-          <div class="mt-2 d-flex justify-content-between align-items-center">
-            <span class="badge bg-light text-dark fw-normal border" style="font-size: 0.6rem;">Python</span>
-            <i class="bi bi-plus-circle text-azure"></i>
-          </div>
+        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc2">
+          <span class="category-tag">Machine Learning</span>
+          <h6 class="fw-bold">China Housing Forecasting</h6>
+          <div class="card-footer-mini"><span class="badge">Python</span><i class="bi bi-chevron-down"></i></div>
         </div>
-      </div>
-
-      <div class="col">
-        <div class="compact-project-card rounded-4" data-bs-toggle="collapse" data-bs-target="#p3">
-          <div>
-            <span class="category-tag">Finance</span>
-            <h6 class="fw-bold mb-0">ESG & Stock Performance</h6>
-          </div>
-          <div class="mt-2 d-flex justify-content-between align-items-center">
-            <span class="badge bg-light text-dark fw-normal border" style="font-size: 0.6rem;">R</span>
-            <i class="bi bi-plus-circle text-azure"></i>
+        <div class="collapse detail-box" id="desc2" data-bs-parent="#projects">
+          <div class="p-3">
+            <p class="small text-secondary mb-2">STSCI 5740 · Data Mining</p>
+            <ul class="list-unstyled small">
+              <li>• Forecasted sector-level new housing sales.</li>
+              <li>• XGBoost to capture nonlinear dynamics.</li>
+              <li>• 5,000+ sector–month observations.</li>
+            </ul>
           </div>
         </div>
       </div>
 
       <div class="col">
-        <div class="compact-project-card rounded-4" data-bs-toggle="collapse" data-bs-target="#p4">
-          <div>
-            <span class="category-tag">Digital Strategy</span>
-            <h6 class="fw-bold mb-0">Virtual Campus Concept</h6>
+        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc3">
+          <span class="category-tag">Financial Analytics</span>
+          <h6 class="fw-bold">ESG & Stock Performance</h6>
+          <div class="card-footer-mini"><span class="badge">R</span><i class="bi bi-chevron-down"></i></div>
+        </div>
+        <div class="collapse detail-box" id="desc3" data-bs-parent="#projects">
+          <div class="p-3">
+            <p class="small text-secondary mb-2">AEM 5850 · Business Analytics</p>
+            <ul class="list-unstyled small">
+              <li>• USD-adjusted international financials.</li>
+              <li>• Analyzed Dieselgate shock on Volkswagen.</li>
+              <li>• Tidyverse and ggplot2 visualizations.</li>
+            </ul>
           </div>
-          <div class="mt-2 d-flex justify-content-between align-items-center">
-            <span class="badge bg-light text-dark fw-normal border" style="font-size: 0.6rem;">VR/AI</span>
-            <i class="bi bi-plus-circle text-azure"></i>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc4">
+          <span class="category-tag">Digital Strategy</span>
+          <h6 class="fw-bold">Virtual Cornell Campus (VCCP)</h6>
+          <div class="card-footer-mini"><span class="badge">VR/AI</span><i class="bi bi-chevron-down"></i></div>
+        </div>
+        <div class="collapse detail-box" id="desc4" data-bs-parent="#projects">
+          <div class="p-3">
+            <ul class="list-unstyled small">
+              <li>• VR-enabled digital platform concept.</li>
+              <li>• Platform governance & ecosystem analysis.</li>
+              <li>• B2B institutional licensing revenue model.</li>
+            </ul>
           </div>
         </div>
       </div>
 
-      </div>
-
-    <div class="project-details">
-      <div class="collapse detail-drawer" id="p1" data-bs-parent="#projects">
-        <div class="p-4 p-md-5">
-          <h4>Digital Purchasing, Consumption Behavior, and Consumer Well-being</h4>
-          <p class="text-secondary">Capstone Research · Cornell University</p>
-          <ul class="mt-3">
-            <li>Designed a 40-item survey for U.S. young adults.</li>
-            <li>Applied OLS regression and bootstrap resampling (1,000 iterations).</li>
-            <li>Tools: R · Behavioral Economics · LOOCV</li>
-          </ul>
+      <div class="col">
+        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc5">
+          <span class="category-tag">Fixed Income</span>
+          <h6 class="fw-bold">Bond Pricing & Risk Analysis</h6>
+          <div class="card-footer-mini"><span class="badge">Finance</span><i class="bi bi-chevron-down"></i></div>
+        </div>
+        <div class="collapse detail-box" id="desc5" data-bs-parent="#projects">
+          <div class="p-3">
+            <ul class="list-unstyled small">
+              <li>• Macaulay duration & modified duration.</li>
+              <li>• Quantified convexity effects on prices.</li>
+              <li>• NPV/IRR for refinancing decisions.</li>
+            </ul>
+          </div>
         </div>
       </div>
 
-      <div class="collapse detail-drawer" id="p2" data-bs-parent="#projects">
-        <div class="p-4 p-md-5">
-          <h4>Forecasting New Housing Transactions in China</h4>
-          <p class="text-secondary">STSCI 5740 · Machine Learning</p>
-          <ul class="mt-3">
-            <li>Built XGBoost models to capture nonlinear demand–supply dynamics.</li>
-            <li>5,000+ sector–month observations integrated.</li>
-            <li>Tools: Python · XGBoost · StatsModels</li>
-          </ul>
+      <div class="col">
+        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc6">
+          <span class="category-tag">Econometrics</span>
+          <h6 class="fw-bold">Determinants of Wine Prices</h6>
+          <div class="card-footer-mini"><span class="badge">OLS</span><i class="bi bi-chevron-down"></i></div>
+        </div>
+        <div class="collapse detail-box" id="desc6" data-bs-parent="#projects">
+          <div class="p-3">
+            <ul class="list-unstyled small">
+              <li>• OLS models with Interaction Effects.</li>
+              <li>• Diagnosed Heteroskedasticity & Multicollinearity.</li>
+              <li>• AIC/BIC model selection criteria.</li>
+            </ul>
+          </div>
         </div>
       </div>
 
-      <div class="collapse detail-drawer" id="p3" data-bs-parent="#projects">
-        <div class="p-4 p-md-5">
-          <h4>ESG, Stock Performance, and Corporate Controversies</h4>
-          <p class="text-secondary">AEM 5850 · Business Analytics</p>
-          <ul class="mt-3">
-            <li>Standardized international financials into USD-adjusted metrics.</li>
-            <li>Analyzed the Dieselgate shock on Volkswagen’s counterfactual earnings.</li>
-            <li>Tools: R · Tidyverse · Financial Ratios</li>
-          </ul>
+      <div class="col">
+        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc7">
+          <span class="category-tag">Macroeconomics</span>
+          <h6 class="fw-bold">Solow Growth Model: India</h6>
+          <div class="card-footer-mini"><span class="badge">Modeling</span><i class="bi bi-chevron-down"></i></div>
+        </div>
+        <div class="collapse detail-box" id="desc7" data-bs-parent="#projects">
+          <div class="p-3">
+            <ul class="list-unstyled small">
+              <li>• Analyzed convergence & capital accumulation.</li>
+              <li>• Contributions of K, N, and A to GDP growth.</li>
+              <li>• Comparison of 2008 & 2020 economic shocks.</li>
+            </ul>
+          </div>
         </div>
       </div>
-      
+
+      <div class="col">
+        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc8">
+          <span class="category-tag">Monetary Policy</span>
+          <h6 class="fw-bold">China's Structural Tools & Industry</h6>
+          <div class="card-footer-mini"><span class="badge">VAR</span><i class="bi bi-chevron-down"></i></div>
+        </div>
+        <div class="collapse detail-box" id="desc8" data-bs-parent="#projects">
+          <div class="p-3">
+            <ul class="list-unstyled small">
+              <li>• VAR model for dynamic response analysis.</li>
+              <li>• Price-based (MLF/SLF) vs Quantity-based (RRR).</li>
+              <li>• Impulse response of industrial output.</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
+      <div class="col">
+        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc9">
+          <span class="category-tag">Qualitative</span>
+          <h6 class="fw-bold">AI Agents vs. Search Engines</h6>
+          <div class="card-footer-mini"><span class="badge">AI</span><i class="bi bi-chevron-down"></i></div>
+        </div>
+        <div class="collapse detail-box" id="desc9" data-bs-parent="#projects">
+          <div class="p-3">
+            <ul class="list-unstyled small">
+              <li>• Semi-structured interviews with students.</li>
+              <li>• Thematic coding for learning efficiency.</li>
+              <li>• Comparative analysis of problem-solving.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
+
+<style>
+  /* 核心自定义样式 - 直接放入 index.html 的 <style> 块 */
+  .compact-card {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 18px;
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    height: 120px; /* 固定高度，保持对齐 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .compact-card:hover {
+    background: #f8fbff;
+    border-color: var(--azure);
+    transform: translateY(-3px);
+  }
+  .category-tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--azure);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .card-footer-mini {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #abb0b8;
+  }
+  .card-footer-mini .badge {
+    background: rgba(0, 122, 255, 0.08);
+    color: var(--azure);
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+  .detail-box {
+    background: white;
+    border: 1px solid var(--azure);
+    border-top: none;
+    border-radius: 0 0 18px 18px;
+    margin-top: -10px; /* 与卡片无缝衔接 */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  }
+  /* 点击卡片时，取消底部圆角以衔接详情盒 */
+  .compact-card[aria-expanded="true"] {
+    border-radius: 18px 18px 0 0;
+    border-color: var(--azure);
+  }
+</style>
     <!-- 
       Contact section
      -->
