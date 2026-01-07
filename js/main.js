@@ -161,30 +161,30 @@ window.requestResume = function () {
 }
 
 // 在 js/main.js 末尾添加
-// 1. 定义三行图标数据
-const skillIcons = [
+
+const skillGroups = [
   ['python.png', 'sql.png', 'r.png', 'matlab.png', 'stata.png'],
   ['bloomberg.png', 'capitaliq.png', 'factset.png', 'dealogic.png'],
   ['excel.png', 'powerpoint.png', 'word.png', 'tableau.png']
 ];
 
-// 2. 执行渲染逻辑
-skillIcons.forEach((icons, index) => {
-  const row = document.getElementById(`skill-row-${index}`);
-  if (row) {
-    // 将该组图标生成 HTML 字符串
-    const iconListHtml = icons.map(img => 
-        `<img src="assets/img/skills/${img}" alt="skill">`
+const rows = document.querySelectorAll(".technologies-row");
+
+skillGroups.forEach((icons, index) => {
+  if (rows[index]) {
+    // 生成一组图标的 HTML
+    const iconHtml = icons.map(img => 
+      `<img src="assets/img/technology-icons/${img}" alt="skill">`
     ).join('');
     
-    // 决定滚动方向：0和2向左，1向右
-    const animClass = (index === 1) ? 'scroll-right' : 'scroll-left';
+    // 设置滚动方向：第一、三行向左，第二行向右
+    const directionClass = (index === 1) ? 'scroll-right' : 'scroll-left';
     
-    // 核心：注入两组完全一样的 inner-group
-    row.innerHTML = `
-      <div class="scroll-track ${animClass}">
-        <div class="inner-group">${iconListHtml}</div>
-        <div class="inner-group">${iconListHtml}</div>
+    // 注入双倍内容：这是解决“离场消失”的关键
+    rows[index].innerHTML = `
+      <div class="scroll-track ${directionClass}">
+        <div class="inner-group">${iconHtml}</div>
+        <div class="inner-group">${iconHtml}</div>
       </div>`;
   }
 });
