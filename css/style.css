@@ -157,65 +157,79 @@ i.bi.bi-chevron-down {
   filter: drop-shadow(0px 1px 2px rgb(0, 0, 0, 0.3));
 }
 
-/* --- Skills 终极方案 --- */
+/* --- 在 style.css 原有内容下方追加或替换 --- */
 
-/* 1. 容器自适应：解决橙色框过大 */
+/* 1. 容器自适应 */
 #skills .tile {
   min-height: unset !important;
   height: auto !important;
   overflow: hidden;
 }
 
-/* 2. 每一行的背景和间距 */
+/* 2. 每一行的背景和基础布局 */
 .technologies-row {
   width: 100%;
-  overflow: hidden; /* 隐藏超出部分 */
-  background: rgba(255, 149, 0, 0.05); /* 淡淡的橙色背景 */
-  margin-bottom: 15px;
-  padding: 15px 0;
-  border-radius: 12px;
+  overflow: hidden; 
+  background: rgba(255, 149, 0, 0.03); /* 极淡的橙色，符合 Apple 审美 */
+  margin-bottom: 20px;
+  padding: 20px 0;
+  border-radius: 16px;
   display: flex;
+  position: relative;
 }
 
-/* 3. 滚动轨道：确保宽度随内容无限延伸 */
+/* 3. 滚动轨道 */
 .scroll-track {
   display: flex;
-  width: max-content; 
+  width: max-content; /* 强制内容不换行且宽度由内容决定 */
   align-items: center;
+  flex-wrap: nowrap;
 }
 
 .scroll-track img {
-  height: 40px; /* 固定高度，解决分辨率不一问题 */
-  width: auto;
-  margin: 0 40px; /* 左右间距 */
+  height: 50px;       /* 增加一点高度感 */
+  width: auto;        /* 关键：宽度自适应，解决比例问题 */
+  margin: 0 45px;     /* 增加图标间距，看起来更高级 */
   filter: grayscale(100%);
-  opacity: 0.5;
-  transition: all 0.3s ease;
+  opacity: 0.4;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  object-fit: contain; /* 保证不拉伸 */
 }
 
+/* 悬停交互：彩色并放大 */
 .scroll-track img:hover {
   filter: grayscale(0%);
   opacity: 1;
-  transform: scale(1.1);
+  transform: scale(1.2);
 }
 
 /* 4. 无缝滚动核心动画 */
-/* 动画原理：当第一组移出，第二组完全顶替，瞬间回到起点 */
 @keyframes infinite-scroll {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  to { transform: translateX(-50%); } /* 滚动到一半时，第二组正好完全重合第一组起点 */
 }
 
 .scroll-left {
-  animation: infinite-scroll 25s linear infinite;
+  animation: infinite-scroll 30s linear infinite;
 }
 
 .scroll-right {
-  animation: infinite-scroll 25s linear infinite reverse; /* 反向滚动 */
+  animation: infinite-scroll 30s linear infinite reverse;
 }
 
-/* 手机端微调 */
+/* 鼠标移入整个行时暂停滚动，方便用户查看 */
+.technologies-row:hover .scroll-track {
+  animation-play-state: paused;
+}
+
+/* 5. 手机端适配 */
 @media (max-width: 768px) {
-  .scroll-track img { height: 30px; margin: 0 20px; }
-  .technologies-row { padding: 10px 0; }
+  .scroll-track img { 
+    height: 35px; 
+    margin: 0 25px; 
+  }
+  .technologies-row { 
+    padding: 15px 0; 
+    margin-bottom: 12px;
+  }
 }
