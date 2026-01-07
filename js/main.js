@@ -160,31 +160,27 @@ window.requestResume = function () {
     checkbox.dispatchEvent(new Event("change"));
 }
 
-// 在 main.js 末尾或 fetchJSON 成功后的回调中
-const skillGroups = [
+
+const skillIcons = [
   ['python.png', 'sql.png', 'r.png', 'matlab.png', 'stata.png'],
   ['bloomberg.png', 'capitaliq.png', 'factset.png', 'dealogic.png'],
   ['excel.png', 'powerpoint.png', 'word.png', 'tableau.png']
 ];
 
-const skillRows = document.querySelectorAll("#skills .technologies-row");
+skillIcons.forEach((icons, index) => {
+  const row = document.getElementById(`row-${index}`);
+  if (row) {
+    // 技巧：循环拼接，确保总数足够多（例如重复 8 次）
+    let combinedIcons = "";
+    const repeatCount = 8; 
+    
+    for (let i = 0; i < repeatCount; i++) {
+      icons.forEach(img => {
+        combinedIcons += `<img src="assets/img/technology-icons/${img}" alt="skill">`;
+      });
+    }
 
-skillRows.forEach((row, index) => {
-  if (skillGroups[index]) {
-    const icons = skillGroups[index];
-    // 生成图标 HTML
-    const iconHtml = icons.map(img => 
-      `<img src="assets/img/technology-icons/${img}" alt="skill" onerror="this.style.display='none'">`
-    ).join('');
-    
-    // 设置方向
-    const directionClass = (index === 1) ? 'scroll-right' : 'scroll-left';
-    
-    // 注入双倍内容实现无缝滚动
-    row.innerHTML = `
-      <div class="scroll-track ${directionClass}">
-        <div class="inner-group">${iconHtml}</div>
-        <div class="inner-group">${iconHtml}</div>
-      </div>`;
+    const trackClass = index === 1 ? 'track-right' : 'track-left';
+    row.innerHTML = `<div class="scroll-track ${trackClass}">${combinedIcons}</div>`;
   }
 });
