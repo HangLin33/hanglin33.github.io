@@ -180,75 +180,25 @@
       Skills section
     -->
 <!-- Skills section -->
-  <div id="skills" class="section container-fluid bg-light">
+<div id="skills" class="section container-fluid bg-light">
       <div class="section-inner-container">
-        <!-- Section heading -->
-        <h2 class="p-4 p-md-5 pd-tb-1-5-rem" style="color: var(--orange);">
-          Skills
-        </h2>
-        <!-- Tiles -->
+        <h2 class="p-4 p-md-5 pd-tb-1-5-rem" style="color: var(--orange);">Skills</h2>
         <div class="row row-cols-1 g-3 g-md-4">
-          <!-- Overview tile -->
           <div class="col">
             <div class="tile rounded-5 d-flex flex-column p-4-5 p-md-5 h-100" style="min-height: unset!important;">
-              <!-- Heading -->
-              <h5 style="color: var(--orange);">
-                Jack of all trades
-              </h5>
-              <!-- Content -->
+              <h5 style="color: var(--orange);">Jack of all trades</h5>
               <div class="tile-content fw-kinda-bold lh-md">
-                <p></p> <div class="d-flex flex-column" style="width: 100%; margin-top: 2rem;">
-                    <div class="technologies-row" id="row-0"></div>
-                    <div class="technologies-row" id="row-1"></div>
-                    <div class="technologies-row" id="row-2"></div>
+                <div class="d-flex flex-column" style="width: 100%; margin-top: 2rem;">
+                  <div class="technologies-row" id="row-0"></div>
+                  <div class="technologies-row" id="row-1"></div>
+                  <div class="technologies-row" id="row-2"></div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- Skills tiles -->
         </div>
       </div>
     </div>
-
-      <style>
-  .scrolling-bg-layer {
-    user-select: none;
-  }
-
-  .scroll-row {
-    white-space: nowrap;
-    font-size: 12rem; /* 超大背景字 */
-    font-weight: 900;
-    line-height: 1.1;
-    display: flex;
-  }
-
-  /* 向左滚动动画 */
-  .left-to-right {
-    animation: scroll-l 40s linear infinite;
-  }
-
-  /* 向右滚动动画 */
-  .right-to-left {
-    animation: scroll-r 45s linear infinite;
-  }
-
-  @keyframes scroll-l {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  @keyframes scroll-r {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
-  }
-
-  /* 响应式调整：手机端字号减小 */
-  @media (max-width: 768px) {
-    .scroll-row { font-size: 4rem; }
-    h1 { font-size: 3rem !important; }
-  }
-</style>
     <!-- 
       Projects section
      -->
