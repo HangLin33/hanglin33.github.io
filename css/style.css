@@ -157,56 +157,74 @@ i.bi.bi-chevron-down {
   filter: drop-shadow(0px 1px 2px rgb(0, 0, 0, 0.3));
 }
 
-/* --- Hang's Custom Styles 修正版 --- */
+/* --- Hang's Custom Styles 最终优化版 --- */
 
-/* 1. 解决橙色框过大的核心：重置 Skills 容器高度 */
+/* 1. 解决橙色框过大：强制自适应高度 */
 #skills .tile {
-  min-height: 0 !important; /* 强制取消 600px 的限制 */
+  min-height: 0 !important; 
   height: auto !important;
   padding-top: 2rem !important;
   padding-bottom: 2rem !important;
-  display: block !important; /* 改为 block 布局，让高度由内容撑开 */
+  display: block !important; 
 }
 
-/* 2. 优化每一行的容器 */
+/* 2. 每一行的基础容器 */
 .technologies-row {
   width: 100%;
   overflow: hidden;
   background: rgba(255, 149, 0, 0.05); 
-  margin-bottom: 12px; /* 行与行之间的间距 */
-  padding: 8px 0;      /* 进一步压缩垂直高度 */
+  margin-bottom: 15px; 
+  padding: 10px 0;    
   border-radius: 12px;
   display: flex;
-  align-items: center;
+  user-select: none;
 }
 
-/* 3. 轨道：确保左右覆盖的核心 */
+/* 3. 轨道：复用 Greeting 的无缝平移逻辑 */
 .scroll-track {
   display: flex;
-  flex-wrap: nowrap; /* 强制不换行 */
-  width: max-content; /* 这一步必须保留，确保宽度无限延伸 */
+  flex-wrap: nowrap;
+  width: max-content; /* 必须保留，让内部两组内容水平排开 */
   align-items: center;
 }
 
 .scroll-track img {
-  height: 38px;  /* 稍微再缩小一点点，更精致 */
+  height: 38px;  
   width: auto;
-  margin: 0 35px; /* 增加间距，让滚动看起来更疏朗 */
+  margin: 0 35px; 
   filter: grayscale(100%);
   opacity: 0.5;
   transition: all 0.3s ease;
 }
 
-/* 4. 动画保持不变 */
-@keyframes scroll-left {
+.scroll-track img:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* 4. 动画模组：完全对应 Greeting 的动画关键帧 (-50%) */
+/* 假设你的 Greeting 使用的关键帧名称是 scroll-l 和 scroll-r */
+.tech-scroll-left {
+  animation: scroll-l 35s linear infinite;
+}
+
+.tech-scroll-right {
+  animation: scroll-r 35s linear infinite;
+}
+
+/* 确保你的 CSS 中有这两个关键帧定义 */
+@keyframes scroll-l {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
-@keyframes scroll-right {
+@keyframes scroll-r {
   0% { transform: translateX(-50%); }
   100% { transform: translateX(0); }
 }
 
-.track-left { animation: scroll-left 35s linear infinite; }
-.track-right { animation: scroll-right 35s linear infinite; }
+/* 手机端适配 */
+@media (max-width: 768px) {
+  .scroll-track img { height: 28px; margin: 0 15px; }
+}
