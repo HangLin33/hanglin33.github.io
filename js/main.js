@@ -160,28 +160,28 @@ window.requestResume = function () {
     checkbox.dispatchEvent(new Event("change"));
 }
 
-// 在 js/main.js 末尾添加
-
+// 在 main.js 末尾或 fetchJSON 成功后的回调中
 const skillGroups = [
   ['python.png', 'sql.png', 'r.png', 'matlab.png', 'stata.png'],
   ['bloomberg.png', 'capitaliq.png', 'factset.png', 'dealogic.png'],
   ['excel.png', 'powerpoint.png', 'word.png', 'tableau.png']
 ];
 
-const rows = document.querySelectorAll(".technologies-row");
+const skillRows = document.querySelectorAll("#skills .technologies-row");
 
-skillGroups.forEach((icons, index) => {
-  if (rows[index]) {
-    // 生成一组图标的 HTML
+skillRows.forEach((row, index) => {
+  if (skillGroups[index]) {
+    const icons = skillGroups[index];
+    // 生成图标 HTML
     const iconHtml = icons.map(img => 
-      `<img src="assets/img/technology-icons/${img}" alt="skill">`
+      `<img src="assets/img/technology-icons/${img}" alt="skill" onerror="this.style.display='none'">`
     ).join('');
     
-    // 设置滚动方向：第一、三行向左，第二行向右
+    // 设置方向
     const directionClass = (index === 1) ? 'scroll-right' : 'scroll-left';
     
-    // 注入双倍内容：这是解决“离场消失”的关键
-    rows[index].innerHTML = `
+    // 注入双倍内容实现无缝滚动
+    row.innerHTML = `
       <div class="scroll-track ${directionClass}">
         <div class="inner-group">${iconHtml}</div>
         <div class="inner-group">${iconHtml}</div>
