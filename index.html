@@ -688,46 +688,41 @@
       
       <div class="col">
         <a href="hello.html" style="text-decoration: none; display: block; color: inherit;">
-          <div class="tile rounded-5 d-flex flex-column p-4 about-card-custom"
-            style="height: 250px; position: relative; overflow: hidden; background-color: var(--violet);">
+          <div class="tile rounded-5 d-flex flex-column p-4"
+            style="height: 250px; position: relative; overflow: hidden; background-color: #333; border: none;">
             
-            <div class="about-bg-image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-              background-image: url('assets/img/phone.jpg'); background-size: cover; background-position: center; opacity: 0.6; z-index: 1;">
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+              background-image: url('assets/img/phone.jpg'); background-size: cover; background-position: center; z-index: 1;">
             </div>
 
-            <div style="position: relative; z-index: 2; color: white; height: 100%; display: flex; flex-direction: column; justify-content: flex-end;">
-              <h5 style="color: #fff; margin-bottom: 0.3rem; font-weight: 600; letter-spacing: 1px; font-size: 0.8rem; opacity: 0.8;">MESSAGE ME</h5>
-              <h2 style="font-size: 2rem; font-weight: 800; line-height: 1.1; margin-bottom: 0.5rem;">Unlock a Message</h2>
-              <div class="mt-1">
-                <span class="btn btn-sm btn-outline-light rounded-pill px-3">Enter Secret Code →</span>
-              </div>
+            <div style="position: relative; z-index: 2; color: white; height: 100%; display: flex; flex-direction: column; justify-content: flex-end;
+                        background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 50%); padding-bottom: 0.5rem;">
+              <h5 style="font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; margin-bottom: 0.2rem;">MESSAGE ME</h5>
+              <h2 style="font-size: 2rem; font-weight: 800; line-height: 1.1;">Unlock a Message</h2>
             </div>
           </div>
         </a>
       </div>
 
       <div class="col">
-        <div class="tile bg-white rounded-5 p-4 d-flex flex-column justify-content-between border" style="height: 250px;">
-          <div>
-            <h5 style="color: var(--violet); font-weight: 700;">Connect with me</h5>
-            <p class="small text-secondary">Feel free to reach out through any of these platforms.</p>
-          </div>
+        <div class="tile bg-white rounded-5 p-4 d-flex flex-column border" style="height: 250px; overflow-y: auto;">
+          <h5 style="color: var(--violet); font-weight: 700; margin-bottom: 1.25rem;">Connect with me</h5>
           
-          <div class="d-flex flex-wrap gap-3 mb-2">
-            <a href="www.linkedin.com/in/hang-lin-469a88273" target="_blank" class="social-box">
+          <div class="d-flex flex-column gap-2">
+            <a href="www.linkedin.com/in/hang-lin-469a88273" target="_blank" class="social-box-vertical">
               <i class="bi bi-linkedin"></i> <span>LinkedIn</span>
             </a>
-            <a href="your-github-link" target="_blank" class="social-box">
+            <a href="your-github-link" target="_blank" class="social-box-vertical">
               <i class="bi bi-github"></i> <span>GitHub</span>
             </a>
-            <a href="linhang3302@outlook.com" class="social-box">
+            <a href="linhang3302@outlook.com" class="social-box-vertical">
               <i class="bi bi-envelope-fill"></i> <span>Email</span>
             </a>
-            <a href="https://www.instagram.com/mathanglin?igsh=MTBndDF1eHZ0b2NsMA%3D%3D&utm_source=qr" target="_blank" class="social-box">
+            <a href="www.instagram.com/mathanglin?igsh=MTBndDF1eHZ0b2NsMA%3D%3D&utm_source=qr" target="_blank" class="social-box-vertical">
               <i class="bi bi-instagram"></i> <span>Instagram</span>
             </a>
-            <div class="social-box" title="WeChat ID: MatthewlinH" style="cursor: pointer;">
-              <i class="bi bi-wechat"></i> <span>WeChat</span>
+            <div class="social-box-vertical" title="WeChat ID: your-id">
+              <i class="bi bi-wechat"></i> <span>WeChat: Hang_Lin_</span>
             </div>
           </div>
         </div>
@@ -738,29 +733,30 @@
 </div>
 
 <style>
-  /* 社交链接小框的样式 */
-  .social-box {
+  /* 竖直社交链接样式 */
+  .social-box-vertical {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background: #f8f9fa;
-    border: 1px solid #eee;
+    gap: 12px;
+    padding: 10px 15px;
+    background: #fdfdfd;
+    border: 1px solid #f0f0f0;
     border-radius: 12px;
     text-decoration: none;
-    color: #444;
+    color: #333;
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     transition: all 0.2s ease;
   }
-  .social-box:hover {
-    background: var(--violet);
-    color: white;
-    border-color: var(--violet);
-    transform: translateY(-2px);
+  .social-box-vertical:hover {
+    background: #f0f7ff;
+    border-color: var(--azure);
+    color: var(--azure);
+    padding-left: 20px; /* 悬停时向右微滑，增加动感 */
   }
-  .social-box i {
-    font-size: 1.1rem;
+  .social-box-vertical i {
+    font-size: 1.2rem;
+    color: var(--violet); /* 图标保持紫色系 */
   }
 </style>
     <!-- 
