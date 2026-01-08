@@ -15,12 +15,37 @@
 
         body { 
             background-color: var(--apple-bg); 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0; padding: 0;
+        }
+
+        /* 返回按钮样式 */
+        .back-btn {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background: #ffffff;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .map-wrapper {
             max-width: 1200px;
-            margin: 40px auto;
+            margin: 80px auto 40px;
             padding: 20px;
             background: #ffffff;
             border-radius: 24px;
@@ -29,53 +54,40 @@
 
         #world-map { width: 100%; height: 600px; }
 
-        /* 高级感提示框 */
+        /* 提示框修复 */
         .jvm-tooltip {
-            background: rgba(29, 29, 31, 0.9) !important;
-            backdrop-filter: blur(8px);
-            border: none !important;
-            border-radius: 10px !important;
-            padding: 10px 15px !important;
-            font-size: 14px !important;
-            color: #fff !important;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            background: #1d1d1f !important;
+            border-radius: 8px !important;
+            padding: 8px 12px !important;
+            font-family: inherit !important;
         }
     </style>
 </head>
 <body>
 
+<a href="index.html" class="back-btn">← Back to Home</a>
+
 <div class="map-wrapper">
     <div style="padding: 20px 40px;">
-        <h2 style="font-weight: 800; color: var(--text-main); letter-spacing: -1px;">Global Journey</h2>
-        <p style="color: #86868b;">Explore my travel stories by clicking on the colored countries.</p>
+        <h2 style="font-weight: 800; color: var(--text-main); letter-spacing: -1px; margin-bottom: 5px;">Global Journey</h2>
+        <p style="color: #86868b; margin-top: 0;">Click on colored regions to explore my footprints.</p>
     </div>
     
     <div id="world-map"></div>
 </div>
 
 <script>
-    // 1. 手动为每个国家定义独特的低饱和度颜色
+    // 定义国家配色
     const countryStyles = {
-        "CN": "#ae4d4d", // 中国：低饱和度朱红
-        "TW": "#ae4d4d", // 台湾：与大陆同步颜色
-        "GB": "#5d737e", // 英国：石板蓝
-        "FR": "#7b8aabe", // 法国：雾霾蓝
-        "DE": "#6d6875", // 德国：灰紫
-        "IT": "#a5a58d", // 意大利：橄榄绿
-        "CH": "#b7b7a4", // 瑞士：浅褐
-        "NO": "#4a6d7c", // 挪威：深海蓝
-        "US": "#89aae6", // 美国：灰天蓝
-        "MV": "#90be6d", // 马尔代夫：海岛绿
-        "TH": "#f4a261", // 泰国：夕阳橙
-        "MY": "#e9c46a", // 马来西亚：芥末黄
-        "SG": "#e76f51", // 新加坡：珊瑚色
-        "ID": "#2a9d8f", // 印度尼西亚：青蓝
-        "AU": "#d4a373", // 澳大利亚：荒漠色
-        "AE": "#9e2a2b", // 阿联酋：深红褐
-        "TR": "#6b705c"  // 土耳其：苔藓绿
+        "CN": "#ae4d4d", "TW": "#ae4d4d", // 中国朱红
+        "GB": "#5d737e", "FR": "#7b8ab8", "DE": "#6d6875",
+        "IT": "#a5a58d", "CH": "#b7b7a4", "NO": "#4a6d7c",
+        "US": "#89aae6", "MV": "#90be6d", "TH": "#f4a261",
+        "MY": "#e9c46a", "SG": "#e76f51", "ID": "#2a9d8f",
+        "AU": "#d4a373", "AE": "#9e2a2b", "TR": "#6b705c"
     };
 
-    // 2. 映射跳转链接
+    // 跳转链接
     const travelLinks = {
         "CN": "journey/china.html", "TW": "journey/china.html",
         "GB": "journey/uk.html", "FR": "journey/france.html", "DE": "journey/germany.html",
@@ -91,19 +103,13 @@
         draggable: true,
         zoomButtons: false,
         
+        // 基础样式设置
         regionStyle: {
-            initial: { 
-                fill: '#ececec', // 未去过国家的基础色
-                stroke: '#fff', 
-                strokeWidth: 0.8 
-            },
-            hover: { 
-                fillOpacity: 0.8, 
-                cursor: 'pointer' 
-            }
+            initial: { fill: '#ececec', stroke: '#fff', strokeWidth: 0.8 },
+            hover: { fillOpacity: 0.8 }
         },
 
-        // 应用自定义的多彩颜色系列
+        // 核心修复：手动注入颜色
         series: {
             regions: [{
                 values: countryStyles,
@@ -111,32 +117,33 @@
             }]
         },
 
-        // 处理点击跳转
+        // 点击逻辑
         onRegionClick: function(event, code) {
             if (travelLinks[code]) {
                 window.location.href = travelLinks[code];
             }
         },
 
-        // 处理提示框名字显示及修复
+        // 提示框文本修复
         onRegionTooltipShow(event, tooltip, code) {
-            let name = tooltip.text();
-            
-            // 领土名字修复
+            let originalName = tooltip.text();
+            let displayName = originalName;
+
+            // 领土逻辑修复
             if (code === "TW" || code === "CN") {
-                name = "China";
+                displayName = "China";
             }
 
+            // 构造纯净的 HTML，避免显示 <b> 标签字符
             if (countryStyles[code]) {
                 tooltip.text(
                     `<div style="text-align:center;">
-                        <b style="font-size:16px;">${name}</b><br>
-                        <span style="color: #81ecec; font-size:12px;">View Memories →</span>
-                    </div>`, 
-                    true // 允许 HTML 渲染
+                        <span style="font-weight:bold; font-size:14px;">${displayName}</span><br>
+                        <span style="color:#81ecec; font-size:11px;">View Stories</span>
+                    </div>`, true
                 );
             } else {
-                tooltip.text(`<b>${name}</b>`);
+                tooltip.text(displayName);
             }
         }
     });
