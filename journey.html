@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Journey - World Map</title>
+    <title>Global Journey - Hang Lin</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap/dist/css/jsvectormap.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/jsvectormap"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsvectormap/dist/maps/world.js"></script>
@@ -10,128 +10,111 @@
     <style>
         :root {
             --apple-bg: #f5f5f7;
-            --tiffany-blue: #81ecec;
-            --dark-gray: #1d1d1f;
+            --text-main: #1d1d1f;
+            --map-base: #e5e5e7; /* 没去过的国家：浅灰 */
         }
 
-        body { background-color: var(--apple-bg); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+        body { background-color: var(--apple-bg); font-family: -apple-system, sans-serif; }
 
         .map-wrapper {
-            max-width: 1100px;
-            margin: 50px auto;
+            max-width: 1200px;
+            margin: 40px auto;
             padding: 20px;
             background: #ffffff;
-            border-radius: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
         }
 
-        /* 地图容器高度 */
-        #world-map {
-            width: 100%;
-            height: 600px;
-        }
+        #world-map { width: 100%; height: 650px; }
 
-        .map-header { padding: 30px; text-align: left; }
-        .map-header h2 { font-size: 2.5rem; font-weight: 800; color: var(--dark-gray); margin-bottom: 10px; }
-        .map-header p { color: #86868b; font-size: 1.1rem; }
-
-        /* 鼠标悬停在国家上的样式由 JS 控制，这里定义提示框样式 */
+        /* 修复后的提示框样式 */
         .jvm-tooltip {
-            background: var(--dark-gray);
-            font-family: inherit;
-            border-radius: 8px;
-            padding: 8px 12px;
+            background: rgba(29, 29, 31, 0.9) !important;
+            backdrop-filter: blur(8px);
+            border: none !important;
+            border-radius: 12px !important;
+            padding: 10px 15px !important;
+            font-size: 14px !important;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="map-wrapper">
-        <div class="map-header">
-            <h2>Global Footprints</h2>
-            <p>Click on the <span style="color: var(--tiffany-blue); font-weight: 600;">colored countries</span> to explore my travel stories.</p>
-        </div>
-        
-        <div id="world-map"></div>
+<div class="map-wrapper">
+    <div style="padding: 20px 40px;">
+        <h2 style="font-weight: 800; color: var(--text-main);">Global Journey</h2>
+        <p style="color: #86868b;">Footprints across the continents. Click a country to explore.</p>
     </div>
+    
+    <div id="world-map"></div>
 </div>
 
 <script>
-    // 定义你去过的国家及其对应的跳转链接
-    const myTravels = {
-        "GB": "journey/uk.html",         // 英国
-        "FR": "journey/france.html",     // 法国
-        "DE": "journey/germany.html",    // 德国
-        "IT": "journey/italy.html",      // 意大利
-        "CH": "journey/switzerland.html",// 瑞士
-        "NO": "journey/norway.html",     // 挪威
-        "US": "journey/usa.html",        // 美国
-        "MV": "journey/maldives.html",   // 马尔代夫
-        "CN": "journey/china.html",      // 中国
-        "TH": "journey/thailand.html",   // 泰国
-        "MY": "journey/malaysia.html",   // 马来西亚
-        "SG": "journey/singapore.html",  // 新加坡
-        "ID": "journey/indonesia.html",  // 印度尼西亚
-        "AU": "journey/australia.html",  // 澳大利亚
-        "AE": "journey/uae.html",        // 阿联酋
-        "TR": "journey/turkey.html"      // 土耳其
+    // 1. 定义你去过的国家列表 (ISO代码)
+    // 领土修复：将 CN 与 TW 逻辑关联
+    const visitedCodes = ["GB", "FR", "DE", "IT", "CH", "NO", "US", "MV", "CN", "TW", "TH", "MY", "SG", "ID", "AU", "AE", "TR"];
+
+    // 2. 映射跳转链接 (台湾点击也跳转到中国页面或指定页面)
+    const travelLinks = {
+        "GB": "journey/uk.html", "FR": "journey/france.html", "DE": "journey/germany.html",
+        "IT": "journey/italy.html", "CH": "journey/switzerland.html", "NO": "journey/norway.html",
+        "US": "journey/usa.html", "MV": "journey/maldives.html", "CN": "journey/china.html",
+        "TW": "journey/china.html", // 逻辑关联
+        "TH": "journey/thailand.html", "MY": "journey/malaysia.html", "SG": "journey/singapore.html",
+        "ID": "journey/indonesia.html", "AU": "journey/australia.html", "AE": "journey/uae.html", "TR": "journey/turkey.html"
     };
+
+    // 3. 莫兰迪低饱和度配色方案 (更高级，不刺眼)
+    const colorPalette = ["#84a59d", "#9b89b3", "#778da9", "#a5a58d", "#6b705c", "#8d99ae", "#b7b7a4"];
+
+    // 为去过的每个国家分配一个颜色（或者同系列不同色）
+    const regionData = {};
+    visitedCodes.forEach((code, index) => {
+        regionData[code] = colorPalette[index % colorPalette.length];
+    });
 
     const map = new jsVectorMap({
         selector: "#world-map",
         map: "world",
         draggable: true,
-        zoomButtons: true,
+        zoomButtons: false,
         
-        // 基础样式
         regionStyle: {
-            initial: {
-                fill: '#e5e5e7',     // 未去过的国家颜色 (灰色)
-                fillOpacity: 1,
-                stroke: '#fff',
-                strokeWidth: 0.5
-            },
-            hover: {
-                fillOpacity: 0.8,
-                cursor: 'pointer'
-            },
-            selected: {
-                fill: '#81ecec'      // 这个其实可以不用，我们通过下面的 markers/series 控制
-            }
+            initial: { fill: '#ececec', stroke: '#fff', strokeWidth: 0.8 },
+            hover: { fillOpacity: 0.7, cursor: 'pointer' }
         },
 
-        // 高亮你去过的国家
+        // 设置国家颜色
         series: {
             regions: [{
-                values: Object.keys(myTravels).reduce((acc, curr) => {
-                    acc[curr] = 1; // 标记这些国家
-                    return acc;
-                }, {}),
-                attribute: 'fill',
-                scale: {
-                    // 去过的国家统一显示的颜色
-                    '1': '#81ecec' 
-                }
+                values: regionData,
+                attribute: 'fill'
             }]
         },
 
-        // 核心功能：点击事件
+        // 交互逻辑
         onRegionClick: function(event, code) {
-            if (myTravels[code]) {
-                // 如果在名单里，跳转页面
-                window.location.href = myTravels[code];
-            } else {
-                console.log("Haven't been to " + code + " yet!");
+            // 修复：点击台湾或中国大陆执行相同逻辑
+            let targetCode = (code === "TW") ? "CN" : code;
+            if (travelLinks[targetCode]) {
+                window.location.href = travelLinks[targetCode];
             }
         },
 
-        // 鼠标悬停时的提示
+        // 修复国家名字显示逻辑
         onRegionTooltipShow(event, tooltip, code) {
-            if (myTravels[code]) {
-                tooltip.text(
-                    `<b>${tooltip.text()}</b><br>(Click to view memories 📸)`
-                );
+            let name = tooltip.text();
+            
+            // 修正台湾在提示框中的显示
+            if (code === "TW" || code === "CN") {
+                name = "China";
+            }
+
+            if (visitedCodes.includes(code)) {
+                tooltip.text(`<div style="text-align:center;"><b>${name}</b><br><span style="font-size:12px; color:#81ecec;">Click to view stories</span></div>`, true);
+            } else {
+                tooltip.text(`<b>${name}</b>`);
             }
         }
     });
