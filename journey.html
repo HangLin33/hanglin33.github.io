@@ -8,58 +8,29 @@
     <script src="https://cdn.jsdelivr.net/npm/jsvectormap/dist/maps/world.js"></script>
 
     <style>
-        :root {
-            --apple-bg: #f5f5f7;
-            --text-main: #1d1d1f;
-        }
+        :root { --apple-bg: #f5f5f7; --text-main: #1d1d1f; }
+        body { background-color: var(--apple-bg); font-family: -apple-system, sans-serif; margin: 0; }
 
-        body { 
-            background-color: var(--apple-bg); 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            margin: 0; padding: 0;
-        }
-
-        /* 返回按钮样式 */
+        /* 返回按钮 */
         .back-btn {
-            position: fixed;
-            top: 25px;
-            left: 25px;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(0,0,0,0.1);
-            padding: 10px 20px;
-            border-radius: 50px;
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 500;
-            font-size: 14px;
-            transition: all 0.3s ease;
+            position: fixed; top: 25px; left: 25px; z-index: 1000;
+            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,0,0,0.1); padding: 10px 22px;
+            border-radius: 50px; text-decoration: none; color: var(--text-main);
+            font-size: 14px; font-weight: 500; transition: 0.3s;
         }
-        .back-btn:hover {
-            background: #ffffff;
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
+        .back-btn:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
         .map-wrapper {
-            max-width: 1200px;
-            margin: 80px auto 40px;
-            padding: 20px;
-            background: #ffffff;
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            max-width: 1100px; margin: 80px auto; padding: 20px;
+            background: #fff; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.05);
         }
-
         #world-map { width: 100%; height: 600px; }
 
-        /* 提示框修复 */
+        /* 提示框 */
         .jvm-tooltip {
-            background: #1d1d1f !important;
-            border-radius: 8px !important;
-            padding: 8px 12px !important;
-            font-family: inherit !important;
+            background: #1d1d1f !important; border-radius: 12px !important;
+            padding: 12px !important; box-shadow: 0 10px 20px rgba(0,0,0,0.3) !important;
         }
     </style>
 </head>
@@ -69,17 +40,16 @@
 
 <div class="map-wrapper">
     <div style="padding: 20px 40px;">
-        <h2 style="font-weight: 800; color: var(--text-main); letter-spacing: -1px; margin-bottom: 5px;">Global Journey</h2>
-        <p style="color: #86868b; margin-top: 0;">Click on colored regions to explore my footprints.</p>
+        <h2 style="font-weight: 800; font-size: 2.5rem; letter-spacing: -1px; margin-bottom: 8px;">Global Journey</h2>
+        <p style="color: #86868b; margin: 0;">Highlighting the paths I've taken across the globe.</p>
     </div>
-    
     <div id="world-map"></div>
 </div>
 
 <script>
-    // 定义国家配色
-    const countryStyles = {
-        "CN": "#ae4d4d", "TW": "#ae4d4d", // 中国朱红
+    // 定义颜色映射表
+    const countryData = {
+        "CN": "#ae4d4d", "TW": "#ae4d4d", // 中国大陆与台湾：统一朱红
         "GB": "#5d737e", "FR": "#7b8ab8", "DE": "#6d6875",
         "IT": "#a5a58d", "CH": "#b7b7a4", "NO": "#4a6d7c",
         "US": "#89aae6", "MV": "#90be6d", "TH": "#f4a261",
@@ -87,8 +57,7 @@
         "AU": "#d4a373", "AE": "#9e2a2b", "TR": "#6b705c"
     };
 
-    // 跳转链接
-    const travelLinks = {
+    const links = {
         "CN": "journey/china.html", "TW": "journey/china.html",
         "GB": "journey/uk.html", "FR": "journey/france.html", "DE": "journey/germany.html",
         "IT": "journey/italy.html", "CH": "journey/switzerland.html", "NO": "journey/norway.html",
@@ -103,47 +72,37 @@
         draggable: true,
         zoomButtons: false,
         
-        // 基础样式设置
         regionStyle: {
             initial: { fill: '#ececec', stroke: '#fff', strokeWidth: 0.8 },
             hover: { fillOpacity: 0.8 }
         },
 
-        // 核心修复：手动注入颜色
-        series: {
-            regions: [{
-                values: countryStyles,
-                attribute: 'fill'
-            }]
+        // 【核心修复点】
+        // 当地图渲染每个区域时，强制检查并设置颜色
+        onRegionRender: function(event, code) {
+            if (countryData[code]) {
+                return { fill: countryData[code] };
+            }
         },
 
-        // 点击逻辑
         onRegionClick: function(event, code) {
-            if (travelLinks[code]) {
-                window.location.href = travelLinks[code];
-            }
+            if (links[code]) window.location.href = links[code];
         },
 
-        // 提示框文本修复
         onRegionTooltipShow(event, tooltip, code) {
-            let originalName = tooltip.text();
-            let displayName = originalName;
+            let name = tooltip.text();
+            if (code === "TW" || code === "CN") name = "China";
 
-            // 领土逻辑修复
-            if (code === "TW" || code === "CN") {
-                displayName = "China";
-            }
-
-            // 构造纯净的 HTML，避免显示 <b> 标签字符
-            if (countryStyles[code]) {
+            // 修复展示文本，避免显示原始标签
+            if (countryData[code]) {
                 tooltip.text(
-                    `<div style="text-align:center;">
-                        <span style="font-weight:bold; font-size:14px;">${displayName}</span><br>
-                        <span style="color:#81ecec; font-size:11px;">View Stories</span>
+                    `<div style="text-align:center; color:white;">
+                        <b style="font-size:15px;">${name}</b><br>
+                        <span style="color:#81ecec; font-size:12px;">Click to Explore</span>
                     </div>`, true
                 );
             } else {
-                tooltip.text(displayName);
+                tooltip.text(name); // 纯文字显示，修复 <b> 标签问题
             }
         }
     });
