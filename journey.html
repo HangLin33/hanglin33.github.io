@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Global Journey - Hang Lin</title>
+    <title>My Journey - World Map</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap/dist/css/jsvectormap.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/jsvectormap"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsvectormap/dist/maps/world.js"></script>
@@ -10,79 +10,72 @@
     <style>
         :root {
             --apple-bg: #f5f5f7;
+            --tiffany-blue: #81ecec;
             --dark-gray: #1d1d1f;
         }
 
-        body { 
-            background-color: var(--apple-bg); 
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
-            margin: 0;
-        }
-
-        /* 返回按钮 */
-        .back-btn {
-            position: fixed; top: 25px; left: 25px; z-index: 1000;
-            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(0,0,0,0.1); padding: 10px 20px;
-            border-radius: 50px; text-decoration: none; color: var(--dark-gray);
-            font-size: 14px; font-weight: 500; transition: 0.3s;
-        }
-        .back-btn:hover { background: #fff; transform: translateY(-2px); }
+        body { background-color: var(--apple-bg); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
 
         .map-wrapper {
-            max-width: 1100px; margin: 80px auto; padding: 20px;
-            background: #ffffff; border-radius: 30px;
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 30px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.05);
         }
 
-        #world-map { width: 100%; height: 600px; }
+        /* 地图容器高度 */
+        #world-map {
+            width: 100%;
+            height: 600px;
+        }
 
         .map-header { padding: 30px; text-align: left; }
-        .map-header h2 { font-size: 2.5rem; font-weight: 800; color: var(--dark-gray); margin: 0; }
-        
-        /* 提示框修复：确保不显示原始代码 */
+        .map-header h2 { font-size: 2.5rem; font-weight: 800; color: var(--dark-gray); margin-bottom: 10px; }
+        .map-header p { color: #86868b; font-size: 1.1rem; }
+
+        /* 鼠标悬停在国家上的样式由 JS 控制，这里定义提示框样式 */
         .jvm-tooltip {
-            background: var(--dark-gray) !important;
-            padding: 10px !important;
-            border-radius: 8px !important;
-            border: none !important;
-            color: white !important;
+            background: var(--dark-gray);
+            font-family: inherit;
+            border-radius: 8px;
+            padding: 8px 12px;
         }
     </style>
 </head>
 <body>
 
-<a href="index.html" class="back-btn">← Back to Home</a>
-
-<div class="map-wrapper">
-    <div class="map-header">
-        <h2>Global Journey</h2>
-        <p style="color: #86868b;">Click on the colored countries to explore my stories.</p>
+<div class="container">
+    <div class="map-wrapper">
+        <div class="map-header">
+            <h2>Global Footprints</h2>
+            <p>Click on the <span style="color: var(--tiffany-blue); font-weight: 600;">colored countries</span> to explore my travel stories.</p>
+        </div>
+        
+        <div id="world-map"></div>
     </div>
-    
-    <div id="world-map"></div>
 </div>
 
 <script>
-    // 1. 定义跳转链接
+    // 定义你去过的国家及其对应的跳转链接
     const myTravels = {
-        "GB": "journey/uk.html", "FR": "journey/france.html", "DE": "journey/germany.html",
-        "IT": "journey/italy.html", "CH": "journey/switzerland.html", "NO": "journey/norway.html",
-        "US": "journey/usa.html", "MV": "journey/maldives.html", "CN": "journey/china.html",
-        "TW": "journey/china.html", // 台湾跳转逻辑
-        "TH": "journey/thailand.html", "MY": "journey/malaysia.html", "SG": "journey/singapore.html",
-        "ID": "journey/indonesia.html", "AU": "journey/australia.html", "AE": "journey/uae.html", "TR": "journey/turkey.html"
-    };
-
-    // 2. 定义具体的颜色表 (多彩低饱和度)
-    const travelColors = {
-        "CN": "#ae4d4d", "TW": "#ae4d4d", // 中国部分统一朱红
-        "GB": "#5d737e", "FR": "#7b8ab8", "DE": "#6d6875",
-        "IT": "#a5a58d", "CH": "#b7b7a4", "NO": "#4a6d7c",
-        "US": "#89aae6", "MV": "#90be6d", "TH": "#f4a261",
-        "MY": "#e9c46a", "SG": "#e76f51", "ID": "#2a9d8f",
-        "AU": "#d4a373", "AE": "#9e2a2b", "TR": "#6b705c"
+        "GB": "journey/uk.html",         // 英国
+        "FR": "journey/france.html",     // 法国
+        "DE": "journey/germany.html",    // 德国
+        "IT": "journey/italy.html",      // 意大利
+        "CH": "journey/switzerland.html",// 瑞士
+        "NO": "journey/norway.html",     // 挪威
+        "US": "journey/usa.html",        // 美国
+        "MV": "journey/maldives.html",   // 马尔代夫
+        "CN": "journey/china.html",      // 中国
+        "TH": "journey/thailand.html",   // 泰国
+        "MY": "journey/malaysia.html",   // 马来西亚
+        "SG": "journey/singapore.html",  // 新加坡
+        "ID": "journey/indonesia.html",  // 印度尼西亚
+        "AU": "journey/australia.html",  // 澳大利亚
+        "AE": "journey/uae.html",        // 阿联酋
+        "TR": "journey/turkey.html"      // 土耳其
     };
 
     const map = new jsVectorMap({
@@ -91,39 +84,54 @@
         draggable: true,
         zoomButtons: true,
         
+        // 基础样式
         regionStyle: {
-            initial: { fill: '#e5e5e7', stroke: '#fff', strokeWidth: 0.5 },
-            hover: { fillOpacity: 0.8, cursor: 'pointer' }
+            initial: {
+                fill: '#e5e5e7',     // 未去过的国家颜色 (灰色)
+                fillOpacity: 1,
+                stroke: '#fff',
+                strokeWidth: 0.5
+            },
+            hover: {
+                fillOpacity: 0.8,
+                cursor: 'pointer'
+            },
+            selected: {
+                fill: '#81ecec'      // 这个其实可以不用，我们通过下面的 markers/series 控制
+            }
         },
 
-        // 使用你第一次成功的 series 模式，但直接传入颜色表
+        // 高亮你去过的国家
         series: {
             regions: [{
+                values: Object.keys(myTravels).reduce((acc, curr) => {
+                    acc[curr] = 1; // 标记这些国家
+                    return acc;
+                }, {}),
                 attribute: 'fill',
-                values: travelColors // 这里直接引用我们的颜色对象
+                scale: {
+                    // 去过的国家统一显示的颜色
+                    '1': '#81ecec' 
+                }
             }]
         },
 
+        // 核心功能：点击事件
         onRegionClick: function(event, code) {
             if (myTravels[code]) {
+                // 如果在名单里，跳转页面
                 window.location.href = myTravels[code];
+            } else {
+                console.log("Haven't been to " + code + " yet!");
             }
         },
 
+        // 鼠标悬停时的提示
         onRegionTooltipShow(event, tooltip, code) {
-            let name = tooltip.text();
-            
-            // 领土名字修复
-            if (code === "TW" || code === "CN") {
-                name = "China";
-            }
-
-            // 只有去过的国家才显示特殊提示，且修复 HTML 显示问题
             if (myTravels[code]) {
-                tooltip.text(name + " (Click to Explore)", false);
-            } else {
-                // 非标记国家直接显示名字，不加任何 HTML 标签
-                tooltip.text(name, false);
+                tooltip.text(
+                    `<b>${tooltip.text()}</b><br>(Click to view memories 📸)`
+                );
             }
         }
     });
