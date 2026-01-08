@@ -10,14 +10,19 @@
     <style>
         :root {
             --apple-bg: #f5f5f7;
+            --apple-orange: #ff9f0a; /* 苹果风格的亮橙色 */
             --dark-gray: #1d1d1f;
         }
 
-        body { background-color: var(--apple-bg); font-family: -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; }
+        body { 
+            background-color: var(--apple-bg); 
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
+            margin: 0; 
+        }
 
-        /* 返回按钮 - 苹果风 */
+        /* 返回按钮 */
         .back-home {
-            position: fixed; top: 20px; left: 20px; z-index: 999;
+            position: fixed; top: 20px; left: 20px; z-index: 1000;
             background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px);
             padding: 10px 20px; border-radius: 50px; border: 1px solid rgba(0,0,0,0.1);
             text-decoration: none; color: var(--dark-gray); font-size: 14px; font-weight: 500;
@@ -31,11 +36,15 @@
         #world-map { width: 100%; height: 600px; }
 
         .map-header { padding: 30px; text-align: left; }
-        .map-header h2 { font-size: 2.5rem; font-weight: 800; color: var(--dark-gray); margin-bottom: 10px; }
+        .map-header h2 { font-size: 2.5rem; font-weight: 800; color: var(--dark-gray); margin-bottom: 5px; }
 
+        /* 提示框简单化，防止出现代码标签 */
         .jvm-tooltip {
-            background: var(--dark-gray); border-radius: 8px; padding: 8px 12px;
-            color: white; font-family: inherit;
+            background: var(--dark-gray) !important;
+            border: none !important;
+            color: white !important;
+            padding: 8px 12px !important;
+            border-radius: 6px !important;
         }
     </style>
 </head>
@@ -45,24 +54,17 @@
 
 <div class="map-wrapper">
     <div class="map-header">
-        <h2>Global Footprints</h2>
-        <p style="color: #86868b;">Click on the countries to explore my travel stories.</p>
+        <h2>Global Journey</h2>
+        <p style="color: #86868b;">Click on the orange areas to see my stories.</p>
     </div>
     <div id="world-map"></div>
 </div>
 
 <script>
-    // 1. 定义每个国家独有的颜色 (Tiffany蓝/莫兰迪色系)
-    const travelData = {
-        "CN": "#81ecec", "TW": "#81ecec", // 中国大陆及台湾：统一颜色
-        "GB": "#74b9ff", "FR": "#a29bfe", "DE": "#dfe6e9",
-        "IT": "#55efc4", "CH": "#fab1a0", "NO": "#00cec9",
-        "US": "#0984e3", "MV": "#00b894", "TH": "#ffeaa7",
-        "MY": "#fdcb6e", "SG": "#e17055", "ID": "#55efc4",
-        "AU": "#fd79a8", "AE": "#636e72", "TR": "#b2bec3"
-    };
+    // 你去过的国家列表
+    const visitedCountries = ["CN", "TW", "GB", "FR", "DE", "IT", "CH", "NO", "US", "MV", "TH", "MY", "SG", "ID", "AU", "AE", "TR"];
 
-    // 2. 对应的跳转链接
+    // 跳转链接映射
     const travelLinks = {
         "CN": "journey/china.html", "TW": "journey/china.html",
         "GB": "journey/uk.html", "FR": "journey/france.html", "DE": "journey/germany.html",
@@ -76,19 +78,18 @@
         selector: "#world-map",
         map: "world",
         draggable: true,
-        zoomButtons: true,
+        zoomButtons: false, // 禁用放大缩小按钮
         
         regionStyle: {
             initial: { fill: '#e5e5e7', stroke: '#fff', strokeWidth: 0.5 },
-            hover: { fillOpacity: 0.8, cursor: 'pointer' }
+            hover: { fillOpacity: 0.7 }
         },
 
-        // 【关键点】这里通过 values 直接传颜色对象，避开 scale 逻辑
-        series: {
-            regions: [{
-                values: travelData,
-                attribute: 'fill'
-            }]
+        // 【最强力着色法】在渲染每个区域时直接干预
+        onRegionRender: function(event, code) {
+            if (visitedCountries.includes(code)) {
+                return { fill: '#ff9f0a' }; // 强制涂成橙色
+            }
         },
 
         onRegionClick: function(event, code) {
@@ -97,23 +98,19 @@
             }
         },
 
+        // 彻底修复名称显示，不使用 HTML 避免标签外露
         onRegionTooltipShow(event, tooltip, code) {
-            let name = tooltip.text();
+            let countryName = tooltip.text();
             
-            // 修复台湾名称及领土显示
+            // 修正台湾显示为 China
             if (code === "TW" || code === "CN") {
-                name = "China";
+                countryName = "China";
             }
 
-            // 修复：如果是在已记录的国家，显示自定义 HTML
-            if (travelData[code]) {
-                tooltip.text(
-                    `<div style="text-align:center;"><b>${name}</b><br>Click to view memories 📸</div>`, 
-                    true // 这里的 true 极其重要，它告诉程序这是 HTML 而不是纯文本
-                );
+            if (visitedCountries.includes(code)) {
+                tooltip.text(countryName + " (Click to view)");
             } else {
-                // 如果是其他国家，直接显示纯文本名，避免 <b> 标签外露
-                tooltip.text(name);
+                tooltip.text(countryName);
             }
         }
     });
