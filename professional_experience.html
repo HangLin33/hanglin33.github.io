@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Experience | Hang Lin</title>
+    <link rel="shortcut icon" href="assets/img/lh/lh-circle.jpg">
+    
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --violet: #a29bfe; /* 强调色 */
+            --dark-gray-text: #e0e0e0; /* 主要文本颜色 */
+            --light-gray-text: #b0b0b0; /* 次要文本颜色 */
+            --section-bg-darkness: 0.4; /* 背景图的亮度，数值越小越暗 */
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            background-color: #000;
+            scroll-behavior: smooth;
+        }
+
+        /* 导航栏：极致透明磨砂 */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+
+        /* 全屏主题容器 */
+        .experience-section {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: white;
+            text-align: center; /* 默认居中 */
+        }
+        
+        /* 针对左对齐的 Section */
+        .experience-section.text-left-aligned {
+            text-align: left;
+            justify-content: flex-start; /* 将内容推到左边 */
+        }
+
+        /* 背景图层 */
+        .bg-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+            filter: brightness(var(--section-bg-darkness)) grayscale(0.2); /* 压暗并轻微去色 */
+            transition: transform 1.5s ease-out;
+        }
+
+        /* 滚动时的背景图缩放效果 */
+        .experience-section.active .bg-layer {
+            transform: scale(1.05);
+        }
+
+        /* 文字内容层 */
+        .content-layer {
+            position: relative;
+            z-index: 2;
+            max-width: 900px; /* 限制内容宽度 */
+            padding: 2rem;
+            margin-left: 10vw; /* 左对齐时距左侧的距离 */
+        }
+        .experience-section.text-left-aligned .content-layer {
+            text-align: left;
+            margin-right: auto; /* 确保左对齐 */
+        }
+
+
+        /* 揭示动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        .active .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 文字样式 */
+        .category-title {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 3rem;
+            color: white;
+            opacity: 0.9;
+        }
+
+        .job-title {
+            font-size: clamp(1.6rem, 5vw, 2.5rem);
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--violet);
+        }
+
+        .company-info {
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+            color: var(--dark-gray-text);
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+        .company-info span {
+            font-weight: 500;
+            color: var(--light-gray-text);
+        }
+
+        .bullet-point {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+            color: var(--dark-gray-text);
+        }
+        .bullet-point strong {
+            color: white;
+            font-weight: 600;
+        }
+
+        .tools-list {
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            color: var(--light-gray-text);
+            margin-top: 1.5rem;
+            line-height: 1.5;
+            font-style: italic;
+        }
+        .tools-list strong {
+            color: var(--violet);
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        /* 返回按钮 */
+        .back-home {
+            display: inline-block;
+            margin-top: 40px;
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .back-home:hover {
+            background: white;
+            color: black;
+            border-color: white;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .experience-section.text-left-aligned .content-layer {
+                margin-left: 2rem; /* 手机上减少左边距 */
+            }
+            .category-title { margin-bottom: 2rem; }
+            .job-title { font-size: 1.8rem; }
+            .content-layer { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-sm navbar-dark fixed-top">
+        <div class="container d-flex justify-content-between">
+            <a class="navbar-brand fw-bold" href="index.html">HANG LIN</a>
+            <a href="index.html" class="btn btn-sm btn-outline-light rounded-pill px-3">Close</a>
+        </div>
+    </nav>
+
+    <section class="experience-section text-left-aligned">
+        <div class="bg-layer" style="background-image: url('assets/img/ecm-bg.jpg');"></div>
+        <div class="content-layer">
+            <h2 class="category-title reveal">Equity Capital Markets & Investment Banking</h2>
+            
+            <div class="reveal" style="transition-delay: 0.2s;">
+                <h3 class="job-title">Equity Capital Markets Intern — CITIC Securities (IBD)</h3>
+                <p class="company-info">Shanghai, China · On-site · <span>Dec 2025 – Present</span></p>
+                <ul>
+                    <li class="bullet-point">Focused on <strong>IPO pricing, valuation analysis</strong>, and investor demand analytics across equity financing transactions.</li>
+                    <li class="bullet-point">Built valuation and market analytics models using <strong>Excel and Python</strong> to support IPO pricing and issuance strategy.</li>
+                    <li class="bullet-point">Conducted <strong>peer comps and factor-based valuation</strong> (P/E, EV/EBITDA, market-cap tiers) across listed comparables.</li>
+                    <li class="bullet-point">Analyzed <strong>investor demand and bookbuilding dynamics</strong>, tracking subscriptions, allocation concentration, and pricing sensitivity.</li>
+                    <li class="bullet-point">Developed structured <strong>ECM dashboards</strong> summarizing issuance conditions, secondary-market performance, and investor participation.</li>
+                </ul>
+                <p class="tools-list"><strong>Tools:</strong> Python · Excel · Valuation · IPO Analytics · Bookbuilding</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="experience-section text-left-aligned">
+        <div class="bg-layer" style="background-image: url('assets/img/china-sec-bg.jpg');"></div>
+        <div class="content-layer">
+            <div class="reveal">
+                <h3 class="job-title">Equity Capital Markets Intern — China Securities Co., Ltd.</h3>
+                <p class="company-info">Hong Kong SAR · Hybrid · <span>Nov 2025 – Dec 2025</span></p>
+                <ul>
+                    <li class="bullet-point">Supported Hong Kong IPO execution through investor analytics, market monitoring, and data-driven pricing support.</li>
+                    <li class="bullet-point">Built a <strong>Python-based database</strong> for 50+ cornerstone investors with <strong>$3B AUM</strong>, improving profiling and tagging efficiency.</li>
+                    <li class="bullet-point">Created <strong>SQL and Excel dashboards</strong> supporting two HK IPOs totaling <strong>$500M</strong>, accelerating peer comps and market updates.</li>
+                    <li class="bullet-point">Analyzed <strong>institutional investor behavior and allocation patterns</strong> to inform pricing and bookbuilding decisions.</li>
+                    <li class="bullet-point">Streamlined recurring ECM analytics workflows, improving turnaround time for deal-related market insights.</li>
+                </ul>
+                <p class="tools-list"><strong>Tools:</strong> Python · SQL · Excel · IPO Analytics · Investor Profiling</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="experience-section text-left-aligned">
+        <div class="bg-layer" style="background-image: url('assets/img/research-bg.jpg');"></div>
+        <div class="content-layer">
+            <h2 class="category-title reveal">Investment Research & Consulting</h2>
+            
+            <div class="reveal" style="transition-delay: 0.2s;">
+                <h3 class="job-title">Industry Research Intern — China Merchants Securities</h3>
+                <p class="company-info">Shenzhen, China · On-site · <span>Nov 2024 – Dec 2024</span></p>
+                <ul>
+                    <li class="bullet-point">Produced <strong>10+ industry and market research reports</strong> using technical indicators, macro data, and commodity fundamentals.</li>
+                    <li class="bullet-point">Co-authored a <strong>sugar market analysis</strong> published in <strong>SugarTalk Magazine</strong>, synthesizing global supply–demand dynamics.</li>
+                    <li class="bullet-point">Built short-term <strong>price trend and volatility tracking models</strong> using time-series techniques.</li>
+                    <li class="bullet-point">Generated weekly research briefs covering macro trends, futures positioning, and sector developments.</li>
+                </ul>
+                <p class="tools-list"><strong>Tools:</strong> Python (Pandas) · Excel (PivotTables, PowerQuery) · Quantitative Research</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="experience-section text-left-aligned">
+        <div class="bg-layer" style="background-image: url('assets/img/consulting-bg.jpg');"></div>
+        <div class="content-layer">
+            <div class="reveal">
+                <h3 class="job-title">Investment Consulting Intern — China Merchants Futures</h3>
+                <p class="company-info">Shenzhen, China · On-site · <span>Jul 2024 – Sep 2024</span></p>
+                <ul>
+                    <li class="bullet-point">Analyzed <strong>new commodity futures products</strong> (including log contracts) by modeling global supply chains and pricing mechanisms.</li>
+                    <li class="bullet-point">Assessed <strong>policy impacts, demand elasticity, and cross-market relationships</strong> to support client advisory notes.</li>
+                    <li class="bullet-point">Conducted comparative analysis across futures varieties, evaluating correlations, volatility structures, and market behavior.</li>
+                    <li class="bullet-point">Collaborated with senior analysts on investment commentaries integrating macro and sector-specific insights.</li>
+                </ul>
+                <p class="tools-list"><strong>Tools:</strong> Python · Excel · Futures Analysis · Commodity Markets</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="experience-section text-left-aligned">
+        <div class="bg-layer" style="background-image: url('assets/img/strategy-bg.jpg');"></div>
+        <div class="content-layer">
+            <h2 class="category-title reveal">Strategy, Audit & Business Analytics</h2>
+            
+            <div class="reveal" style="transition-delay: 0.2s;">
+                <h3 class="job-title">Strategy Analyst (Part-time) — Strategy&</h3>
+                <p class="company-info">Shanghai, China · Remote · <span>Jun 2023 – Aug 2023</span></p>
+                <ul>
+                    <li class="bullet-point">Built <strong>financial and operational models</strong> (scenario analysis, financial ratios) to evaluate strategic options.</li>
+                    <li class="bullet-point">Conducted industry benchmarking using <strong>Wind and Capital IQ</strong>, standardizing <strong>200+ KPIs</strong> across peers.</li>
+                    <li class="bullet-point">Performed customer segmentation analysis using <strong>SQL and Excel</strong> to identify revenue drivers.</li>
+                    <li class="bullet-point">Produced client-ready dashboards and insight summaries using <strong>Tableau and PowerPoint</strong>.</li>
+                </ul>
+                <p class="tools-list"><strong>Tools:</strong> Excel · SQL · Tableau · Strategy Analysis</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="experience-section text-left-aligned">
+        <div class="bg-layer" style="background-image: url('assets/img/audit-bg.jpg');"></div>
+        <div class="content-layer">
+            <div class="reveal">
+                <h3 class="job-title">Audit Intern — BDO China (Shu Lun Pan CPAs)</h3>
+                <p class="company-info">Beijing, China · On-site · <span>Feb 2025 – Mar 2025</span></p>
+                <ul>
+                    <li class="bullet-point">Automated reconciliation for <strong>25 subsidiaries with $5B+ in assets</strong> using SQL and Excel, reducing audit time.</li>
+                    <li class="bullet-point">Identified financial irregularities through variance and cross-ledger analysis.</li>
+                    <li class="bullet-point">Translated accounting datasets into structured analytical outputs supporting audit judgments.</li>
+                </ul>
+                <p class="tools-list"><strong>Tools:</strong> SQL · Excel · Audit Analytics · Financial Analysis</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="experience-section text-left-aligned">
+        <div class="bg-layer" style="background-image: url('assets/img/biz-ops-bg.jpg');"></div>
+        <div class="content-layer">
+            <div class="reveal">
+                <h3 class="job-title">Business Operations Intern — OnePlus Management</h3>
+                <p class="company-info">Hong Kong SAR · Hybrid · <span>Jul 2022 – Sep 2022</span></p>
+                <ul>
+                    <li class="bullet-point">Conducted competitor benchmarking and user-behavior analysis using <strong>Python (Pandas, Seaborn)</strong>.</li>
+                    <li class="bullet-point">Built acquisition and retention reports using <strong>SQL and Excel</strong>, identifying funnel drop-offs.</li>
+                    <li class="bullet-point">Designed <strong>Tableau dashboards</strong> visualizing user activity, campaign performance, and demographics.</li>
+                    <li class="bullet-point">Assisted in evaluating marketing A/B tests and summarizing results for strategy recommendations.</li>
+                </ul>
+                <p class="tools-list"><strong>Tools:</strong> Python · SQL · Tableau · Business Analytics</p>
+            </div>
+            <a href="index.html" class="back-home reveal" style="transition-delay: 0.4s;">Back to Home</a>
+        </div>
+    </section>
+    
+    <script>
+        // Intersection Observer 逻辑
+        const observerOptions = {
+            threshold: 0.3 // 元素露出 30% 时激活
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                } else {
+                    // 滚动离开时动画重置
+                    entry.target.classList.remove('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.experience-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+</body>
+</html>
