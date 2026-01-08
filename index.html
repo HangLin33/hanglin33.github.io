@@ -753,6 +753,80 @@
     </div>
   </div>
 </div>
+
+<style>
+  /* 基础列表项样式 */
+  .social-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 8px 12px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: #444;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #fcfcfc;
+    border: 1px solid #f0f0f0;
+  }
+
+  /* 图标盒子 */
+  .icon-box {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    transition: transform 0.3s ease;
+  }
+
+  /* 文字排版 */
+  .text-content {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+  .label {
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .sub-label {
+    font-size: 0.7rem;
+    color: #999;
+  }
+
+  /* 右侧小箭头 */
+  .arrow {
+    font-size: 0.8rem;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+  }
+
+  /* 悬停特效 */
+  .social-item:hover {
+    transform: translateX(8px);
+    background: white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    border-color: #eee;
+  }
+  .social-item:hover .arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .social-item:hover .icon-box {
+    transform: scale(1.1) rotate(-5deg);
+  }
+
+  /* 品牌色微调 */
+  .linkedin:hover .icon-box { color: #0077b5; }
+  .github:hover .icon-box { color: #333; }
+  .instagram:hover .icon-box { color: #e1306c; }
+  .email:hover .icon-box { color: var(--violet); }
+</style>
     <!-- 
       Footer
      -->
