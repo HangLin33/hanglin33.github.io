@@ -10,61 +10,84 @@
     <style>
         :root {
             --apple-bg: #f5f5f7;
-            --apple-orange: #ff9f0a; /* 苹果风格的亮橙色 */
-            --dark-gray: #1d1d1f;
+            --text-main: #1d1d1f;
         }
 
         body { 
             background-color: var(--apple-bg); 
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
-            margin: 0; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0; padding: 0;
         }
 
-        /* 返回按钮 */
-        .back-home {
-            position: fixed; top: 20px; left: 20px; z-index: 1000;
-            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px);
-            padding: 10px 20px; border-radius: 50px; border: 1px solid rgba(0,0,0,0.1);
-            text-decoration: none; color: var(--dark-gray); font-size: 14px; font-weight: 500;
+        /* 返回按钮样式 */
+        .back-btn {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background: #ffffff;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .map-wrapper {
-            max-width: 1100px; margin: 60px auto; padding: 20px;
-            background: #ffffff; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            max-width: 1200px;
+            margin: 80px auto 40px;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
         }
 
         #world-map { width: 100%; height: 600px; }
 
-        .map-header { padding: 30px; text-align: left; }
-        .map-header h2 { font-size: 2.5rem; font-weight: 800; color: var(--dark-gray); margin-bottom: 5px; }
-
-        /* 提示框简单化，防止出现代码标签 */
+        /* 提示框修复 */
         .jvm-tooltip {
-            background: var(--dark-gray) !important;
-            border: none !important;
-            color: white !important;
+            background: #1d1d1f !important;
+            border-radius: 8px !important;
             padding: 8px 12px !important;
-            border-radius: 6px !important;
+            font-family: inherit !important;
         }
     </style>
 </head>
 <body>
 
-<a href="index.html" class="back-home">← Back to Home</a>
+<a href="index.html" class="back-btn">← Back to Home</a>
 
 <div class="map-wrapper">
-    <div class="map-header">
-        <h2>Global Journey</h2>
-        <p style="color: #86868b;">Click on the orange areas to see my stories.</p>
+    <div style="padding: 20px 40px;">
+        <h2 style="font-weight: 800; color: var(--text-main); letter-spacing: -1px; margin-bottom: 5px;">Global Journey</h2>
+        <p style="color: #86868b; margin-top: 0;">Click on colored regions to explore my footprints.</p>
     </div>
+    
     <div id="world-map"></div>
 </div>
 
 <script>
-    // 你去过的国家列表
-    const visitedCountries = ["CN", "TW", "GB", "FR", "DE", "IT", "CH", "NO", "US", "MV", "TH", "MY", "SG", "ID", "AU", "AE", "TR"];
+    // 定义国家配色
+    const countryStyles = {
+        "CN": "#ae4d4d", "TW": "#ae4d4d", // 中国朱红
+        "GB": "#5d737e", "FR": "#7b8ab8", "DE": "#6d6875",
+        "IT": "#a5a58d", "CH": "#b7b7a4", "NO": "#4a6d7c",
+        "US": "#89aae6", "MV": "#90be6d", "TH": "#f4a261",
+        "MY": "#e9c46a", "SG": "#e76f51", "ID": "#2a9d8f",
+        "AU": "#d4a373", "AE": "#9e2a2b", "TR": "#6b705c"
+    };
 
-    // 跳转链接映射
+    // 跳转链接
     const travelLinks = {
         "CN": "journey/china.html", "TW": "journey/china.html",
         "GB": "journey/uk.html", "FR": "journey/france.html", "DE": "journey/germany.html",
@@ -78,39 +101,49 @@
         selector: "#world-map",
         map: "world",
         draggable: true,
-        zoomButtons: false, // 禁用放大缩小按钮
+        zoomButtons: false,
         
+        // 基础样式设置
         regionStyle: {
-            initial: { fill: '#e5e5e7', stroke: '#fff', strokeWidth: 0.5 },
-            hover: { fillOpacity: 0.7 }
+            initial: { fill: '#ececec', stroke: '#fff', strokeWidth: 0.8 },
+            hover: { fillOpacity: 0.8 }
         },
 
-        // 【最强力着色法】在渲染每个区域时直接干预
-        onRegionRender: function(event, code) {
-            if (visitedCountries.includes(code)) {
-                return { fill: '#ff9f0a' }; // 强制涂成橙色
-            }
+        // 核心修复：手动注入颜色
+        series: {
+            regions: [{
+                values: countryStyles,
+                attribute: 'fill'
+            }]
         },
 
+        // 点击逻辑
         onRegionClick: function(event, code) {
             if (travelLinks[code]) {
                 window.location.href = travelLinks[code];
             }
         },
 
-        // 彻底修复名称显示，不使用 HTML 避免标签外露
+        // 提示框文本修复
         onRegionTooltipShow(event, tooltip, code) {
-            let countryName = tooltip.text();
-            
-            // 修正台湾显示为 China
+            let originalName = tooltip.text();
+            let displayName = originalName;
+
+            // 领土逻辑修复
             if (code === "TW" || code === "CN") {
-                countryName = "China";
+                displayName = "China";
             }
 
-            if (visitedCountries.includes(code)) {
-                tooltip.text(countryName + " (Click to view)");
+            // 构造纯净的 HTML，避免显示 <b> 标签字符
+            if (countryStyles[code]) {
+                tooltip.text(
+                    `<div style="text-align:center;">
+                        <span style="font-weight:bold; font-size:14px;">${displayName}</span><br>
+                        <span style="color:#81ecec; font-size:11px;">View Stories</span>
+                    </div>`, true
+                );
             } else {
-                tooltip.text(countryName);
+                tooltip.text(displayName);
             }
         }
     });
