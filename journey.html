@@ -8,29 +8,46 @@
     <script src="https://cdn.jsdelivr.net/npm/jsvectormap/dist/maps/world.js"></script>
 
     <style>
-        :root { --apple-bg: #f5f5f7; --text-main: #1d1d1f; }
-        body { background-color: var(--apple-bg); font-family: -apple-system, sans-serif; margin: 0; }
+        :root {
+            --apple-bg: #f5f5f7;
+            --dark-gray: #1d1d1f;
+        }
+
+        body { 
+            background-color: var(--apple-bg); 
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
+            margin: 0;
+        }
 
         /* 返回按钮 */
         .back-btn {
             position: fixed; top: 25px; left: 25px; z-index: 1000;
             background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px);
-            border: 1px solid rgba(0,0,0,0.1); padding: 10px 22px;
-            border-radius: 50px; text-decoration: none; color: var(--text-main);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,0,0,0.1); padding: 10px 20px;
+            border-radius: 50px; text-decoration: none; color: var(--dark-gray);
             font-size: 14px; font-weight: 500; transition: 0.3s;
         }
-        .back-btn:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .back-btn:hover { background: #fff; transform: translateY(-2px); }
 
         .map-wrapper {
             max-width: 1100px; margin: 80px auto; padding: 20px;
-            background: #fff; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+            background: #ffffff; border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
         }
+
         #world-map { width: 100%; height: 600px; }
 
-        /* 提示框 */
+        .map-header { padding: 30px; text-align: left; }
+        .map-header h2 { font-size: 2.5rem; font-weight: 800; color: var(--dark-gray); margin: 0; }
+        
+        /* 提示框修复：确保不显示原始代码 */
         .jvm-tooltip {
-            background: #1d1d1f !important; border-radius: 12px !important;
-            padding: 12px !important; box-shadow: 0 10px 20px rgba(0,0,0,0.3) !important;
+            background: var(--dark-gray) !important;
+            padding: 10px !important;
+            border-radius: 8px !important;
+            border: none !important;
+            color: white !important;
         }
     </style>
 </head>
@@ -39,17 +56,28 @@
 <a href="index.html" class="back-btn">← Back to Home</a>
 
 <div class="map-wrapper">
-    <div style="padding: 20px 40px;">
-        <h2 style="font-weight: 800; font-size: 2.5rem; letter-spacing: -1px; margin-bottom: 8px;">Global Journey</h2>
-        <p style="color: #86868b; margin: 0;">Highlighting the paths I've taken across the globe.</p>
+    <div class="map-header">
+        <h2>Global Journey</h2>
+        <p style="color: #86868b;">Click on the colored countries to explore my stories.</p>
     </div>
+    
     <div id="world-map"></div>
 </div>
 
 <script>
-    // 定义颜色映射表
-    const countryData = {
-        "CN": "#ae4d4d", "TW": "#ae4d4d", // 中国大陆与台湾：统一朱红
+    // 1. 定义跳转链接
+    const myTravels = {
+        "GB": "journey/uk.html", "FR": "journey/france.html", "DE": "journey/germany.html",
+        "IT": "journey/italy.html", "CH": "journey/switzerland.html", "NO": "journey/norway.html",
+        "US": "journey/usa.html", "MV": "journey/maldives.html", "CN": "journey/china.html",
+        "TW": "journey/china.html", // 台湾跳转逻辑
+        "TH": "journey/thailand.html", "MY": "journey/malaysia.html", "SG": "journey/singapore.html",
+        "ID": "journey/indonesia.html", "AU": "journey/australia.html", "AE": "journey/uae.html", "TR": "journey/turkey.html"
+    };
+
+    // 2. 定义具体的颜色表 (多彩低饱和度)
+    const travelColors = {
+        "CN": "#ae4d4d", "TW": "#ae4d4d", // 中国部分统一朱红
         "GB": "#5d737e", "FR": "#7b8ab8", "DE": "#6d6875",
         "IT": "#a5a58d", "CH": "#b7b7a4", "NO": "#4a6d7c",
         "US": "#89aae6", "MV": "#90be6d", "TH": "#f4a261",
@@ -57,52 +85,45 @@
         "AU": "#d4a373", "AE": "#9e2a2b", "TR": "#6b705c"
     };
 
-    const links = {
-        "CN": "journey/china.html", "TW": "journey/china.html",
-        "GB": "journey/uk.html", "FR": "journey/france.html", "DE": "journey/germany.html",
-        "IT": "journey/italy.html", "CH": "journey/switzerland.html", "NO": "journey/norway.html",
-        "US": "journey/usa.html", "MV": "journey/maldives.html", "TH": "journey/thailand.html",
-        "MY": "journey/malaysia.html", "SG": "journey/singapore.html", "ID": "journey/indonesia.html",
-        "AU": "journey/australia.html", "AE": "journey/uae.html", "TR": "journey/turkey.html"
-    };
-
     const map = new jsVectorMap({
         selector: "#world-map",
         map: "world",
         draggable: true,
-        zoomButtons: false,
+        zoomButtons: true,
         
         regionStyle: {
-            initial: { fill: '#ececec', stroke: '#fff', strokeWidth: 0.8 },
-            hover: { fillOpacity: 0.8 }
+            initial: { fill: '#e5e5e7', stroke: '#fff', strokeWidth: 0.5 },
+            hover: { fillOpacity: 0.8, cursor: 'pointer' }
         },
 
-        // 【核心修复点】
-        // 当地图渲染每个区域时，强制检查并设置颜色
-        onRegionRender: function(event, code) {
-            if (countryData[code]) {
-                return { fill: countryData[code] };
-            }
+        // 使用你第一次成功的 series 模式，但直接传入颜色表
+        series: {
+            regions: [{
+                attribute: 'fill',
+                values: travelColors // 这里直接引用我们的颜色对象
+            }]
         },
 
         onRegionClick: function(event, code) {
-            if (links[code]) window.location.href = links[code];
+            if (myTravels[code]) {
+                window.location.href = myTravels[code];
+            }
         },
 
         onRegionTooltipShow(event, tooltip, code) {
             let name = tooltip.text();
-            if (code === "TW" || code === "CN") name = "China";
+            
+            // 领土名字修复
+            if (code === "TW" || code === "CN") {
+                name = "China";
+            }
 
-            // 修复展示文本，避免显示原始标签
-            if (countryData[code]) {
-                tooltip.text(
-                    `<div style="text-align:center; color:white;">
-                        <b style="font-size:15px;">${name}</b><br>
-                        <span style="color:#81ecec; font-size:12px;">Click to Explore</span>
-                    </div>`, true
-                );
+            // 只有去过的国家才显示特殊提示，且修复 HTML 显示问题
+            if (myTravels[code]) {
+                tooltip.text(name + " (Click to Explore)", false);
             } else {
-                tooltip.text(name); // 纯文字显示，修复 <b> 标签问题
+                // 非标记国家直接显示名字，不加任何 HTML 标签
+                tooltip.text(name, false);
             }
         }
     });
