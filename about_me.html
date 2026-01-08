@@ -1,1 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflections | Hang Lin</title>
+    <link rel="shortcut icon" href="assets/img/lh/lh-circle.jpg">
+    
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
 
+    <style>
+        :root {
+            --violet: #6f42c1;
+            --apple-gray: #86868b;
+        }
+
+        body {
+            background-color: #fff;
+            color: #1d1d1f;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* 磨砂玻璃导航栏 */
+        .navbar.bg-blur {
+            background-color: rgba(255, 255, 255, 0.7) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        /* 滚动揭示动画核心 CSS */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+            will-change: opacity, transform;
+            margin-bottom: 6rem; /* 增加段落间距，让滚动更有节奏感 */
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 文字排版优化 */
+        .narrative-container {
+            max-width: 900px;
+            margin: 120px auto;
+            padding: 0 2rem;
+        }
+
+        .hero-text {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            color: #1d1d1f;
+        }
+
+        .body-text {
+            font-size: 1.75rem;
+            font-weight: 500;
+            line-height: 1.5;
+            color: var(--apple-gray);
+            transition: color 0.5s ease;
+        }
+
+        /* 鼠标悬停在段落上时颜色加深，增加互动感 */
+        .reveal:hover .body-text {
+            color: #1d1d1f;
+        }
+
+        .back-home {
+            text-decoration: none;
+            color: var(--violet);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4rem;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .hero-text { font-size: 2.2rem; }
+            .body-text { font-size: 1.3rem; }
+            .narrative-container { margin: 80px auto; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="navbar" class="navbar navbar-expand-sm navbar-light fixed-top bg-blur">
+        <div class="container-sm d-flex justify-content-between">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <img src="assets/img/lh/lh.jpg" alt="lh" class="rounded-circle me-2" style="width: 30px; height: 30px; object-fit: cover;">
+                Hang Lin
+            </a>
+            <div class="navbar-nav">
+                <a class="nav-link fw-medium" href="index.html">Close</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="narrative-container">
+            
+            <div class="reveal">
+                <h1 class="hero-text">I don’t believe much in regret.</h1>
+            </div>
+
+            <div class="reveal">
+                <p class="body-text">
+                    Every decision we make is the most honest choice we could offer at that moment — 
+                    shaped by who we were, what we knew, and what we were capable of then. 
+                    If given the same moment again, I believe I would still choose the same path. 
+                    And if that is true, what is there to regret?
+                </p>
+            </div>
+
+            <div class="reveal">
+                <p class="body-text">
+                    This belief didn’t come from certainty, but from struggle. 
+                    For many years, I lived with anxiety — the kind that makes breathing feel difficult, 
+                    as if air itself must be earned. It took nearly ten years to understand it, 
+                    live with it, and eventually overcome it.
+                </p>
+            </div>
+
+            <div class="reveal">
+                <p class="body-text">
+                    I don’t see that time as something lost. It taught me patience, attention, 
+                    and respect for quiet moments. Today, I move forward without urgency, 
+                    without resentment toward the past — only with a clearer sense of presence, 
+                    and gratitude for being able to breathe freely again.
+                </p>
+                
+                <a href="index.html" class="back-home reveal">
+                    <i class="bi bi-arrow-left"></i> Back to Portfolio
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="py-5 bg-light border-top">
+        <div class="container text-center">
+            <p class="text-secondary small">© <script>document.write(new Date().getFullYear());</script> Hang Lin. Crafted with mindfulness.</p>
+        </div>
+    </footer>
+
+    <script src="vendor/bootstrap/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Intersection Observer 逻辑：监听滚动
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll(".reveal");
+
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // 进入视口添加 active 类
+                        entry.target.classList.add("active");
+                    } else {
+                        // 往回滚时移除，实现循环动画（可选）
+                        // entry.target.classList.remove("active");
+                    }
+                });
+            }, {
+                threshold: 0.1, // 元素露出 10% 即触发
+                rootMargin: "0px 0px -50px 0px" // 提前或延迟触发的偏移量
+            });
+
+            reveals.forEach(el => revealObserver.observe(el));
+        });
+    </script>
+
+</body>
+</html>
