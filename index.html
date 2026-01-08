@@ -62,6 +62,27 @@
 .scroll-track:hover {
     animation-play-state: paused;
 }
+
+/* 导航栏磨砂玻璃效果 */
+.navbar.bg-blur {
+    /* 背景半透明，A（0.7）控制透明度，数值越小越透 */
+    background-color: rgba(255, 255, 255, 0.7) !important; 
+    
+    /* 核心：模糊背景 */
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); /* 兼容 Safari */
+    
+    /* 可选：增加一根细细的底边线增加质感 */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    
+    /* 确保导航栏在最上层 */
+    z-index: 1030; 
+}
+
+/* 如果你的导航栏是深色模式，请使用这个颜色 */
+[data-bs-theme="dark"] .navbar.bg-blur {
+    background-color: rgba(0, 0, 0, 0.6) !important;
+}
 </style>
 <head>
   <meta charset="UTF-8">
