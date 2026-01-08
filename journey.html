@@ -11,10 +11,12 @@
         :root {
             --apple-bg: #f5f5f7;
             --text-main: #1d1d1f;
-            --map-base: #e5e5e7; /* 没去过的国家：浅灰 */
         }
 
-        body { background-color: var(--apple-bg); font-family: -apple-system, sans-serif; }
+        body { 
+            background-color: var(--apple-bg); 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+        }
 
         .map-wrapper {
             max-width: 1200px;
@@ -25,16 +27,17 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.05);
         }
 
-        #world-map { width: 100%; height: 650px; }
+        #world-map { width: 100%; height: 600px; }
 
-        /* 修复后的提示框样式 */
+        /* 高级感提示框 */
         .jvm-tooltip {
             background: rgba(29, 29, 31, 0.9) !important;
             backdrop-filter: blur(8px);
             border: none !important;
-            border-radius: 12px !important;
+            border-radius: 10px !important;
             padding: 10px 15px !important;
             font-size: 14px !important;
+            color: #fff !important;
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
     </style>
@@ -43,36 +46,44 @@
 
 <div class="map-wrapper">
     <div style="padding: 20px 40px;">
-        <h2 style="font-weight: 800; color: var(--text-main);">Global Journey</h2>
-        <p style="color: #86868b;">Footprints across the continents. Click a country to explore.</p>
+        <h2 style="font-weight: 800; color: var(--text-main); letter-spacing: -1px;">Global Journey</h2>
+        <p style="color: #86868b;">Explore my travel stories by clicking on the colored countries.</p>
     </div>
     
     <div id="world-map"></div>
 </div>
 
 <script>
-    // 1. 定义你去过的国家列表 (ISO代码)
-    // 领土修复：将 CN 与 TW 逻辑关联
-    const visitedCodes = ["GB", "FR", "DE", "IT", "CH", "NO", "US", "MV", "CN", "TW", "TH", "MY", "SG", "ID", "AU", "AE", "TR"];
-
-    // 2. 映射跳转链接 (台湾点击也跳转到中国页面或指定页面)
-    const travelLinks = {
-        "GB": "journey/uk.html", "FR": "journey/france.html", "DE": "journey/germany.html",
-        "IT": "journey/italy.html", "CH": "journey/switzerland.html", "NO": "journey/norway.html",
-        "US": "journey/usa.html", "MV": "journey/maldives.html", "CN": "journey/china.html",
-        "TW": "journey/china.html", // 逻辑关联
-        "TH": "journey/thailand.html", "MY": "journey/malaysia.html", "SG": "journey/singapore.html",
-        "ID": "journey/indonesia.html", "AU": "journey/australia.html", "AE": "journey/uae.html", "TR": "journey/turkey.html"
+    // 1. 手动为每个国家定义独特的低饱和度颜色
+    const countryStyles = {
+        "CN": "#ae4d4d", // 中国：低饱和度朱红
+        "TW": "#ae4d4d", // 台湾：与大陆同步颜色
+        "GB": "#5d737e", // 英国：石板蓝
+        "FR": "#7b8aabe", // 法国：雾霾蓝
+        "DE": "#6d6875", // 德国：灰紫
+        "IT": "#a5a58d", // 意大利：橄榄绿
+        "CH": "#b7b7a4", // 瑞士：浅褐
+        "NO": "#4a6d7c", // 挪威：深海蓝
+        "US": "#89aae6", // 美国：灰天蓝
+        "MV": "#90be6d", // 马尔代夫：海岛绿
+        "TH": "#f4a261", // 泰国：夕阳橙
+        "MY": "#e9c46a", // 马来西亚：芥末黄
+        "SG": "#e76f51", // 新加坡：珊瑚色
+        "ID": "#2a9d8f", // 印度尼西亚：青蓝
+        "AU": "#d4a373", // 澳大利亚：荒漠色
+        "AE": "#9e2a2b", // 阿联酋：深红褐
+        "TR": "#6b705c"  // 土耳其：苔藓绿
     };
 
-    // 3. 莫兰迪低饱和度配色方案 (更高级，不刺眼)
-    const colorPalette = ["#84a59d", "#9b89b3", "#778da9", "#a5a58d", "#6b705c", "#8d99ae", "#b7b7a4"];
-
-    // 为去过的每个国家分配一个颜色（或者同系列不同色）
-    const regionData = {};
-    visitedCodes.forEach((code, index) => {
-        regionData[code] = colorPalette[index % colorPalette.length];
-    });
+    // 2. 映射跳转链接
+    const travelLinks = {
+        "CN": "journey/china.html", "TW": "journey/china.html",
+        "GB": "journey/uk.html", "FR": "journey/france.html", "DE": "journey/germany.html",
+        "IT": "journey/italy.html", "CH": "journey/switzerland.html", "NO": "journey/norway.html",
+        "US": "journey/usa.html", "MV": "journey/maldives.html", "TH": "journey/thailand.html",
+        "MY": "journey/malaysia.html", "SG": "journey/singapore.html", "ID": "journey/indonesia.html",
+        "AU": "journey/australia.html", "AE": "journey/uae.html", "TR": "journey/turkey.html"
+    };
 
     const map = new jsVectorMap({
         selector: "#world-map",
@@ -81,38 +92,49 @@
         zoomButtons: false,
         
         regionStyle: {
-            initial: { fill: '#ececec', stroke: '#fff', strokeWidth: 0.8 },
-            hover: { fillOpacity: 0.7, cursor: 'pointer' }
+            initial: { 
+                fill: '#ececec', // 未去过国家的基础色
+                stroke: '#fff', 
+                strokeWidth: 0.8 
+            },
+            hover: { 
+                fillOpacity: 0.8, 
+                cursor: 'pointer' 
+            }
         },
 
-        // 设置国家颜色
+        // 应用自定义的多彩颜色系列
         series: {
             regions: [{
-                values: regionData,
+                values: countryStyles,
                 attribute: 'fill'
             }]
         },
 
-        // 交互逻辑
+        // 处理点击跳转
         onRegionClick: function(event, code) {
-            // 修复：点击台湾或中国大陆执行相同逻辑
-            let targetCode = (code === "TW") ? "CN" : code;
-            if (travelLinks[targetCode]) {
-                window.location.href = travelLinks[targetCode];
+            if (travelLinks[code]) {
+                window.location.href = travelLinks[code];
             }
         },
 
-        // 修复国家名字显示逻辑
+        // 处理提示框名字显示及修复
         onRegionTooltipShow(event, tooltip, code) {
             let name = tooltip.text();
             
-            // 修正台湾在提示框中的显示
+            // 领土名字修复
             if (code === "TW" || code === "CN") {
                 name = "China";
             }
 
-            if (visitedCodes.includes(code)) {
-                tooltip.text(`<div style="text-align:center;"><b>${name}</b><br><span style="font-size:12px; color:#81ecec;">Click to view stories</span></div>`, true);
+            if (countryStyles[code]) {
+                tooltip.text(
+                    `<div style="text-align:center;">
+                        <b style="font-size:16px;">${name}</b><br>
+                        <span style="color: #81ecec; font-size:12px;">View Memories →</span>
+                    </div>`, 
+                    true // 允许 HTML 渲染
+                );
             } else {
                 tooltip.text(`<b>${name}</b>`);
             }
