@@ -42,12 +42,6 @@
             transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
-
-        /* 已去过的国家（高亮） */
-        .active-country {
-            fill: #81ecec; /* 使用你最喜欢的蒂芙尼蓝 */
-            cursor: pointer;
-        }
     
         .map-wrapper {
             max-width: 1200px;
@@ -130,6 +124,13 @@
             }
         },
 
+
+        /* 已去过的国家（高亮） */
+        .active-country {
+            fill: #81ecec; /* 使用你最喜欢的蒂芙尼蓝 */
+            cursor: pointer;
+        }
+    
         // 提示框文本修复
         onRegionTooltipShow(event, tooltip, code) {
             let originalName = tooltip.text();
