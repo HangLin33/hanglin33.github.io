@@ -1,912 +1,334 @@
-<!-- 
-    index.html
-    portfolio
-
-    Created by Hang on 2026-01-05.
-    Copyright (c) 2025 Hang. All rights reserved.
- -->
 <!DOCTYPE html>
-<html lang="en">
-
-
-<style>
-/* 容器样式 */
-.technologies-row {
-    width: 100%;
-    overflow: hidden;
-    margin-bottom: 20px;
-    padding: 10px 0;
-    /* 这里的背景可以根据你的喜好调整 */
-    background: rgba(0, 0, 0, 0.02); 
-    border-radius: 12px;
-}
-
-/* 滚动轨道 */
-.scroll-track {
-    display: flex;
-    width: max-content; /* 自动撑开宽度 */
-}
-
-/* 图标样式 */
-.scroll-track img {
-    height: 40px; /* 图标高度 */
-    width: auto;
-    margin: 0 40px; /* 图标之间的间距 */
-    filter: grayscale(100%);
-    opacity: 0.5;
-    transition: 0.3s;
-}
-
-.scroll-track img:hover {
-    filter: grayscale(0%);
-    opacity: 1;
-    transform: scale(1.1);
-}
-
-/* 向左滚动的动画 */
-@keyframes slide-left {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); } /* 滚动到一半时，第二组图片正好衔接上 */
-}
-
-.anim-left {
-    animation: slide-left 25s linear infinite;
-}
-
-/* 向右滚动的动画 */
-.anim-right {
-    animation: slide-left 25s linear infinite reverse;
-}
-
-/* 鼠标悬停时停止 */
-.scroll-track:hover {
-    animation-play-state: paused;
-}
-
-/* 导航栏磨砂玻璃效果 */
-.navbar.bg-blur {
-    /* 背景半透明，A（0.1）控制透明度，数值越小越透 */
-    background-color: rgba(255, 255, 255, 0.7) !important; 
-    
-    /* 核心：模糊背景 */
-    backdrop-filter: blur(5px); 
-    -webkit-backdrop-filter: blur(5px); /* 兼容 Safari */
-    
-    /* 可选：增加一根细细的底边线增加质感 */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    
-    /* 确保导航栏在最上层 */
-    z-index: 1030; 
-}
-
-/* 如果你的导航栏是深色模式，请使用这个颜色 */
-[data-bs-theme="dark"] .navbar.bg-blur {
-    background-color: rgba(0, 0, 0, 0.6) !important;
-}
-</style>
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hang's portfolio</title>
-  <link rel="shortcut icon" href="assets/img/lh/lh-circle.jpg">
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="vendor/normalize.css">
-  <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
-  <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poetry - Hang Lin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;500&family=Playfair+Display:italic,wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --apple-bg: #000000;
+            --apple-text: #f5f5f7;
+            --accent-gold: #d4af37;
+        }
+
+        body {
+            background-color: var(--apple-bg);
+            color: var(--apple-text);
+            font-family: 'Noto Serif SC', serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* 顶部导航返回 */
+        .back-btn {
+            position: fixed; top: 30px; left: 30px; z-index: 1000;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
+            padding: 10px 20px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2);
+            text-decoration: none; color: white; font-size: 14px; transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+
+        /* 题头 */
+        .page-header {
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, #000 100%),
+                        url('https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=2070') no-repeat center/cover;
+        }
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem; margin: 0; font-style: italic; letter-spacing: -2px;
+        }
+        .page-header p { font-weight: 300; opacity: 0.6; letter-spacing: 8px; margin-top: 20px; }
+
+        /* 时间轴布局 */
+        .poetry-container {
+            position: relative;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .year-divider {
+            text-align: center;
+            font-size: 4rem;
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-gold);
+            margin: 120px 0 60px;
+            font-weight: 700;
+            opacity: 0.8;
+        }
+
+        /* 诗词卡片样式 */
+        .poem-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            margin-bottom: 180px;
+            position: relative;
+            min-height: 450px;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        /* 背景图与模糊层 */
+        .poem-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.4) blur(2px);
+            z-index: 1;
+            transition: transform 1s ease;
+        }
+        .poem-entry:hover .poem-bg { transform: scale(1.05); }
+
+        .poem-body {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            width: 100%;
+            padding: 60px;
+            gap: 40px;
+        }
+
+        .side { width: 50%; display: flex; flex-direction: column; justify-content: center; }
+
+        /* 中文 */
+        .zh-side { text-align: right; padding-right: 50px; border-right: 1px solid rgba(255,255,255,0.15); }
+        .zh-side h3 { font-family: 'Ma Shan Zheng', cursive; font-size: 2.8rem; color: var(--accent-gold); margin: 0 0 25px 0; }
+        .zh-side p { font-size: 1.4rem; line-height: 2.2; white-space: pre-wrap; letter-spacing: 2px; }
+
+        /* 英文 */
+        .en-side { text-align: left; padding-left: 50px; }
+        .en-side h3 { font-family: 'Playfair Display', serif; font-size: 2rem; font-style: italic; margin: 0 0 25px 0; }
+        .en-side p { font-family: 'Playfair Display', serif; font-size: 1.15rem; line-height: 1.8; opacity: 0.8; font-style: italic; }
+
+        /* 响应式适配 */
+        @media (max-width: 900px) {
+            .poem-body { flex-direction: column; padding: 40px 20px; }
+            .side { width: 100%; text-align: center !important; padding: 0 !important; border: none !important; }
+            .zh-side { margin-bottom: 40px; }
+            .page-header h1 { font-size: 3rem; }
+        }
+    </style>
 </head>
+<body>
 
-<body style="overflow-x: hidden;">
-  <!-- 
-    Nav bar
-   -->
-<nav id="navbar" class="navbar navbar-expand-sm navbar-dark fixed-top bg-blur">
-    <div class="container-sm d-flex flex-row justify-content-between">
-      <a id="title" class="navbar-brand fw-kinda-bold px-2 d-flex flex-row align-items-center gap-2"
-        href="#intro" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">
-        <img src="assets/img/lh/lh.jpg" alt="lh" class="lh app-icon">
-        Hang Lin
-      </a>
-      <button id="navbar-toggler" class="navbar-toggler" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false"
-        aria-label="Navigation toggler">
-        <div class="navbar-toggler-icon-wrapper">
-          <span class="navbar-toggler-bread top">
-            <span class="navbar-toggler-bread-crust top"></span>
-          </span>
-          <span class="navbar-toggler-bread bottom">
-            <span class="navbar-toggler-bread-crust bottom"></span>
-          </span>
+<a href="index.html" class="back-btn">← Home</a>
+
+<header class="page-header">
+    <h1 data-aos="zoom-out">Poetry & Verse</h1>
+    <p data-aos="fade-up" data-aos-delay="300">墨 染 时 光 · 笔 触 岁 月</p>
+</header>
+
+<div class="poetry-container">
+
+    <div class="year-divider" data-aos="fade-right">2026</div>
+
+    <div class="poem-entry" data-aos="fade-up">
+        <div class="poem-bg" style="background-image: url('https://images.unsplash.com/photo-1542332213-31f87348057f?q=80&w=2070');"></div>
+        <div class="poem-body">
+            <div class="side zh-side">
+                <h3>《蝶恋花·茉莉渡江》</h3>
+                <p>金风秋雪戏杨柳，万缕千丝，守乌纱发白。
+共韵以观茶道砚，墨语沉香许流芳。
+烛灯摇曳暖寒楼，日影微旧，长似水无穷。
+愿往皓月同西东，曲书不赋天下人。</p>
+            </div>
+            <div class="side en-side">
+                <h3>Jasmine Crossing the River</h3>
+                <p>Autumn winds and falling snow tease the willows,
+Threads upon threads, guarding hair turned white beneath official caps.
+In shared rhythm, we watch tea and ink together,
+Words of fragrance sink deep, promising lasting echoes.
+Candlelight sways, warming the cold chambers,
+Sun shadows age softly, flowing without end.
+May we face the bright moon, east or west alike,
+Writing no songs for the world but only for ourselves.</p>
+            </div>
         </div>
-      </button>
-      <div id="navbar-content" class="collapse navbar-collapse flex-grow-0">
-        <ul class="navbar-nav navbar-nav-scroll me-auto mb-2 mb-sm-0 align-items-center">
-          <li class="nav-item mx-md-1">
-            <a href="#about" class="nav-link py-1">About</a>
-          </li>
-          <li class="nav-item mx-md-1">
-            <a href="#experience" class="nav-link py-1">Experience</a>
-          </li>
-          <li class="nav-item mx-md-1">
-            <a href="#projects" class="nav-link py-1">Projects</a>
-          </li>
-          <li class="nav-item mx-md-1">
-            <a href="#lifestyle" class="nav-link py-1">Journey</a>
-          </li>
-          <li class="nav-item mx-md-1">
-            <a href="#lifestyle" class="nav-link py-1">Poetry</a>
-          </li>
-          <li class="nav-item mx-md-1">
-            <a href="https://github.com/HangLin33" target="_blank" class="nav-link py-1">
-              <i class="bi bi-github"></i> GitHub
-            </a>
-          </li>
-          <li class="nav-item ms-md-2">
-            <a href="hello.html" class="btn btn-primary rounded-pill px-4 py-1 fw-bold">Say Hello</a>
-          </li>
-        </ul>
-      </div>
     </div>
-  </nav>
-    <!-- 
-      Greeting section
-     -->
-<div id="Greeting" class="section container-fluid bg-light" style="position: relative; overflow: hidden; padding: 100px 0;">
-  
-  <div class="scrolling-bg-layer" style="position: absolute; top: 0; left: 0; width: 100%; opacity: 0.08; pointer-events: none; z-index: 1;">
-    <div class="scroll-row left-to-right">
-      <span>Hello · 你好 · Bonjour · Hola · こんにちは · 안녕하세요 · Ciao · Hello · 你好 · Bonjour · Hola · こんにちは · 안녕하세요 · Ciao</span>
-    </div>
-    <div class="scroll-row right-to-left">
-      <span>Guten Tag · Olá · Привет · Namaste · Shalom · Welcome · Guten Tag · Olá · Привет · Namaste · Shalom · Welcome</span>
-    </div>
-    <div class="scroll-row left-to-right" style="margin-left: -50px;">
-      <span>Experience · Journeys · Poetry · CV · Projects · Designs · Experience · Journeys · Poetry · CV · Projects · Designs</span>
-    </div>
-  </div>
 
-  <div class="section-inner-container" style="position: relative; z-index: 2; text-align: center; padding: 100px 0;">
-    <h1 style="font-size: 10rem; font-weight: 800; color: #1d1d1f; letter-spacing: -0.03em; margin-bottom: 10px;">
-      Hang Lin
-    </h1>
-    <p style="font-size: 1.5rem; color: #86868b; font-weight: 400;">
-      Applied Economics and Management @ Cornell
-    </p>
-  </div>
+    <div class="year-divider" data-aos="fade-right">2025</div>
+
+    <div class="poem-entry" data-aos="fade-up">
+        <div class="poem-bg" style="background-image: url('https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?q=80&w=2070');"></div>
+        <div class="poem-body">
+            <div class="side zh-side">
+                <h3>《日暮行·白梅冠雪》</h3>
+                <p>夜阑流萤，昙花端安侍雨
+枫秋晚亭，门阙怜忘清曲
+归潮邃凌，岸舟侧问浪语
+溯墨古今，朝颜古墙题序</p>
+            </div>
+            <div class="side en-side">
+                <h3>White Plum Crowned with Snow</h3>
+                <p>Fireflies drift through the late night,
+Ephemeral blossoms rest quietly beneath the rain.
+Autumn maples surround the evening pavilion,
+Palace gates listen to forgotten melodies.
+Tides return, deep and distant,
+Boats at the shore ask the waves their language.
+Ink traces past and present,
+Morning blooms write their names upon ancient walls.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="poem-entry" data-aos="fade-up">
+        <div class="poem-bg" style="background-image: url('https://images.unsplash.com/photo-1494500764479-0c8f2919a3d8?q=80&w=2070');"></div>
+        <div class="poem-body">
+            <div class="side zh-side">
+                <h3>《水穷》</h3>
+                <p>墨晕挽宣白，琴萧沉阳关。
+震行八万里，水云顶漫穹。
+苍龙惊天雷，蹄马走疾风。
+多山皆具荣，无往终南国。
+悬起撼四方，落笔绝千言。</p>
+            </div>
+            <div class="side en-side">
+                <h3>Where the Water Runs Out</h3>
+                <p>Ink gathers and thins on white paper,
+Zither and flute fade into distant passes.
+I have moved through eighty thousand miles of wind and thunder,
+Water and cloud pressing against the vast sky.
+Azure dragons wake within the storm,
+Horses race beneath cracking light.
+Every mountain holds its glory. Every path finds its stillness.
+A single stroke is held in the air, And a thousand words fall silent.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="year-divider" data-aos="fade-right">2024</div>
+
+    <div class="poem-entry" data-aos="fade-up">
+        <div class="poem-bg" style="background-image: url('https://images.unsplash.com/photo-1533038590840-1cde6e668a91?q=80&w=1974');"></div>
+        <div class="poem-body">
+            <div class="side zh-side">
+                <h3>《何以歌·海棠葬雨》</h3>
+                <p>褴褛着，韵观砚行孤墨
+磷灯祝，往皓月随阡陌
+傲雪醉，映万家如星落
+鸿雁至，扬海浪化烟波</p>
+            </div>
+            <div class="side en-side">
+                <h3>Begonia Buried in Rain</h3>
+                <p>Ragged verses linger,
+Ink travels alone across the inkstone.
+Phosphor lamps offer silent prayers,
+The bright moon follows winding paths.
+Proud snow falls,
+A thousand households scatter like stars.
+Wild geese arrive,
+Lifting ocean waves into mist and smoke.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="year-divider" data-aos="fade-right">2023</div>
+
+    <div class="poem-entry" data-aos="fade-up">
+        <div class="poem-bg" style="background-image: url('https://images.unsplash.com/photo-1516617442634-75371039bd3b?q=80&w=1974');"></div>
+        <div class="poem-body">
+            <div class="side zh-side">
+                <h3>《尹天矢·梨花问水》</h3>
+                <p>清风在侧，彩云飘过染红的光阴似火
+絮雪落覆，江波流去渐淡的往事如墨
+晨露微薄，沾湿衣袖盘坐间妄自菲薄
+晚尘叠霍，惊扰烛灯安思间难逾倥偬</p>
+            </div>
+            <div class="side en-side">
+                <h3>Pear Blossoms Asking the Water</h3>
+                <p>A quiet wind stays beside me,
+Colored clouds drift by, staining time a burning red.
+Snow-like petals fall,
+River currents carry the past away, Ink fading from memory’s page.
+Morning dew, light as breath,
+Dampens my sleeves as I sit, Lost in thoughts of my own smallness.
+Evening dust settles thick,
+Disturbing the candle’s flame, In stillness, my mind struggles to cross the night.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="poem-entry" data-aos="fade-up">
+        <div class="poem-bg" style="background-image: url('https://images.unsplash.com/photo-1444492417251-9c839d358e0d?q=80&w=2070');"></div>
+        <div class="poem-body">
+            <div class="side zh-side">
+                <h3>《望愈》</h3>
+                <p>晴阳悄入百家窗，孤烟飘缕揽弧光。
+闲花仍顾来年树，少年已非往旧人。</p>
+            </div>
+            <div class="side en-side">
+                <h3>Toward Healing</h3>
+                <p>Sunlight slips quietly into a hundred windows,
+A lone wisp of smoke gathers the curve of light.
+Idle flowers still look toward next year’s trees,
+Yet the youth I was is no longer the same.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="year-divider" data-aos="fade-right">2022</div>
+
+    <div class="poem-entry" data-aos="fade-up">
+        <div class="poem-bg" style="background-image: url('https://images.unsplash.com/photo-1523050335456-adabbf72c90b?q=80&w=2070');"></div>
+        <div class="poem-body">
+            <div class="side zh-side">
+                <h3>《毕业》</h3>
+                <p>涩走年华踏川
+斑驳陆离朝霞
+殷勤百待逐浪
+恰似锦州缠云</p>
+            </div>
+            <div class="side en-side">
+                <h3>Graduation</h3>
+                <p>We walk with bitterness through the years, crossing rivers of time.
+Dawn appears, fractured and scattered.
+With careful hope, we chase the waves ahead—
+Like clouds entwined above distant hills.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="poem-entry" data-aos="fade-up">
+        <div class="poem-bg" style="background-image: url('https://images.unsplash.com/photo-1533613220915-609f661a6fe1?q=80&w=1964');"></div>
+        <div class="poem-body">
+            <div class="side zh-side">
+                <h3>《硝火》</h3>
+                <p>万盏烛花浸满城，沉醉战火漫疆痕。
+逾展逾台逐鹿来，布首忧怨天不仁。</p>
+            </div>
+            <div class="side en-side">
+                <h3>Embers of War</h3>
+                <p>A city soaked in a thousand candle-flames,
+Intoxicated by war, its scars spreading across the land.
+Stage after stage, the hunt for power unfolds—
+While common lives grieve beneath an unmerciful sky.</p>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<style>
-  .scrolling-bg-layer {
-    user-select: none;
-  }
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1200,
+        once: true,
+        offset: 150
+    });
+</script>
 
-  .scroll-row {
-    white-space: nowrap;
-    font-size: 12rem; /* 超大背景字 */
-    font-weight: 900;
-    line-height: 1.1;
-    display: flex;
-  }
-
-  /* 向左滚动动画 */
-  .left-to-right {
-    animation: scroll-l 40s linear infinite;
-  }
-
-  /* 向右滚动动画 */
-  .right-to-left {
-    animation: scroll-r 45s linear infinite;
-  }
-
-  @keyframes scroll-l {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  @keyframes scroll-r {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
-  }
-
-  /* 响应式调整：手机端字号减小 */
-  @media (max-width: 768px) {
-    .scroll-row { font-size: 4rem; }
-    h1 { font-size: 3rem !important; }
-  }
-</style>
-    <!-- 
-      Intro section
-     -->
-   <div id="about" class="section container-fluid bg-light">
-  <div class="section-inner-container">
-    <h2 class="p-4 p-md-5 pd-tb-1-5-rem" style="color: var(--azure);">
-      About
-    </h2>
-    <div class="row row-cols-1 g-3 g-md-4">
-      <div class="col">
-        <a href="about_me.html" style="text-decoration: none; display: block; color: inherit;">
-          <div class="tile rounded-5 d-flex flex-column p-4-5 p-md-5 h-100 about-card-custom"
-            style="min-height: 600px; position: relative; overflow: hidden; background-color: #f5f5f7;">
-            
-            <div class="about-bg-image" style="
-              position: absolute; 
-              top: 0; left: 0; width: 100%; height: 100%; 
-              background-image: url('assets/img/about/myphoto.jpg'); 
-              background-size: cover; 
-              background-position: center;
-              z-index: 1;">
-            </div>
-
-           <div style="position: relative; z-index: 2; max-width: 500px;">
-              <h5 style="color: var(--azure); margin-bottom: 1.5rem; font-weight: 600;">
-                A little about me
-              </h5>
-              <h2 style="font-size: 3rem; font-weight: 800; line-height: 1.1; color: #1d1d1f;">
-                How I Think 
-              </h2>
-              <p style="margin-top: 2rem; font-size: 1.25rem; color: #424245; font-weight: 500;">
-                My approach to analysis and decision-making.
-                <span style="color: var(--azure); display: block; margin-top: 10px;">Learn more →</span>
-              </p>
-            </div>
-
-            </div>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<style>
-  /* 增加悬停效果，让卡片看起来更像 Apple 的交互 */
-  .about-card-custom {
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s ease;
-  }
-  .about-card-custom:hover {
-    transform: scale(1.02);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-  }
-  /* 为手机端优化字号 */
-  @media (max-width: 768px) {
-    .about-card-custom h2 { font-size: 2rem !important; }
-  }
-</style>
-      
-    <!-- 
-      Professional Experience section
-    -->
-<div id="experience" class="section container-fluid bg-light">
-  <div class="section-inner-container">
-    <div class="p-4 p-md-5 pd-tb-1-5-rem pd-b-2-2-5-rem">
-      <h2 style="color: var(--tomato)">Professional Experience</h2>
-      <p class="text-matte-light">Insights from my career journey and industry impact.</p>
-    </div>
-
-    <div class="row row-cols-1 g-3 g-md-4">
-      <div class="col">
-        <a href="pro_exp.html" style="text-decoration: none; display: block; color: inherit;">
-          <div class="tile rounded-5 d-flex flex-column p-4-5 p-md-5 h-100 about-card-custom"
-            style="min-height: 600px; position: relative; overflow: hidden; background-color: #f5f5f7;">
-            
-            <div class="about-bg-image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-              background-image: url('assets/img/index/HK.jpg'); background-size: cover; background-position: center; z-index: 1;">
-            </div>
-
-            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-              background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 50%); z-index: 1.5;">
-            </div>
-
-            <div style="position: relative; z-index: 2; max-width: 750px;">
-              <h5 style="color: var(--tomato); margin-bottom: 1.5rem; font-weight: 600;">Latest Milestone</h5>
-              <h2 style="font-size: 3rem; font-weight: 800; line-height: 1.1; color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.2);">
-                Investment Banking Intern at <br>CITIC Securities
-              </h2>
-              <p style="margin-top: 2rem; font-size: 1.25rem; color: #eeeeee; font-weight: 500;">
-                Focusing on market analysis and financial modeling within the Investment Banking Division.
-                <span style="color: var(--tomato); display: block; margin-top: 10px;">Learn more →</span>
-              </p>
-            </div>
-
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-    <!-- 
-       Research & Projects
-      -->
-<div id="projects" class="section container-fluid bg-light">
-  <div class="section-inner-container">
-    
-    <div class="p-4 p-md-5 pd-tb-1-5-rem">
-      <h2 style="color: #004225">Research & Projects</h2>
-      <p class="text-matte-light">Click on each card to view research methodologies and key findings.</p>
-    </div>
-
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-      
-      <div class="col">
-        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc1">
-          <span class="category-tag">Behavioral Economics</span>
-          <h6 class="fw-bold">Digital Purchasing & Well-being</h6>
-          <div class="card-footer-mini"><span class="badge">R</span><i class="bi bi-chevron-down"></i></div>
-        </div>
-        <div class="collapse detail-box" id="desc1" data-bs-parent="#projects">
-          <div class="p-3">
-            <p class="small text-secondary mb-2">Capstone Research · Cornell University</p>
-            <ul class="list-unstyled small">
-              <li>• Examined digital convenience vs. impulse buying.</li>
-              <li>• 40-item survey for U.S. young adults.</li>
-              <li>• OLS regression & bootstrap (1,000 iterations).</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc2">
-          <span class="category-tag">Machine Learning</span>
-          <h6 class="fw-bold">China Housing Forecasting</h6>
-          <div class="card-footer-mini"><span class="badge">Python</span><i class="bi bi-chevron-down"></i></div>
-        </div>
-        <div class="collapse detail-box" id="desc2" data-bs-parent="#projects">
-          <div class="p-3">
-            <p class="small text-secondary mb-2">STSCI 5740 · Data Mining</p>
-            <ul class="list-unstyled small">
-              <li>• Forecasted sector-level new housing sales.</li>
-              <li>• XGBoost to capture nonlinear dynamics.</li>
-              <li>• 5,000+ sector–month observations.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc3">
-          <span class="category-tag">Financial Analytics</span>
-          <h6 class="fw-bold">ESG & Stock Performance</h6>
-          <div class="card-footer-mini"><span class="badge">R</span><i class="bi bi-chevron-down"></i></div>
-        </div>
-        <div class="collapse detail-box" id="desc3" data-bs-parent="#projects">
-          <div class="p-3">
-            <p class="small text-secondary mb-2">AEM 5850 · Business Analytics</p>
-            <ul class="list-unstyled small">
-              <li>• USD-adjusted international financials.</li>
-              <li>• Analyzed Dieselgate shock on Volkswagen.</li>
-              <li>• Tidyverse and ggplot2 visualizations.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc4">
-          <span class="category-tag">Digital Strategy</span>
-          <h6 class="fw-bold">Virtual Cornell Campus (VCCP)</h6>
-          <div class="card-footer-mini"><span class="badge">VR/AI</span><i class="bi bi-chevron-down"></i></div>
-        </div>
-        <div class="collapse detail-box" id="desc4" data-bs-parent="#projects">
-          <div class="p-3">
-            <ul class="list-unstyled small">
-              <li>• VR-enabled digital platform concept.</li>
-              <li>• Platform governance & ecosystem analysis.</li>
-              <li>• B2B institutional licensing revenue model.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc5">
-          <span class="category-tag">Fixed Income</span>
-          <h6 class="fw-bold">Bond Pricing & Risk Analysis</h6>
-          <div class="card-footer-mini"><span class="badge">Finance</span><i class="bi bi-chevron-down"></i></div>
-        </div>
-        <div class="collapse detail-box" id="desc5" data-bs-parent="#projects">
-          <div class="p-3">
-            <ul class="list-unstyled small">
-              <li>• Macaulay duration & modified duration.</li>
-              <li>• Quantified convexity effects on prices.</li>
-              <li>• NPV/IRR for refinancing decisions.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc6">
-          <span class="category-tag">Econometrics</span>
-          <h6 class="fw-bold">Determinants of Wine Prices</h6>
-          <div class="card-footer-mini"><span class="badge">OLS</span><i class="bi bi-chevron-down"></i></div>
-        </div>
-        <div class="collapse detail-box" id="desc6" data-bs-parent="#projects">
-          <div class="p-3">
-            <ul class="list-unstyled small">
-              <li>• OLS models with Interaction Effects.</li>
-              <li>• Diagnosed Heteroskedasticity & Multicollinearity.</li>
-              <li>• AIC/BIC model selection criteria.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc7">
-          <span class="category-tag">Macroeconomics</span>
-          <h6 class="fw-bold">Solow Growth Model: India</h6>
-          <div class="card-footer-mini"><span class="badge">Modeling</span><i class="bi bi-chevron-down"></i></div>
-        </div>
-        <div class="collapse detail-box" id="desc7" data-bs-parent="#projects">
-          <div class="p-3">
-            <ul class="list-unstyled small">
-              <li>• Analyzed convergence & capital accumulation.</li>
-              <li>• Contributions of K, N, and A to GDP growth.</li>
-              <li>• Comparison of 2008 & 2020 economic shocks.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc8">
-          <span class="category-tag">Monetary Policy</span>
-          <h6 class="fw-bold">China's Structural Tools & Industry</h6>
-          <div class="card-footer-mini"><span class="badge">VAR</span><i class="bi bi-chevron-down"></i></div>
-        </div>
-        <div class="collapse detail-box" id="desc8" data-bs-parent="#projects">
-          <div class="p-3">
-            <ul class="list-unstyled small">
-              <li>• VAR model for dynamic response analysis.</li>
-              <li>• Price-based (MLF/SLF) vs Quantity-based (RRR).</li>
-              <li>• Impulse response of industrial output.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="compact-card" data-bs-toggle="collapse" data-bs-target="#desc9">
-          <span class="category-tag">Qualitative</span>
-          <h6 class="fw-bold">AI Agents vs. Search Engines</h6>
-          <div class="card-footer-mini"><span class="badge">AI</span><i class="bi bi-chevron-down"></i></div>
-        </div>
-        <div class="collapse detail-box" id="desc9" data-bs-parent="#projects">
-          <div class="p-3">
-            <ul class="list-unstyled small">
-              <li>• Semi-structured interviews with students.</li>
-              <li>• Thematic coding for learning efficiency.</li>
-              <li>• Comparative analysis of problem-solving.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<style>
-  /* 核心自定义样式 - 直接放入 index.html 的 <style> 块 */
-  .compact-card {
-    background: white;
-    border: 1px solid rgba(0,0,0,0.08);
-    border-radius: 18px;
-    padding: 1.25rem;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    height: 120px; /* 固定高度，保持对齐 */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .compact-card:hover {
-    background: #f8fbff;
-    border-color: var(--azure);
-    transform: translateY(-3px);
-  }
-  .category-tag {
-    font-size: 0.65rem;
-    font-weight: 700;
-    color: var(--azure);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-  }
-  .card-footer-mini {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.8rem;
-    color: #abb0b8;
-  }
-  .card-footer-mini .badge {
-    background: rgba(0, 122, 255, 0.08);
-    color: var(--azure);
-    font-weight: 500;
-    padding: 3px 8px;
-    border-radius: 6px;
-  }
-  .detail-box {
-    background: white;
-    border: 1px solid var(--azure);
-    border-top: none;
-    border-radius: 0 0 18px 18px;
-    margin-top: -10px; /* 与卡片无缝衔接 */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-  }
-  /* 点击卡片时，取消底部圆角以衔接详情盒 */
-  .compact-card[aria-expanded="true"] {
-    border-radius: 18px 18px 0 0;
-    border-color: var(--azure);
-  }
-</style>
-    <!-- 
-       Skills
-     -->
-      <div id="skills" class="section container-fluid bg-light">
-  <div class="section-inner-container">
-    <h2 class="p-4 p-md-5 pd-tb-1-5-rem" style="color: var(--orange);">Skills</h2>
-    <div class="row row-cols-1 g-3 g-md-4">
-      <div class="col">
-        <div class="tile rounded-5 d-flex flex-column p-4-5 p-md-5 h-100" style="min-height: unset!important; background: white; overflow: hidden;">
-          <h5 style="color: var(--orange); margin-bottom: 2rem;">Professional Toolkit</h5>
-
-          <style>
-            /* 定义无缝循环动画 */
-            @keyframes infinite-scroll {
-              0% { transform: translateX(0); }
-              100% { transform: translateX(-25%); } /* 移动正好一组的距离 */
-            }
-            .skill-item {
-              height: 40px; 
-              width: auto; 
-              margin: 0 40px; 
-              filter: grayscale(100%); 
-              opacity: 0.5; 
-              transition: 0.3s;
-              flex-shrink: 0; /* 防止图片被挤压 */
-            }
-            .skill-item:hover { 
-              filter: grayscale(0%); 
-              opacity: 1; 
-              transform: scale(1.1); 
-            }
-            /* 强制容器为横向排列且不换行 */
-            .marquee-track {
-              display: flex !important;
-              flex-direction: row !important;
-              flex-wrap: nowrap !important;
-              width: max-content !important;
-            }
-          </style>
-
-          <div style="width: 100%; overflow: hidden; margin: 15px 0;">
-            <div class="marquee-track" style="animation: infinite-scroll 20s linear infinite;">
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/python.png" class="skill-item"><img src="assets/img/technology-icons/sql.png" class="skill-item"><img src="assets/img/technology-icons/r.png" class="skill-item"><img src="assets/img/technology-icons/matlab.png" class="skill-item"><img src="assets/img/technology-icons/stata.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/python.png" class="skill-item"><img src="assets/img/technology-icons/sql.png" class="skill-item"><img src="assets/img/technology-icons/r.png" class="skill-item"><img src="assets/img/technology-icons/matlab.png" class="skill-item"><img src="assets/img/technology-icons/stata.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/python.png" class="skill-item"><img src="assets/img/technology-icons/sql.png" class="skill-item"><img src="assets/img/technology-icons/r.png" class="skill-item"><img src="assets/img/technology-icons/matlab.png" class="skill-item"><img src="assets/img/technology-icons/stata.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/python.png" class="skill-item"><img src="assets/img/technology-icons/sql.png" class="skill-item"><img src="assets/img/technology-icons/r.png" class="skill-item"><img src="assets/img/technology-icons/matlab.png" class="skill-item"><img src="assets/img/technology-icons/stata.png" class="skill-item">
-              </div>
-            </div>
-          </div>
-
-          <div style="width: 100%; overflow: hidden; margin: 15px 0;">
-            <div class="marquee-track" style="animation: infinite-scroll 25s linear infinite reverse;">
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/bloomberg.png" class="skill-item"><img src="assets/img/technology-icons/capitaliq.png" class="skill-item"><img src="assets/img/technology-icons/factset.png" class="skill-item"><img src="assets/img/technology-icons/dealogic.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/bloomberg.png" class="skill-item"><img src="assets/img/technology-icons/capitaliq.png" class="skill-item"><img src="assets/img/technology-icons/factset.png" class="skill-item"><img src="assets/img/technology-icons/dealogic.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/bloomberg.png" class="skill-item"><img src="assets/img/technology-icons/capitaliq.png" class="skill-item"><img src="assets/img/technology-icons/factset.png" class="skill-item"><img src="assets/img/technology-icons/dealogic.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/bloomberg.png" class="skill-item"><img src="assets/img/technology-icons/capitaliq.png" class="skill-item"><img src="assets/img/technology-icons/factset.png" class="skill-item"><img src="assets/img/technology-icons/dealogic.png" class="skill-item">
-              </div>
-            </div>
-          </div>
-
-          <div style="width: 100%; overflow: hidden; margin: 15px 0;">
-            <div class="marquee-track" style="animation: infinite-scroll 22s linear infinite;">
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/excel.png" class="skill-item"><img src="assets/img/technology-icons/powerpoint.png" class="skill-item"><img src="assets/img/technology-icons/word.png" class="skill-item"><img src="assets/img/technology-icons/tableau.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/excel.png" class="skill-item"><img src="assets/img/technology-icons/powerpoint.png" class="skill-item"><img src="assets/img/technology-icons/word.png" class="skill-item"><img src="assets/img/technology-icons/tableau.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/excel.png" class="skill-item"><img src="assets/img/technology-icons/powerpoint.png" class="skill-item"><img src="assets/img/technology-icons/word.png" class="skill-item"><img src="assets/img/technology-icons/tableau.png" class="skill-item">
-              </div>
-              <div style="display: flex;">
-                <img src="assets/img/technology-icons/excel.png" class="skill-item"><img src="assets/img/technology-icons/powerpoint.png" class="skill-item"><img src="assets/img/technology-icons/word.png" class="skill-item"><img src="assets/img/technology-icons/tableau.png" class="skill-item">
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-    <!--   
- Journey section
-     -->
-<div id="lifestyle" class="section container-fluid bg-light">
-  <div class="section-inner-container">
-
-<div class="p-4 p-md-5 pd-tb-1-5-rem">
-  <h2 style="color: #FFD700;">Notes from Living</h2>
-</div>
-
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-      
-      <div class="col">
-        <a href="journey.html" style="text-decoration: none; display: block; color: inherit;">
-          <div class="tile rounded-5 d-flex flex-column p-4-5 p-md-5 h-100 about-card-custom"
-            style="height: 500px !important; min-height: unset !important; position: relative; overflow: hidden; background-color: #000;">
-            
-            <div class="about-bg-image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-              background-image: url('assets/img/index/journey.jpg'); background-size: cover; background-position: center; 
-              opacity: 0.7; z-index: 1; filter: blur(0px); transform: scale(1.05);">
-            </div>
-
-            <div style="position: relative; z-index: 2; color: white; height: 100%; display: flex; flex-direction: column; justify-content: flex-end;">
-              <h5 style="color: #FFD700; margin-bottom: 1rem; font-weight: 600; letter-spacing: 1px;">JOURNEY</h5>
-              <h2 style="font-size: 2.5rem; font-weight: 800; line-height: 1.2;">Footprints & <br>Reflections</h2>
-              <p style="margin-top: 1.5rem; font-size: 1.1rem; color: rgba(255,255,255,0.8); font-weight: 400;">
-                Toward the Horizon.
-              </p>
-              <div class="mt-3">
-                <span style="color: #FFD700;">Explore My Travels →</span>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-
-      <div class="col">
-        <a href="poetry.html" style="text-decoration: none; display: block; color: inherit;">
-          <div class="tile rounded-5 d-flex flex-column p-4-5 p-md-5 h-100 about-card-custom"
-            style="height: 500px !important; min-height: unset !important; position: relative; overflow: hidden; background-color: #000;">
-            
-            <div class="about-bg-image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-              background-image: url('assets/img/index/galaxy.jpg'); background-size: cover; background-position: center; 
-              opacity: 0.6; z-index: 1; filter: blur(0px); transform: scale(1.05);">
-            </div>
-
-            <div style="position: relative; z-index: 2; color: white; height: 100%; display: flex; flex-direction: column; justify-content: flex-end;">
-              <h5 style="color: #b8e994; margin-bottom: 1rem; font-weight: 600; letter-spacing: 1px;">POETRY</h5>
-              <h2 style="font-size: 2.5rem; font-weight: 800; line-height: 1.2; font-family: 'Noto Serif SC', serif;">Stars & <br>The Sea</h2>
-              <p style="margin-top: 1.5rem; font-size: 1.1rem; color: rgba(255,255,255,0.8); line-height: 1.8;">
-                The world reveals itself slowly. So do we.
-              </p>
-              <div class="mt-3">
-                <span style="color: #b8e994;">Read My Work →</span>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-
-    </div>
-  </div>
-</div>
-     <!--  
-      Contact section
-     -->
-<div id="contact" class="section container-fluid bg-light">
-  <div class="section-inner-container">
-    
-    <div class="p-4 p-md-5 pd-tb-1-5-rem">
-      <h2 style="color: var(--violet)">Say Hello</h2>
-    </div>
-
-    <div class="row row-cols-1 row-cols-md-2 g-3">
-      
-      <div class="col">
-        <a href="hello.html" style="text-decoration: none; display: block; color: inherit;">
-          <div class="tile rounded-5 d-flex flex-column p-4 about-card-custom"
-            style="height: 500px !important; min-height: unset !important; position: relative; overflow: hidden; background-color: #000;">
-            
-            <div class="about-bg-image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-              background-image: url('assets/img/index/envelope.jpg'); background-size: cover; background-position: center; 
-              z-index: 1; filter: blur(6px) brightness(0.8); transform: scale(1.1);">
-            </div>
-
-            <div style="position: relative; z-index: 2; color: white; height: 100%; display: flex; flex-direction: column; justify-content: flex-start;">
-              <h5 style="font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; margin-bottom: 0.2rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">MESSAGE ME</h5>
-              <h2 style="font-size: 2rem; font-weight: 800; line-height: 1.1; margin-bottom: 0.8rem; text-shadow: 1px 1px 4px rgba(0,0,0,0.6);">Unlock a Message</h2>
-              <div class="mt-1">
-                <span class="btn btn-sm btn-outline-light rounded-pill px-3 fw-bold" style="backdrop-filter: blur(2px);">Enter Secret Code →</span>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-
-<div class="col">
-        <div class="tile rounded-5 p-4 d-flex flex-column border" 
-             style="height: 500px !important; min-height: unset !important; position: relative; overflow: hidden; background-color: #000;">
-          
-          <div class="about-bg-image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background-image: url('assets/img/index/phone.jpg'); background-size: cover; background-position: center; 
-            z-index: 1; filter: blur(4px) brightness(0.6); transform: scale(1.1);">
-          </div>
-
-          <div style="position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column;">
-            <h5 style="color: white; font-weight: 700; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;">
-              <i class="bi bi-share-fill" style="font-size: 0.9rem;"></i> Connect with me
-            </h5>
-            
-            <div class="d-flex flex-column gap-2 flex-grow-1 justify-content-center">
-              <a href="https://www.linkedin.com/in/hang-lin-469a88273" target="_blank" class="social-item linkedin">
-                <div class="icon-box"><i class="bi bi-linkedin"></i></div>
-                <div class="text-content">
-                  <span class="label">LinkedIn</span>
-                  <span class="sub-label">Professional Profile</span>
-                </div>
-                <i class="bi bi-chevron-right ms-auto arrow"></i>
-              </a>
-
-              <a href="https://github.com/HangLin33" target="_blank" class="social-item github">
-                <div class="icon-box"><i class="bi bi-github"></i></div>
-                <div class="text-content">
-                  <span class="label">GitHub</span>
-                  <span class="sub-label">Projects & Code</span>
-                </div>
-                <i class="bi bi-chevron-right ms-auto arrow"></i>
-              </a>
-
-              <a href="https://www.instagram.com/mathanglin?igsh=MTBndDF1eHZ0b2NsMA%3D%3D&utm_source=qr" target="_blank" class="social-item instagram">
-                <div class="icon-box"><i class="bi bi-instagram"></i></div>
-                <div class="text-content">
-                  <span class="label">Instagram</span>
-                  <span class="sub-label">Life & Moments</span>
-                </div>
-                <i class="bi bi-chevron-right ms-auto arrow"></i>
-              </a>
-
-              <a href="mailto:linhang3302@outlook.com" class="social-item email">
-                <div class="icon-box"><i class="bi bi-envelope"></i></div>
-                <div class="text-content">
-                  <span class="label">Email</span>
-                  <span class="sub-label">linhang3302@outlook.com</span>
-                </div>
-                <i class="bi bi-chevron-right ms-auto arrow"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<style>
-  /* 基础列表项样式 */
-  .social-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 8px 12px;
-    border-radius: 14px;
-    text-decoration: none;
-    color: #444;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    background: #fcfcfc;
-    border: 1px solid #f0f0f0;
-  }
-
-  /* 图标盒子 */
-  .icon-box {
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    font-size: 1.2rem;
-    background: white;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-    transition: transform 0.3s ease;
-  }
-
-  /* 文字排版 */
-  .text-content {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
-  }
-  .label {
-    font-weight: 700;
-    font-size: 0.9rem;
-  }
-  .sub-label {
-    font-size: 0.7rem;
-    color: #999;
-  }
-
-  /* 右侧小箭头 */
-  .arrow {
-    font-size: 0.8rem;
-    opacity: 0;
-    transform: translateX(-10px);
-    transition: all 0.3s ease;
-  }
-
-  /* 悬停特效 */
-  .social-item:hover {
-    transform: translateX(8px);
-    background: white;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-    border-color: #eee;
-  }
-  .social-item:hover .arrow {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  .social-item:hover .icon-box {
-    transform: scale(1.1) rotate(-5deg);
-  }
-
-  /* 品牌色微调 */
-  .linkedin:hover .icon-box { color: #0077b5; }
-  .github:hover .icon-box { color: #333; }
-  .instagram:hover .icon-box { color: #e1306c; }
-  .email:hover .icon-box { color: var(--violet); }
-</style>
-    <!-- 
-      Footer
-     -->
-    <footer>
-      <div style="max-width: 100vw; overflow: hidden;">
-        <div class="row bg-light-secondary pd-lr-4 pt-1 pb-1">
-          <!-- Copyright text -->
-          <div class="foot-div col-sm-8 d-flex align-items-center">
-            <p class="text-matte-light text-center fw-normal fs-14px p-2 " style="margin-bottom: 0px;">
-              Copyright &copy;
-              <script>document.write(`2025 - ${new Date().getFullYear()}`);</script>
-              <span><a class="text-light goto-contact" href="#contact">Hang Lin</a></span>. All rights reserved.
-            </p>
-          </div> <!-- End copyright text -->
-          <!-- Appearance toggle -->
-          <div id="appearance-toggle-container" class="foot-div col-sm d-flex align-items-start p-2"
-            style="justify-content: flex-end">
-            <div id="appearance-toggle">
-              <ul class="nav nav-pills fs-14px">
-                <li class="nav-item">
-                  <a id="light-appearance" class="nav-link">Light</a>
-                </li>
-                <li class="nav-item">
-                  <a id="dark-appearance" class="nav-link">Dark</a>
-                </li>
-                <li class="nav-item">
-                  <a id="auto-appearance" class="nav-link">Auto</a>
-                </li>
-              </ul>
-            </div> <!-- End #appearance-toggle -->
-          </div> <!-- End #appearance-toggle-container -->
-        </div> <!-- End footer .row -->
-      </div> <!-- End footer inner container -->
-    </footer>
-  </div> <!-- End #main-container -->
-  <!-- 
-    Scripts
-   -->
-  <script src="vendor/bootstrap/bootstrap.min.js"></script>
-  <script src="js/main.js" type="module"></script>
-  <script src="js/animations.js" type="module"></script>
-  <script src="js/appearance.js" type="module"></script>
 </body>
-
 </html>
