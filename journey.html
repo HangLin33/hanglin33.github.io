@@ -3,156 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <title>Global Journey - Hang Lin</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap/dist/css/jsvectormap.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/jsvectormap"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jsvectormap/dist/maps/world.js"></script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"></script>
 
     <style>
         :root {
             --apple-bg: #f5f5f7;
-            --text-main: #1d1d1f;
+            --apple-orange: #ff9f0a; /* 统一的亮橙色 */
+            --dark-gray: #1d1d1f;
         }
 
         body { 
             background-color: var(--apple-bg); 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            margin: 0; padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0; 
+            padding: 0;
         }
 
         /* 返回按钮样式 */
-        .back-btn {
-            position: fixed;
-            top: 25px;
-            left: 25px;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+        .back-home {
+            position: fixed; top: 25px; left: 25px; z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            padding: 10px 22px; border-radius: 50px; 
             border: 1px solid rgba(0,0,0,0.1);
-            padding: 10px 20px;
-            border-radius: 50px;
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 500;
-            font-size: 14px;
-            transition: all 0.3s ease;
+            text-decoration: none; color: var(--dark-gray); 
+            font-size: 14px; font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
         }
-        .back-btn:hover {
-            background: #ffffff;
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-    
-        .map-wrapper {
+        .back-home:hover { transform: scale(1.05); }
+
+        .map-container {
             max-width: 1200px;
-            margin: 80px auto 40px;
+            margin: 80px auto;
             padding: 20px;
             background: #ffffff;
             border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
         }
+
+        .header { padding: 20px 30px; }
+        .header h2 { font-size: 2rem; font-weight: 800; color: var(--dark-gray); margin: 0 0 10px 0; }
+        .header p { color: #86868b; margin: 0; }
 
         #world-map { width: 100%; height: 600px; }
 
-        /* 提示框修复 */
+        /* 修复提示框样式：黑底白字，无乱码 */
         .jvm-tooltip {
-            background: #1d1d1f !important;
-            border-radius: 8px !important;
+            background-color: #1d1d1f !important;
+            border-radius: 6px !important;
             padding: 8px 12px !important;
             font-family: inherit !important;
+            font-size: 13px !important;
+            color: #fff !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border: none !important;
+            z-index: 9999;
         }
     </style>
 </head>
 <body>
 
-<a href="index.html" class="back-btn">← Back to Home</a>
+<a href="index.html" class="back-home">← Back to Home</a>
 
-<div class="map-wrapper">
-    <div style="padding: 20px 40px;">
-        <h2 style="font-weight: 800; color: var(--text-main); letter-spacing: -1px; margin-bottom: 5px;">Global Journey</h2>
-        <p style="color: #86868b; margin-top: 0;">Click on colored regions to explore my footprints.</p>
+<div class="map-container">
+    <div class="header">
+        <h2>Global Journey</h2>
+        <p>Explore my footprints. <span style="color:var(--apple-orange); font-weight:bold;">Orange</span> indicates visited regions.</p>
     </div>
-    
     <div id="world-map"></div>
 </div>
 
 <script>
-    // 定义国家配色
-    const countryStyles = {
-        "CN": "#ae4d4d", "TW": "#ae4d4d", // 中国朱红
-        "GB": "#5d737e", "FR": "#7b8ab8", "DE": "#6d6875",
-        "IT": "#a5a58d", "CH": "#b7b7a4", "NO": "#4a6d7c",
-        "US": "#89aae6", "MV": "#90be6d", "TH": "#f4a261",
-        "MY": "#e9c46a", "SG": "#e76f51", "ID": "#2a9d8f",
-        "AU": "#d4a373", "AE": "#9e2a2b", "TR": "#6b705c"
-    };
+    // 确保页面完全加载后再执行地图逻辑
+    window.addEventListener('DOMContentLoaded', () => {
 
-    // 跳转链接
-    const travelLinks = {
-        "CN": "journey/china.html", "TW": "journey/china.html",
-        "GB": "journey/uk.html", "FR": "journey/france.html", "DE": "journey/germany.html",
-        "IT": "journey/italy.html", "CH": "journey/switzerland.html", "NO": "journey/norway.html",
-        "US": "journey/usa.html", "MV": "journey/maldives.html", "TH": "journey/thailand.html",
-        "MY": "journey/malaysia.html", "SG": "journey/singapore.html", "ID": "journey/indonesia.html",
-        "AU": "journey/australia.html", "AE": "journey/uae.html", "TR": "journey/turkey.html"
-    };
-
-    const map = new jsVectorMap({
-        selector: "#world-map",
-        map: "world",
-        draggable: true,
-        zoomButtons: false,
+        // 1. 定义数据：颜色和链接
+        // 统一使用橙色 #ff9f0a
+        const visitedColor = "#ff9f0a";
         
-        // 基础样式设置
-        regionStyle: {
-            initial: { fill: '#ececec', stroke: '#fff', strokeWidth: 0.8 },
-            hover: { fillOpacity: 0.8 }
-        },
+        // 生成颜色对象：所有去过的国家都设为橙色
+        // 注意：这里明确包含 CN 和 TW
+        const countryColors = {
+            "CN": visitedColor, "TW": visitedColor, 
+            "GB": visitedColor, "FR": visitedColor, "DE": visitedColor,
+            "IT": visitedColor, "CH": visitedColor, "NO": visitedColor,
+            "US": visitedColor, "MV": visitedColor, "TH": visitedColor,
+            "MY": visitedColor, "SG": visitedColor, "ID": visitedColor,
+            "AU": visitedColor, "AE": visitedColor, "TR": visitedColor
+        };
 
-        // 核心修复：手动注入颜色
-        series: {
-            regions: [{
-                values: countryStyles,
-                attribute: 'fill'
-            }]
-        },
+        const links = {
+            "CN": "journey/china.html", "TW": "journey/china.html",
+            "GB": "journey/uk.html", "FR": "journey/france.html", "DE": "journey/germany.html",
+            "IT": "journey/italy.html", "CH": "journey/switzerland.html", "NO": "journey/norway.html",
+            "US": "journey/usa.html", "MV": "journey/maldives.html", "TH": "journey/thailand.html",
+            "MY": "journey/malaysia.html", "SG": "journey/singapore.html", "ID": "journey/indonesia.html",
+            "AU": "journey/australia.html", "AE": "journey/uae.html", "TR": "journey/turkey.html"
+        };
 
-        // 点击逻辑
-        onRegionClick: function(event, code) {
-            if (travelLinks[code]) {
-                window.location.href = travelLinks[code];
+        // 2. 初始化地图
+        const map = new jsVectorMap({
+            selector: "#world-map",
+            map: "world",
+            
+            // 禁用缩放按钮，界面更干净
+            zoomButtons: false,
+            // 允许鼠标滚轮缩放
+            zoomOnScroll: true,
+
+            // 基础样式（未去过的国家：浅灰）
+            regionStyle: {
+                initial: {
+                    fill: '#e5e5e7',
+                    stroke: '#ffffff',
+                    strokeWidth: 1,
+                    fillOpacity: 1
+                },
+                hover: {
+                    fillOpacity: 0.8,
+                    cursor: 'pointer'
+                }
+            },
+
+            // 【核心修复】使用 visualizeData / series 属性标准着色
+            // 这是官方推荐的方法，比 onRegionRender 更稳定
+            series: {
+                regions: [{
+                    attribute: 'fill',
+                    legend: { vertical: true, title: 'Status' }, 
+                    scale: {
+                        // 这里不需要 scale，因为我们直接通过 values 给定颜色
+                    },
+                    values: countryColors // 直接传入 {"CN": "#ff9f0a", ...}
+                }]
+            },
+
+            // 3. 点击逻辑
+            onRegionClick: function(event, code) {
+                // 点击台湾，视同点击中国
+                let targetCode = code === "TW" ? "CN" : code;
+                
+                if (links[targetCode]) {
+                    window.location.href = links[targetCode];
+                }
+            },
+
+            // 4. 提示框逻辑 (纯文本，解决 <b> 问题)
+            onRegionTooltipShow(event, tooltip, code) {
+                let name = tooltip.text();
+                
+                // 强制将 Taiwan 显示为 China
+                if (code === "TW") {
+                    name = "China"; 
+                } else if (code === "CN") {
+                    name = "China";
+                }
+
+                // 如果是去过的国家，加一点后缀，但不加 HTML 标签
+                if (countryColors[code]) {
+                    // 使用 setText 方法更新文本（纯文本模式）
+                    tooltip.text(name + " (Visited)"); 
+                } else {
+                    tooltip.text(name);
+                }
             }
-        },
-
-
-        /* 已去过的国家（高亮） */
-        .active-country {
-            fill: #81ecec; /* 使用你最喜欢的蒂芙尼蓝 */
-            cursor: pointer;
-        }
-    
-        // 提示框文本修复
-        onRegionTooltipShow(event, tooltip, code) {
-            let originalName = tooltip.text();
-            let displayName = originalName;
-
-            // 领土逻辑修复
-            if (code === "TW" || code === "CN") {
-                displayName = "China";
-            }
-
-            // 构造纯净的 HTML，避免显示 <b> 标签字符
-            if (countryStyles[code]) {
-                tooltip.text(
-                    `<div style="text-align:center;">
-                        <span style="font-weight:bold; font-size:14px;">${displayName}</span><br>
-                        <span style="color:#81ecec; font-size:11px;">View Stories</span>
-                    </div>`, true
-                );
-            } else {
-                tooltip.text(displayName);
-            }
-        }
+        });
     });
 </script>
 
