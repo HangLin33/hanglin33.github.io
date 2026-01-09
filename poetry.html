@@ -22,16 +22,18 @@
             overflow-x: hidden;
         }
 
-        /* 顶部导航返回 */
+        /* 返回按钮 */
         .back-btn {
             position: fixed; top: 30px; left: 30px; z-index: 1000;
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
-            padding: 10px 20px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 12px 24px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2);
             text-decoration: none; color: white; font-size: 14px; transition: 0.3s;
+            font-weight: 500;
         }
         .back-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
 
-        /* 题头 */
+        /* 1. 页面大背景头图 */
         .page-header {
             height: 70vh;
             display: flex;
@@ -39,21 +41,29 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, #000 100%),
-                        url('https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=2070') no-repeat center/cover;
+            position: relative;
+            background: #000;
+            overflow: hidden;
         }
+        .header-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            /* 替换此路径为你的主背景图 */
+            background: url('images/main_bg.jpg') no-repeat center/cover;
+            filter: brightness(0.5);
+            z-index: 1;
+        }
+        .header-content { position: relative; z-index: 2; }
         .page-header h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 5rem; margin: 0; font-style: italic; letter-spacing: -2px;
+            font-size: 5rem; margin: 0; font-style: italic;
         }
-        .page-header p { font-weight: 300; opacity: 0.6; letter-spacing: 8px; margin-top: 20px; }
+        .page-header p { font-weight: 300; opacity: 0.6; letter-spacing: 8px; margin-top: 15px; }
 
-        /* 时间轴布局 */
         .poetry-container {
             position: relative;
             max-width: 1300px;
             margin: 0 auto;
-            padding: 50px 20px;
+            padding: 0 20px 100px;
         }
 
         .year-divider {
@@ -63,79 +73,74 @@
             color: var(--accent-gold);
             margin: 120px 0 60px;
             font-weight: 700;
-            opacity: 0.8;
         }
 
-        /* 诗词卡片样式 */
+        /* 诗词卡片 */
         .poem-entry {
             display: flex;
-            justify-content: space-between;
-            align-items: stretch;
-            margin-bottom: 180px;
+            margin-bottom: 150px;
             position: relative;
-            min-height: 450px;
+            min-height: 500px;
             border-radius: 40px;
             overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            background: #111;
         }
 
-        /* 背景图与模糊层 */
+        /* 诗词独立背景图 */
         .poem-bg {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             background-size: cover;
             background-position: center;
-            filter: brightness(0.4) blur(2px);
+            filter: brightness(0.35) blur(2px); /* 这里控制背景亮度和模糊度 */
             z-index: 1;
-            transition: transform 1s ease;
+            transition: transform 1.5s ease;
         }
-        .poem-entry:hover .poem-bg { transform: scale(1.05); }
+        .poem-entry:hover .poem-bg { transform: scale(1.08); }
 
         .poem-body {
             position: relative;
             z-index: 2;
             display: flex;
             width: 100%;
-            padding: 60px;
-            gap: 40px;
+            padding: 80px 60px;
         }
 
         .side { width: 50%; display: flex; flex-direction: column; justify-content: center; }
 
-        /* 中文 */
         .zh-side { text-align: right; padding-right: 50px; border-right: 1px solid rgba(255,255,255,0.15); }
-        .zh-side h3 { font-family: 'Ma Shan Zheng', cursive; font-size: 2.8rem; color: var(--accent-gold); margin: 0 0 25px 0; }
-        .zh-side p { font-size: 1.4rem; line-height: 2.2; white-space: pre-wrap; letter-spacing: 2px; }
+        .zh-side h3 { font-family: 'Ma Shan Zheng', cursive; font-size: 3rem; color: var(--accent-gold); margin: 0 0 25px 0; }
+        .zh-side p { font-size: 1.5rem; line-height: 2.2; white-space: pre-wrap; letter-spacing: 2px; }
 
-        /* 英文 */
         .en-side { text-align: left; padding-left: 50px; }
         .en-side h3 { font-family: 'Playfair Display', serif; font-size: 2rem; font-style: italic; margin: 0 0 25px 0; }
-        .en-side p { font-family: 'Playfair Display', serif; font-size: 1.15rem; line-height: 1.8; opacity: 0.8; font-style: italic; }
+        .en-side p { font-family: 'Playfair Display', serif; font-size: 1.1rem; line-height: 1.8; opacity: 0.8; font-style: italic; }
 
-        /* 响应式适配 */
         @media (max-width: 900px) {
-            .poem-body { flex-direction: column; padding: 40px 20px; }
+            .poem-body { flex-direction: column; padding: 60px 30px; }
             .side { width: 100%; text-align: center !important; padding: 0 !important; border: none !important; }
-            .zh-side { margin-bottom: 40px; }
-            .page-header h1 { font-size: 3rem; }
+            .zh-side { margin-bottom: 50px; }
+            .page-header h1 { font-size: 3.5rem; }
         }
     </style>
 </head>
 <body>
 
-<a href="index.html" class="back-btn">← Home</a>
+<a href="index.html" class="back-btn">← Back to Home</a>
 
 <header class="page-header">
-    <h1 data-aos="zoom-out">Poetry & Verse</h1>
-    <p data-aos="fade-up" data-aos-delay="300">墨 染 时 光 · 笔 触 岁 月</p>
+    <div class="header-bg"></div> <div class="header-content">
+        <h1 data-aos="fade-down" data-aos-duration="1500">Poetry & Rhymes</h1>
+        <p data-aos="fade-up" data-aos-delay="300">墨 染 时 光 · 笔 触 岁 月</p>
+    </div>
 </header>
 
 <div class="poetry-container">
 
-    <div class="year-divider" data-aos="fade-right">2026</div>
+    <div class="year-divider" data-aos="fade-in">2026</div>
 
     <div class="poem-entry" data-aos="fade-up">
-        <div class="poem-bg" style="background-image: url('https://images.unsplash.com/photo-1542332213-31f87348057f?q=80&w=2070');"></div>
+        <div class="poem-bg" style="background-image: url('images/2026_jasmine.jpg');"></div>
         <div class="poem-body">
             <div class="side zh-side">
                 <h3>《蝶恋花·茉莉渡江》</h3>
@@ -158,10 +163,10 @@ Writing no songs for the world but only for ourselves.</p>
         </div>
     </div>
 
-    <div class="year-divider" data-aos="fade-right">2025</div>
+    <div class="year-divider" data-aos="fade-in">2025</div>
 
     <div class="poem-entry" data-aos="fade-up">
-        <div class="poem-bg" style="background-image: url('https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?q=80&w=2070');"></div>
+        <div class="poem-bg" style="background-image: url('images/2025_plum.jpg');"></div>
         <div class="poem-body">
             <div class="side zh-side">
                 <h3>《日暮行·白梅冠雪》</h3>
@@ -185,7 +190,7 @@ Morning blooms write their names upon ancient walls.</p>
     </div>
 
     <div class="poem-entry" data-aos="fade-up">
-        <div class="poem-bg" style="background-image: url('https://images.unsplash.com/photo-1494500764479-0c8f2919a3d8?q=80&w=2070');"></div>
+        <div class="poem-bg" style="background-image: url('images/2025_water.jpg');"></div>
         <div class="poem-body">
             <div class="side zh-side">
                 <h3>《水穷》</h3>
@@ -197,22 +202,20 @@ Morning blooms write their names upon ancient walls.</p>
             </div>
             <div class="side en-side">
                 <h3>Where the Water Runs Out</h3>
-                <p>Ink gathers and thins on white paper,
-Zither and flute fade into distant passes.
-I have moved through eighty thousand miles of wind and thunder,
-Water and cloud pressing against the vast sky.
-Azure dragons wake within the storm,
-Horses race beneath cracking light.
+                <p>Ink gathers and thins on white paper, zither and flute fade into distant passes.
+I have moved through eighty thousand miles of wind and thunder, water and cloud pressing against the vast sky.
+Azure dragons wake within the storm, horses race beneath cracking light.
 Every mountain holds its glory. Every path finds its stillness.
-A single stroke is held in the air, And a thousand words fall silent.</p>
+Here, where the water runs out, the journey learns how to rest.
+A single stroke is held in the air, and a thousand words fall silent.</p>
             </div>
         </div>
     </div>
 
-    <div class="year-divider" data-aos="fade-right">2024</div>
+    <div class="year-divider" data-aos="fade-in">2024</div>
 
     <div class="poem-entry" data-aos="fade-up">
-        <div class="poem-bg" style="background-image: url('https://images.unsplash.com/photo-1533038590840-1cde6e668a91?q=80&w=1974');"></div>
+        <div class="poem-bg" style="background-image: url('images/2024_begonia.jpg');"></div>
         <div class="poem-body">
             <div class="side zh-side">
                 <h3>《何以歌·海棠葬雨》</h3>
@@ -223,22 +226,18 @@ A single stroke is held in the air, And a thousand words fall silent.</p>
             </div>
             <div class="side en-side">
                 <h3>Begonia Buried in Rain</h3>
-                <p>Ragged verses linger,
-Ink travels alone across the inkstone.
-Phosphor lamps offer silent prayers,
-The bright moon follows winding paths.
-Proud snow falls,
-A thousand households scatter like stars.
-Wild geese arrive,
-Lifting ocean waves into mist and smoke.</p>
+                <p>Ragged verses linger, ink travels alone across the inkstone.
+Phosphor lamps offer silent prayers, the bright moon follows winding paths.
+Proud snow falls, a thousand households scatter like stars.
+Wild geese arrive, lifting ocean waves into mist and smoke.</p>
             </div>
         </div>
     </div>
 
-    <div class="year-divider" data-aos="fade-right">2023</div>
+    <div class="year-divider" data-aos="fade-in">2023</div>
 
     <div class="poem-entry" data-aos="fade-up">
-        <div class="poem-bg" style="background-image: url('https://images.unsplash.com/photo-1516617442634-75371039bd3b?q=80&w=1974');"></div>
+        <div class="poem-bg" style="background-image: url('images/2023_pear.jpg');"></div>
         <div class="poem-body">
             <div class="side zh-side">
                 <h3>《尹天矢·梨花问水》</h3>
@@ -249,20 +248,17 @@ Lifting ocean waves into mist and smoke.</p>
             </div>
             <div class="side en-side">
                 <h3>Pear Blossoms Asking the Water</h3>
-                <p>A quiet wind stays beside me,
-Colored clouds drift by, staining time a burning red.
-Snow-like petals fall,
-River currents carry the past away, Ink fading from memory’s page.
-Morning dew, light as breath,
-Dampens my sleeves as I sit, Lost in thoughts of my own smallness.
-Evening dust settles thick,
-Disturbing the candle’s flame, In stillness, my mind struggles to cross the night.</p>
+                <p>A quiet wind stays beside me, colored clouds drift by, staining time a burning red.
+Snow-like petals fall, river currents carry the past away.
+Morning dew, light as breath, dampens my sleeves as I sit.
+Evening dust settles thick, disturbing the candle’s flame.
+In stillness, my mind struggles to cross the night.</p>
             </div>
         </div>
     </div>
 
     <div class="poem-entry" data-aos="fade-up">
-        <div class="poem-bg" style="background-image: url('https://images.unsplash.com/photo-1444492417251-9c839d358e0d?q=80&w=2070');"></div>
+        <div class="poem-bg" style="background-image: url('images/2023_healing.jpg');"></div>
         <div class="poem-body">
             <div class="side zh-side">
                 <h3>《望愈》</h3>
@@ -279,10 +275,10 @@ Yet the youth I was is no longer the same.</p>
         </div>
     </div>
 
-    <div class="year-divider" data-aos="fade-right">2022</div>
+    <div class="year-divider" data-aos="fade-in">2022</div>
 
     <div class="poem-entry" data-aos="fade-up">
-        <div class="poem-bg" style="background-image: url('https://images.unsplash.com/photo-1523050335456-adabbf72c90b?q=80&w=2070');"></div>
+        <div class="poem-bg" style="background-image: url('images/2022_graduation.jpg');"></div>
         <div class="poem-body">
             <div class="side zh-side">
                 <h3>《毕业》</h3>
@@ -302,7 +298,7 @@ Like clouds entwined above distant hills.</p>
     </div>
 
     <div class="poem-entry" data-aos="fade-up">
-        <div class="poem-bg" style="background-image: url('https://images.unsplash.com/photo-1533613220915-609f661a6fe1?q=80&w=1964');"></div>
+        <div class="poem-bg" style="background-image: url('images/2022_fire.jpg');"></div>
         <div class="poem-body">
             <div class="side zh-side">
                 <h3>《硝火》</h3>
@@ -311,8 +307,7 @@ Like clouds entwined above distant hills.</p>
             </div>
             <div class="side en-side">
                 <h3>Embers of War</h3>
-                <p>A city soaked in a thousand candle-flames,
-Intoxicated by war, its scars spreading across the land.
+                <p>A city soaked in a thousand candle-flames, intoxicated by war.
 Stage after stage, the hunt for power unfolds—
 While common lives grieve beneath an unmerciful sky.</p>
             </div>
@@ -324,9 +319,9 @@ While common lives grieve beneath an unmerciful sky.</p>
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>
     AOS.init({
-        duration: 1200,
-        once: true,
-        offset: 150
+        duration: 1000, // 动画持续时间
+        once: true,     // 只在第一次滚动时触发
+        offset: 200     // 距离窗口底部多少像素开始弹出
     });
 </script>
 
