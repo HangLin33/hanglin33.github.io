@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Journey - Hang Lin</title>
+    <title>Journey in USA - Hang Lin</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:italic,wght@400;700&family=Noto+Serif+SC:wght@300;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -23,7 +23,7 @@
             overflow-x: hidden;
         }
 
-        /* 返回按钮 - 确保链接到 journey.html */
+        /* 返回按钮 - 使用 ../ 回到根目录的地图页 */
         .back-btn {
             position: fixed; top: 30px; left: 30px; z-index: 1000;
             background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
@@ -33,146 +33,77 @@
         }
         .back-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
 
-        header {
-            text-align: center;
-            padding: 80px 20px 40px;
-        }
-
-        header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            margin: 0;
-            font-style: italic;
-            letter-spacing: -1px;
-        }
-
-        header p {
-            opacity: 0.5;
-            letter-spacing: 5px;
-            margin-top: 10px;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
+        header { text-align: center; padding: 100px 20px 40px; }
+        header h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 0; font-style: italic; }
+        header p { opacity: 0.5; letter-spacing: 5px; margin-top: 10px; text-transform: uppercase; font-size: 0.9rem; }
 
         .journey-grid {
-            display: flex;
-            gap: 30px;
-            width: 100%;
-            max-width: 1200px;
-            padding: 40px;
-            box-sizing: border-box;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: flex; gap: 30px; width: 100%; max-width: 1200px;
+            padding: 40px; box-sizing: border-box; flex-wrap: wrap; justify-content: center;
         }
 
         .city-card {
-            position: relative;
-            flex: 1;
-            min-width: 350px;
-            height: 600px;
-            border-radius: 30px;
-            overflow: hidden;
-            text-decoration: none;
-            color: white;
-            transition: transform 0.6s cubic-bezier(0.2, 1, 0.2, 1), box-shadow 0.6s;
+            position: relative; flex: 1; min-width: 350px; height: 600px;
+            border-radius: 30px; overflow: hidden; text-decoration: none;
+            color: white; transition: transform 0.6s cubic-bezier(0.2, 1, 0.2, 1), box-shadow 0.6s;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        .city-card:hover {
-            transform: scale(1.02) translateY(-10px);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-        }
+        .city-card:hover { transform: scale(1.02) translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
 
         .card-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover;
-            background-position: center;
-            transition: transform 1.2s ease;
-            z-index: 1;
-            background-color: #222; /* 图片加载前的底色 */
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            transition: transform 1.2s ease; z-index: 1;
         }
 
-        .city-card:hover .card-bg {
-            transform: scale(1.1);
-        }
-
+        .city-card:hover .card-bg { transform: scale(1.1); }
         .overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%);
             z-index: 2;
         }
 
-        .city-info {
-            position: absolute;
-            bottom: 50px;
-            left: 40px;
-            z-index: 3;
-        }
-
-        .city-info h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin: 0;
-            font-style: italic;
-        }
-
-        .city-info p {
-            font-size: 1rem;
-            opacity: 0.8;
-            margin-top: 5px;
-            letter-spacing: 2px;
-        }
-
+        .city-info { position: absolute; bottom: 50px; left: 40px; z-index: 3; }
+        .city-info h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin: 0; font-style: italic; }
+        .city-info p { font-size: 1rem; opacity: 0.8; margin-top: 5px; letter-spacing: 2px; }
         .explore-btn {
-            margin-top: 20px;
-            display: inline-block;
-            padding: 8px 20px;
-            border: 1px solid rgba(255,255,255,0.4);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            backdrop-filter: blur(5px);
-            transition: 0.3s;
+            margin-top: 20px; display: inline-block; padding: 8px 20px;
+            border: 1px solid rgba(255,255,255,0.4); border-radius: 20px;
+            font-size: 0.8rem; backdrop-filter: blur(5px); transition: 0.3s;
         }
+        .city-card:hover .explore-btn { background: white; color: black; }
 
-        .city-card:hover .explore-btn {
-            background: white;
-            color: black;
-        }
-
-        @media (max-width: 768px) {
-            .city-card { min-width: 100%; height: 400px; }
-        }
+        @media (max-width: 768px) { .city-card { min-width: 100%; height: 400px; } }
     </style>
 </head>
 <body>
 
-    <a href="journey.html" class="back-btn">← Back to World Map</a>
+    <a href="../journey.html" class="back-btn">← Back to World Map</a>
 
     <header>
-        <h1>The States Journey</h1>
-        <p>Explore my memories in the US</p>
+        <h1>United States</h1>
+        <p>Memory of New York & Ithaca</p>
     </header>
 
     <div class="journey-grid">
         <a href="ny.html" class="city-card">
-            <div class="card-bg" style="background-image: url('assets/img/journey/usa/newyork.jpg');"></div>
+            <div class="card-bg" style="background-image: url('../images/newyork.jpg');"></div>
             <div class="overlay"></div>
             <div class="city-info">
-                <p>CITY OF LIGHTS</p>
+                <p>THE EMPIRE STATE</p>
                 <h2>New York</h2>
-                <div class="explore-btn">Explore Stories</div>
+                <div class="explore-btn">Enter City</div>
             </div>
         </a>
 
         <a href="ithaca.html" class="city-card">
-            <div class="card-bg" style="background-image: url('assets/img/journey/usa/ithaca.jpg');"></div>
+            <div class="card-bg" style="background-image: url('../images/ithaca.jpg');"></div>
             <div class="overlay"></div>
             <div class="city-info">
-                <p>GORGEOUS WATERFALLS</p>
+                <p>UPSTATE SERENITY</p>
                 <h2>Ithaca</h2>
-                <div class="explore-btn">Explore Stories</div>
+                <div class="explore-btn">Enter City</div>
             </div>
         </a>
     </div>
