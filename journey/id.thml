@@ -99,7 +99,7 @@
 
     <div class="journey-grid">
         <a href="bali.html" class="city-card">
-            <div class="card-bg" style="background-image: url('../img/in/bali.jpg');"></div>
+            <div class="card-bg" style="background-image: url('../img/id/bali.jpg');"></div>
             <div class="overlay"></div>
             <div class="city-info">
                 <p>SPIRITUAL SANCTUARY</p>
