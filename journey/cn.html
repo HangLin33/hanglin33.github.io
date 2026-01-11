@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journey in China - Hang Lin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:italic,wght@400;700&family=Noto+Serif+SC:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root { --apple-bg: #0b0b0c; --apple-text: #f5f5f7; }
+        body { background-color: var(--apple-bg); color: var(--apple-text); font-family: 'Noto Serif SC', serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+
+        .back-btn { position: fixed; top: 30px; left: 30px; z-index: 1000; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); padding: 12px 24px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2); text-decoration: none; color: white; font-size: 14px; transition: 0.3s; }
+        
+        header { text-align: center; padding: 100px 20px 40px; }
+        header h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 0; font-style: italic; }
+        header p { opacity: 0.5; letter-spacing: 5px; margin-top: 10px; text-transform: uppercase; font-size: 0.9rem; }
+
+        /* 中国区特殊的网格设计 */
+        .journey-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1400px;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .province-card {
+            position: relative;
+            height: 350px;
+            border-radius: 20px;
+            overflow: hidden;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.6s cubic-bezier(0.2, 1, 0.2, 1);
+            background-color: #1a1a1a;
+        }
+
+        .province-card:hover { transform: scale(1.03); }
+        .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; transition: 1.2s; }
+        .province-card:hover .card-bg { transform: scale(1.1); }
+        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.8) 100%); }
+
+        .info { position: absolute; bottom: 25px; left: 25px; }
+        .info h2 { font-size: 1.5rem; margin: 0; font-weight: 500; }
+        .info p { font-size: 0.75rem; opacity: 0.6; margin-top: 5px; letter-spacing: 1px; }
+
+        @media (max-width: 768px) { .journey-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <a href="../journey.html" class="back-btn">← World Map</a>
+
+    <header>
+        <h1>The Middle Kingdom</h1>
+        <p>A Vast Tapestry of Homeland Memories</p>
+    </header>
+
+    <div class="journey-grid">
+        <a href="guangdong.html" class="province-card">
+            <div class="card-bg" style="background-image: url('../img/cn/guangdong.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="info"><h2>广东</h2><p>广州 · 深圳 · 佛山</p></div>
+        </a>
+        <a href="shanghai.html" class="province-card">
+            <div class="card-bg" style="background-image: url('../img/cn/shanghai.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="info"><h2>上海</h2><p>Shanghai Skyline</p></div>
+        </a>
+        <a href="beijing.html" class="province-card">
+            <div class="card-bg" style="background-image: url('../img/cn/beijing.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="info"><h2>北京</h2><p>The Imperial Capital</p></div>
+        </a>
+        <a href="yunnan.html" class="province-card">
+            <div class="card-bg" style="background-image: url('../img/cn/yunnan.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="info"><h2>云南</h2><p>大理 · 丽江 · 昆明</p></div>
+        </a>
+        <a href="zhejiang.html" class="province-card">
+            <div class="card-bg" style="background-image: url('../img/cn/zhejiang.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="info"><h2>浙江</h2><p>杭州 · 温州</p></div>
+        </a>
+        <a href="jiangsu.html" class="province-card">
+            <div class="card-bg" style="background-image: url('../img/cn/jiangsu.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="info"><h2>江苏</h2><p>南京</p></div>
+        </a>
+        <a href="hk_mo.html" class="province-card">
+            <div class="card-bg" style="background-image: url('../img/cn/hk.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="info"><h2>港澳</h2><p>Hong Kong & Macau</p></div>
+        </a>
+        <a href="hainan.html" class="province-card">
+            <div class="card-bg" style="background-image: url('../img/cn/hainan.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="info"><h2>海南</h2><p>海口 · 三亚</p></div>
+        </a>
+        <a href="guangxi.html" class="province-card">
+            <div class="card-bg" style="background-image: url('../img/cn/guangxi.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="info"><h2>广西</h2><p>桂林山水</p></div>
+        </a>
+        <a href="inner_mongolia.html" class="province-card">
+            <div class="card-bg" style="background-image: url('../img/cn/mongolia.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="info"><h2>内蒙古</h2><p>呼和浩特</p></div>
+        </a>
+        <a href="liaoning.html" class="province-card">
+            <div class="card-bg" style="background-image: url('../img/cn/liaoning.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="info"><h2>辽宁</h2><p>大连</p></div>
+        </a>
+        <a href="anhui.html" class="province-card">
+            <div class="card-bg" style="background-image: url('../img/cn/anhui.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="info"><h2>安徽</h2><p>凤阳</p></div>
+        </a>
+        <a href="shanxi.html" class="province-card">
+            <div class="card-bg" style="background-image: url('../img/cn/shanxi.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="info"><h2>山西</h2><p>太原</p></div>
+        </a>
+        <a href="hebei.html" class="province-card">
+            <div class="card-bg" style="background-image: url('../img/cn/hebei.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="info"><h2>河北</h2><p>石家庄</p></div>
+        </a>
+        <a href="hunan.html" class="province-card">
+            <div class="card-bg" style="background-image: url('../img/cn/hunan.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="info"><h2>湖南</h2><p>长沙</p></div>
+        </a>
+    </div>
+
+</body>
+</html>
