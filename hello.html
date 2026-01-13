@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,30 +8,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <style>
         :root { --apple-blue: #0071e3; }
-        body { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); height: 100vh; display: flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; margin: 0; }
-        
+        body { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; margin: 0; }
         .message-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 30px; padding: 3rem; box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-width: 500px; width: 90%; text-align: center; position: relative; }
-        
-        /* 返回按钮样式 */
-        .back-link { position: absolute; top: 20px; left: 20px; text-decoration: none; color: #86868b; font-size: 14px; transition: 0.3s; display: flex; align-items: center; }
+        .back-link { position: absolute; top: 25px; left: 25px; text-decoration: none; color: #86868b; font-size: 14px; transition: 0.3s; }
         .back-link:hover { color: #1d1d1f; transform: translateX(-3px); }
-
         input { border-radius: 15px !important; padding: 12px 20px !important; border: 1px solid #ddd !important; margin-bottom: 15px; text-align: center; }
-        
-        /* 隐藏和动画 */
         #step-2, #secret-message { display: none; }
         .fade-in { animation: fadeIn 0.6s cubic-bezier(0.2, 1, 0.2, 1) forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-
         .hint-text { color: var(--apple-blue); font-weight: 600; margin: 20px 0; font-size: 1.1rem; line-height: 1.5; }
-        .welcome-text { font-size: 0.9rem; color: #86868b; margin-bottom: 5px; }
     </style>
 </head>
 <body>
 
 <div class="message-card">
     <a href="index.html" class="back-link">← Home</a>
-
     <h2 class="fw-bold mb-4" id="card-title">Secret Box</h2>
     
     <div id="step-1" class="fade-in">
@@ -41,8 +32,7 @@
     </div>
 
     <div id="step-2">
-        <p class="welcome-text">Hello, <span id="span-name" class="fw-bold text-dark"></span></p>
-        <p class="small text-secondary">请回答下面的问题以解锁留言：</p>
+        <p class="small text-secondary mb-1">Hello, <span id="span-name" class="fw-bold text-dark"></span></p>
         <div id="pwd-hint" class="hint-text"></div>
         <input type="password" id="secretKey" class="form-control" placeholder="Your Answer">
         <button onclick="unlock()" class="btn btn-primary w-100 rounded-pill py-2">Unlock Message</button>
@@ -51,44 +41,42 @@
     <div id="secret-message">
         <div class="mb-2"><span class="badge rounded-pill bg-success px-3">Unlocked</span></div>
         <h4 id="display-name" class="fw-bold text-dark"></h4>
-        <p id="message-text" class="text-secondary mt-3" style="font-size: 1.1rem; white-space: pre-wrap;"></p>
+        <p id="message-text" class="text-secondary mt-3" style="font-size: 1.1rem; white-space: pre-line;"></p>
         <hr class="my-4">
         <button onclick="location.reload()" class="btn btn-sm btn-outline-secondary rounded-pill px-4">Exit</button>
     </div>
 </div>
 
 <script>
-    // 这里的 database 结构：名字哈希 -> { 提示语, 加密内容 }
+    // 这里的 Key 必须与下方的 CryptoJS.SHA256 计算结果严格一致
     const database = {
-        // 示例：何颖蓁 (SHA256)
         "834edd5e939e8bec7322de962416ea9b8a8b0456fd0785abb576236b423d0ef1": {
             hint: "我们微信2025年10月10号说的第一句话是什么？",
             msg: "U2FsdGVkX1+cLvovOmx6oJi5VNfSQpn++54JwKSCX8y0fgGDwvEpCkasAFFFfLbG"
-        },
+        }
     };
 
     let currentUserHash = "";
 
     function findUser() {
-        const name = document.getElementById('friendName').value.trim();
-        if (!name) return;
+        const rawName = document.getElementById('friendName').value.trim();
+        if (!rawName) return;
         
-        // 计算名字哈希
-        const nameHash = CryptoJS.SHA256(name).toString();
+        // 关键：计算哈希前先去除空格
+        const nameHash = CryptoJS.SHA256(rawName).toString();
 
         if (database[nameHash]) {
             currentUserHash = nameHash;
-            document.getElementById('span-name').innerText = name;
+            document.getElementById('span-name').innerText = rawName;
             document.getElementById('pwd-hint').innerText = database[nameHash].hint;
             
-            // 切换 UI
             document.getElementById('step-1').style.display = "none";
             const step2 = document.getElementById('step-2');
             step2.style.display = "block";
             step2.classList.add('fade-in');
-            document.getElementById('card-title').innerText = "Verify Identity";
+            document.getElementById('card-title').innerText = "Identity Verified";
         } else {
-            alert("抱歉，没找到属于这个名字的秘密。");
+            alert("抱歉，没找到对应的秘密。请确保名字输入正确。");
         }
     }
 
@@ -97,7 +85,6 @@
         if (!answer) return;
 
         try {
-            // 使用答案作为 Key 进行解密
             const bytes = CryptoJS.AES.decrypt(database[currentUserHash].msg, answer);
             const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
 
@@ -105,7 +92,6 @@
                 document.getElementById('display-name').innerText = "To: " + document.getElementById('friendName').value.trim();
                 document.getElementById('message-text').innerText = decryptedData;
                 
-                // 切换到展示页面
                 document.getElementById('step-2').style.display = "none";
                 const secretBox = document.getElementById('secret-message');
                 secretBox.style.display = "block";
