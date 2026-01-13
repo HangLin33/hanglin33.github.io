@@ -22,7 +22,6 @@
             text-align: center; position: relative; 
         }
         
-        /* 返回按钮 */
         .back-link { 
             position: absolute; top: 25px; left: 25px; text-decoration: none; 
             color: #86868b; font-size: 14px; transition: 0.3s; 
@@ -34,10 +33,10 @@
             border: 1px solid #ddd !important; margin-bottom: 15px; text-align: center; 
         }
 
-        /* 核心修复：允许中文输入但显示为圆点 */
+        /* 核心：将 text 输入框模拟成圆点密码，但不锁定输入法 */
         .custom-password {
-            -webkit-text-security: disc; /* Chrome/Safari */
-            text-security: disc;         /* Future proof */
+            -webkit-text-security: disc !important;
+            text-security: disc !important;
         }
         
         #step-2, #secret-message { display: none; }
@@ -62,7 +61,18 @@
     <div id="step-2">
         <p class="small text-secondary mb-1">Hello, <span id="span-name" class="fw-bold text-dark"></span></p>
         <div id="pwd-hint" class="hint-text"></div>
-        <input type="text" id="secretKey" class="form-control custom-password" placeholder="请输入中文答案">
+        
+        <input 
+            type="text" 
+            id="secretKey" 
+            class="form-control custom-password" 
+            placeholder="请输入中文答案"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+        >
+        
         <button onclick="unlock()" class="btn btn-primary w-100 rounded-pill py-2">Unlock Message</button>
     </div>
 
@@ -76,7 +86,7 @@
 </div>
 
 <script>
-    // 这里的哈希值是 "何颖蓁"
+    // 数据配置
     const database = {
         "834edd5e939e8bec7322de962416ea9b8a8b0456fd0785abb576236b423d0ef1": {
             hint: "我们微信2025年10月10号说的第一句话是什么？",
@@ -125,7 +135,7 @@
                 secretBox.classList.add('fade-in');
                 document.getElementById('card-title').innerText = "Special Message";
             } else {
-                alert("答案不对哦，请检查是否包含空格或标点符号。");
+                alert("答案不对哦，请检查是否包含空格或标点。");
             }
         } catch (e) {
             alert("解锁失败，请确保答案正确。");
