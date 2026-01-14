@@ -1,123 +1,201 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cornwall - My Travel Gallery</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Travel: Cornwall | Hang Lin</title>
+    <link rel="shortcut icon" href="assets/img/lh/lh-circle.jpg">
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.css">
+
     <style>
-        :root { --accent-color: #0071e3; }
-        body { background-color: #f5f5f7; font-family: -apple-system, sans-serif; color: #1d1d1f; }
+        :root {
+            --apple-bg: #f5f5f7;
+            --frame-bg: #ffffff;
+            --text-dark: #1d1d1f;
+        }
 
-        /* 顶部评语区 */
-        .header-section {
-            padding: 80px 20px;
+        body {
+            background-color: var(--apple-bg);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            color: var(--text-dark);
+            margin: 0;
+            padding-top: 100px; /* 留出导航栏空间 */
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.7) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+        }
+        .navbar-brand, .btn-outline-dark {
+            color: var(--text-dark) !important;
+        }
+
+        /* 标题区域 */
+        .header-content {
             text-align: center;
-            background: white;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
+            padding: 0 20px;
         }
-        .header-section h1 { font-weight: 700; font-size: 2.5rem; margin-bottom: 15px; }
-        .header-section p { 
-            font-size: 1.2rem; 
-            color: #86868b; 
-            max-width: 600px; 
-            margin: 0 auto;
-            line-height: 1.6;
-            font-style: italic;
+        .header-content h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
         }
-
-        /* 瀑布流容器 */
-        .gallery-container {
-            column-count: 3; /* 默认电脑端显示3列 */
-            column-gap: 20px;
-            padding: 0 20px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
+        .header-content p {
+            font-size: 1.2rem;
+            color: #86868b;
+            font-weight: 400;
         }
 
-        /* 图片卡片样式 */
+        /* 瀑布流布局核心代码 */
+        .gallery-grid {
+            columns: 3 300px; /* 自动分栏：最小300px宽，自动填充 */
+            column-gap: 30px;
+            padding: 0 40px 60px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Apple 风格画框 */
         .photo-card {
-            background: white;
-            margin-bottom: 20px;
-            break-inside: avoid; /* 防止图片被切断分行 */
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
+            break-inside: avoid; /* 防止照片被跨列截断 */
+            margin-bottom: 30px;
+            background: var(--frame-bg);
+            padding: 12px; /* 白框厚度 */
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
         }
+
+        .photo-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .photo-card:hover {
-            transform: translateY(-5px);
+            transform: scale(1.02) translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
         }
+
         .photo-card img {
             width: 100%;
-            height: auto; /* 保持图片原比例 */
+            height: auto; /* 关键：自适应比例 */
             display: block;
-            background: #eee; /* 图片加载前的占位色 */
+            border-radius: 4px; /* 照片内角微圆 */
+            transition: filter 0.5s;
         }
-        .photo-desc {
-            padding: 12px;
+
+        .photo-card:hover img {
+            filter: brightness(1.05);
+        }
+
+        /* 照片描述文字 */
+        .photo-info {
+            padding: 12px 5px 4px 5px;
             font-size: 0.9rem;
             color: #424245;
-            border-top: 1px solid #f2f2f2;
+            text-align: left;
+        }
+        .photo-info .date {
+            font-size: 0.8rem;
+            color: #a1a1a6;
+            display: block;
         }
 
         /* 响应式调整 */
-        @media (max-width: 992px) { .gallery-container { column-count: 2; } } /* 平板2列 */
-        @media (max-width: 600px) { 
-            .gallery-container { column-count: 1; } /* 手机1列 */
-            .header-section { padding: 50px 20px; }
-        }
-
-        /* 返回按钮 */
-        .back-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 100;
-            background: rgba(255,255,255,0.8);
-            backdrop-filter: blur(10px);
-            padding: 8px 16px;
-            border-radius: 20px;
-            text-decoration: none;
-            color: var(--accent-color);
-            font-weight: 600;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        @media (max-width: 768px) {
+            .gallery-grid {
+                columns: 1;
+                padding: 0 20px 40px 20px;
+            }
+            .header-content { margin-bottom: 30px; }
         }
     </style>
 </head>
 <body>
 
-    <a href="journey/uk/uk.html" class="back-btn">← Back</a>
-
-    <header class="header-section">
-        <div class="container">
-            <h1>Cornwall</h1>
-            <p>“康沃尔是我认为英国最美的地方。这里的海风、悬崖和那抹纯净的蓝色，永远值得被珍藏。”</p>
+    <nav class="navbar navbar-expand-sm fixed-top">
+        <div class="container d-flex justify-content-between">
+            <a class="navbar-brand fw-bold" href="journey/uk/uk.html">HANG LIN</a>
+            <a href="index.html" class="btn btn-sm btn-outline-dark rounded-pill px-3">Close</a>
         </div>
+    </nav>
+
+    <header class="header-content container">
+        <h1 class="reveal">Cornwall</h1>
+        <p class="reveal" style="transition-delay: 0.1s;">Where the land ends and the stories begin.</p>
     </header>
 
-    <div class="gallery-container">
-        
+    <main class="gallery-grid">
         <div class="photo-card">
-            <img src="../../img/uk/cornwall/cornwall-beach.jpg" alt="Cornwall View">
-            <div class="photo-desc">圣迈克尔山 (St Michael's Mount)</div>
+            <img src="../../img/uk/cornwall/cornwall.jpg" alt="Cornwall View">
+            <div class="photo-info">
+                <strong>St Michael's Mount</strong>
+                <span class="date">May 2025</span>
+            </div>
+        </div>
+
+        <div class="photo-card" style="transition-delay: 0.1s;">
+            <img src="assets/img/travel/cornwall_vertical.jpg" alt="Cornwall View">
+            <div class="photo-info">
+                <strong>Land's End Cliffs</strong>
+                <span class="date">May 2025</span>
+            </div>
+        </div>
+
+        <div class="photo-card" style="transition-delay: 0.2s;">
+            <img src="assets/img/travel/cornwall_square.jpg" alt="Cornwall View">
+            <div class="photo-info">
+                <strong>Penzance Harbor</strong>
+                <span class="date">May 2025</span>
+            </div>
         </div>
 
         <div class="photo-card">
-            <img src="images/cornwall-2.jpg" alt="Cornwall View">
-            <div class="photo-desc">这里的海水蓝得不可思议</div>
+            <img src="assets/img/travel/cornwall2.jpg" alt="Cornwall View">
+            <div class="photo-info">
+                <strong>St Ives Beach</strong>
+                <span class="date">May 2025</span>
+            </div>
         </div>
 
         <div class="photo-card">
-            <img src="images/cornwall-3.jpg" alt="Cornwall View">
-            <div class="photo-desc">悬崖边的徒步路线</div>
+            <img src="assets/img/travel/cornwall3.jpg" alt="Cornwall View">
+            <div class="photo-info">
+                <strong>Minack Theatre</strong>
+                <span class="date">May 2025</span>
+            </div>
         </div>
+    </main>
 
-        <div class="photo-card">
-            <img src="images/cornwall-4.jpg" alt="Cornwall View">
-            <div class="photo-desc">Land's End 这里的日落</div>
-        </div>
-        </div>
+    <script>
+        // 简单的进入行动画逻辑
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.photo-card, .header-content h1, .header-content p').forEach(el => {
+            el.classList.add('reveal'); // 复用你之前的类名
+            observer.observe(el);
+        });
+
+        // 为了配合“画框”效果，在CSS里添加了 show 类来控制
+        document.querySelectorAll('.photo-card').forEach(card => {
+            card.classList.add('show'); // 初始也可以直接显示，或随滚动加载
+        });
+    </script>
 
 </body>
 </html>
