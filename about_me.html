@@ -1,247 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reflections | Hang Lin</title>
-    <link rel="shortcut icon" href="assets/img/lh/lh-circle.jpg">
-    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
-    
-    <style>
-        :root {
-            --violet: #a29bfe;
-            --apple-ease: cubic-bezier(0.25, 1, 0.5, 1);
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflections | Hang Lin</title>
+    <link rel="shortcut icon" href="assets/img/lh/lh-circle.jpg">
+    
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.css">
 
-        body, html {
-            margin: 0; padding: 0;
-            background-color: #000;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
-            color: #fff;
-            overflow-x: hidden;
-        }
+    <style>
+        :root {
+            --violet: #a29bfe;
+        }
 
-        /* 导航栏：极简沉浸 */
-        .navbar {
-            background: transparent !important;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 1.5rem 0;
-            transition: all 0.5s;
-        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            background-color: #000;
+            scroll-behavior: smooth;
+        }
 
-        /* 核心全屏章节 */
-        .theme-section {
-            position: relative;
-            height: 100vh;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            perspective: 1000px;
-        }
+        /* 导航栏：极致透明磨砂 */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
 
-        /* 背景层：视差 + 缩放 + 骨架屏占位 */
-        .bg-layer {
-            position: absolute;
-            top: -10%; left: -10%;
-            width: 120%; height: 120%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            z-index: 1;
-            /* 初始占位色 */
-            background-color: #1a1a1c;
-            filter: brightness(0.4) saturate(1.2);
-            transition: transform 0.1s linear, opacity 1.5s var(--apple-ease);
-            opacity: 0; /* 加载前隐藏 */
-        }
+        /* 全屏主题容器 */
+        .theme-section {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: white;
+            text-align: center;
+        }
 
-        .bg-layer.loaded { opacity: 1; }
+        /* 背景图层 */
+        .bg-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+            filter: brightness(0.5); /* 压暗图片，确保文字清晰 */
+            transition: transform 1.5s ease-out;
+        }
 
-        /* 内容层：确保文字永远清晰 */
-        .content-layer {
-            position: relative;
-            z-index: 5;
-            max-width: 1000px;
-            padding: 0 40px;
-            text-align: center;
-        }
+        /* 滚动时的缩放效果 */
+        .theme-section.active .bg-layer {
+            transform: scale(1.05);
+        }
 
-        /* 文字阴影层：防止亮图遮挡文字 */
-        .theme-section::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%);
-            z-index: 2;
-        }
+        /* 文字内容层 */
+        .content-layer {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 2rem;
+        }
 
-        /* 文字揭示动画：更丝滑的位移 */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px) scale(0.98);
-            filter: blur(10px);
-            transition: all 1.2s var(--apple-ease);
-            will-change: transform, opacity, filter;
-        }
+        /* 苹果风格揭示动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
 
-        .active .reveal {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            filter: blur(0);
-        }
+        .active .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-        /* 标题排版 */
-        .hero-title {
-            font-size: clamp(2.5rem, 8vw, 4.8rem);
-            font-weight: 700;
-            letter-spacing: -0.04em;
-            margin-bottom: 2.5rem;
-            line-height: 1.05;
-        }
+        /* 文字样式 */
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 2rem;
+            line-height: 1.1;
+        }
 
-        .sub-text {
-            font-size: clamp(1.1rem, 3.5vw, 1.6rem);
-            font-weight: 300;
-            line-height: 1.5;
-            color: rgba(255, 255, 255, 0.7);
-            max-width: 800px;
-            margin: 0 auto 1.8rem;
-        }
+        .sub-text {
+            font-size: clamp(1.1rem, 4vw, 1.8rem);
+            font-weight: 400;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
 
-        .highlight {
-            color: var(--violet);
-            position: relative;
-            display: inline-block;
-        }
+        /* 特殊强调色 */
+        .highlight {
+            color: var(--violet);
+            font-weight: 600;
+        }
 
-        /* 装饰用的小横线 */
-        .highlight::after {
-            content: '';
-            position: absolute;
-            bottom: -5px; left: 0;
-            width: 100%; height: 2px;
-            background: var(--violet);
-            transform: scaleX(0);
-            transition: transform 1s 0.5s var(--apple-ease);
-        }
-        .active .highlight::after { transform: scaleX(1); }
+        /* 底部返回按钮 */
+        .back-home {
+            display: inline-block;
+            margin-top: 30px;
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
 
-        /* 底部按钮 */
-        .back-home {
-            display: inline-block;
-            margin-top: 40px;
-            color: #fff;
-            text-decoration: none;
-            padding: 14px 40px;
-            border-radius: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            font-weight: 500;
-            letter-spacing: 1px;
-            transition: all 0.4s;
-        }
+        .back-home:hover {
+            background: white;
+            color: black;
+        }
 
-        .back-home:hover {
-            background: #fff;
-            color: #000;
-            transform: scale(1.05);
-        }
-    </style>
+    </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-sm navbar-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html" style="letter-spacing: 2px;">HANG LIN</a>
-            <a href="index.html" class="btn btn-sm btn-outline-light rounded-pill px-4">CLOSE</a>
-        </div>
-    </nav>
+    <nav class="navbar navbar-expand-sm navbar-dark fixed-top">
+        <div class="container d-flex justify-content-between">
+            <a class="navbar-brand fw-bold" href="index.html">HANG LIN</a>
+            <a href="index.html" class="btn btn-sm btn-outline-light rounded-pill px-3">Close</a>
+        </div>
+    </nav>
 
-    <section class="theme-section">
-        <div class="bg-layer" data-bg="assets/img/about_me/cayugalake.jpg"></div>
-        <div class="content-layer">
-            <h1 class="hero-title reveal">I don’t believe much in <span class="highlight">regret</span>.</h1>
-            <p class="sub-text reveal">
-                Every decision we make is the most honest choice we could offer at that moment — shaped by who we were, what we knew, and what we were capable of then.
-            </p>
-            <p class="sub-text reveal" style="transition-delay: 0.3s;">
-                If given the same moment again, I believe I would still choose the same path. And if that is true, what is there to regret?
-            </p>
-        </div>
-    </section>
+    <section class="theme-section">
+        <div class="bg-layer" style="background-image: url('assets/img/about_me/cayugalake.jpg');"></div>
+        <div class="content-layer">
+            <h1 class="hero-title reveal">I don’t believe much in <span class="highlight">regret</span>.</h1>
+            <p class="sub-text reveal">
+                Every decision we make is the most honest choice we could offer at that moment — shaped by who we were, what we knew, and what we were capable of then.
+            </p>
+            <p class="sub-text reveal" style="transition-delay: 0.2s;">
+                If given the same moment again, I believe I would still choose the same path. And if that is true, what is there to regret?
+            </p>
+        </div>
+    </section>
 
-    <section class="theme-section">
-        <div class="bg-layer" data-bg="assets/img/about_me/sea_wave.jpg"></div>
-        <div class="content-layer">
-            <h1 class="hero-title reveal">From Struggle to <span class="highlight">Strength</span>.</h1>
-            <p class="sub-text reveal">
-                For many years, I lived with <span class="highlight">anxiety</span> — the kind that makes breathing feel difficult, as if air itself must be earned.
-            </p>
-            <p class="sub-text reveal" style="transition-delay: 0.3s;">
-                It took nearly ten years to understand it, live with it, and eventually overcome it.
-            </p>
-        </div>
-    </section>
+    <section class="theme-section">
+        <div class="bg-layer" style="background-image: url('assets/img/about_me/sea_wave.jpg');"></div>
+        <div class="content-layer">
+            <h1 class="hero-title reveal">From Struggle to <span class="highlight">Strength</span>.</h1>
+            <p class="sub-text reveal">
+                For many years, I lived with <span class="highlight">anxiety</span> — the kind that makes breathing feel difficult, as if air itself must be earned.
+            </p>
+            <p class="sub-text reveal" style="transition-delay: 0.2s;">
+                It took nearly ten years to understand it, live with it, and eventually overcome it.
+            </p>
+        </div>
+    </section>
 
-    <section class="theme-section">
-        <div class="bg-layer" data-bg="assets/img/about_me/autumn_tree.jpg"></div>
-        <div class="content-layer">
-            <h1 class="hero-title reveal">Breathe <span class="highlight">Freely</span>.</h1>
-            <p class="sub-text reveal">
-                I don’t see that time as something lost. It taught me patience, attention, and respect for quiet moments.
-            </p>
-            <p class="sub-text reveal" style="transition-delay: 0.3s;">
-                Today, I move forward without urgency, only with a clearer sense of presence, and gratitude for being able to breathe again.
-            </p>
-            <a href="index.html" class="back-home reveal" style="transition-delay: 0.6s;">BACK TO HOME</a>
-        </div>
-    </section>
+    <section class="theme-section">
+        <div class="bg-layer" style="background-image: url('assets/img/about_me/autumn_tree.jpg');"></div>
+        <div class="content-layer">
+            <h1 class="hero-title reveal">Breathe <span class="highlight">Freely</span>.</h1>
+            <p class="sub-text reveal">
+                I don’t see that time as something lost. It taught me patience, attention, and respect for quiet moments.
+            </p>
+            <p class="sub-text reveal" style="transition-delay: 0.2s;">
+                Today, I move forward without urgency, only with a clearer sense of presence, and gratitude for being able to breathe again.
+            </p>
+            <a href="index.html" class="back-home reveal" style="transition-delay: 0.4s;">Back to Home</a>
+        </div>
+    </section>
 
-    <script>
-        // 1. 实现背景图视差滚动 + 缩放 + 加载效果
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            document.querySelectorAll('.bg-layer').forEach((layer, index) => {
-                const speed = 0.3;
-                const offset = scrolled * speed;
-                // 计算每个章节相对滚动的位移
-                const yPos = -(scrolled - (window.innerHeight * index)) * speed;
-                layer.style.transform = `translateY(${yPos}px) scale(1.1)`;
-            });
-        });
+    <script>
+        // 实现苹果官网样式的进入激活效果
+        const observerOptions = {
+            threshold: 0.5 // 当页面露出 50% 时激活
+        };
 
-        // 2. 揭示动画：使用 IntersectionObserver
-        const observerOptions = { threshold: 0.55 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                } else {
-                    entry.target.classList.remove('active');
-                }
-            });
-        }, observerOptions);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                } else {
+                    // 如果希望往回滑时动画重置，保留下面这行
+                    entry.target.classList.remove('active');
+                }
+            });
+        }, observerOptions);
 
-        document.querySelectorAll('.theme-section').forEach(section => {
-            observer.observe(section);
-        });
+        document.querySelectorAll('.theme-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
 
-        // 3. 异步图片加载修复：先显示流光/颜色，再淡入
-        document.querySelectorAll('.bg-layer').forEach(layer => {
-            const bgUrl = layer.getAttribute('data-bg');
-            const img = new Image();
-            img.src = bgUrl;
-            img.onload = () => {
-                layer.style.backgroundImage = `url(${bgUrl})`;
-                layer.classList.add('loaded');
-            };
-        });
-    </script>
 </body>
 </html>
