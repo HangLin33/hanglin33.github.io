@@ -11,7 +11,7 @@
     <style>
         :root {
             --violet: #a29bfe;
-            --section-bg-darkness: 0.4; /* 与职业页保持一致的亮度控制 */
+            --section-bg-darkness: 0.4; 
         }
 
         body, html {
@@ -20,9 +20,10 @@
             background-color: #000;
             scroll-behavior: smooth;
             color: white;
+            overflow-x: hidden;
         }
 
-        /* 导航栏：极致透明磨砂 (同步职业页样式) */
+        /* 导航栏 */
         .navbar {
             background-color: rgba(0, 0, 0, 0.3) !important;
             backdrop-filter: blur(20px);
@@ -31,7 +32,7 @@
             z-index: 1000;
         }
 
-        /* 全屏容器 (同步职业页样式) */
+        /* 全屏容器 */
         .theme-section {
             position: relative;
             height: 100vh;
@@ -43,7 +44,7 @@
             text-align: center;
         }
 
-        /* 背景层及缩放动画 (同步职业页样式) */
+        /* 背景层：初始透明度为0，加载完成后淡入 */
         .bg-layer {
             position: absolute;
             top: 0; left: 0;
@@ -53,10 +54,11 @@
             z-index: 1;
             filter: brightness(var(--section-bg-darkness));
             transition: transform 1.5s ease-out, opacity 1s ease;
+            opacity: 0; 
             will-change: transform;
         }
 
-        /* 核心触发逻辑：当 section 激活时背景放大 */
+        /* 激活时的缩放效果 */
         .theme-section.active .bg-layer {
             transform: scale(1.05);
         }
@@ -68,7 +70,7 @@
             padding: 2rem;
         }
 
-        /* 揭示动画 (同步职业页逻辑) */
+        /* 揭示动画 */
         .reveal {
             opacity: 0;
             transform: translateY(50px);
@@ -166,9 +168,22 @@
     </section>
 
     <script>
-        // 与你的职业经历页面保持完全一致的触发逻辑
+        // 1. 背景图片预加载与显示逻辑
+        document.querySelectorAll('.bg-layer').forEach(layer => {
+            const imgUrl = layer.getAttribute('data-bg');
+            if (imgUrl) {
+                const img = new Image();
+                img.src = imgUrl;
+                img.onload = () => {
+                    layer.style.backgroundImage = `url('${imgUrl}')`;
+                    layer.style.opacity = '1'; // 加载完成后淡入显示
+                };
+            }
+        });
+
+        // 2. 滚动触发逻辑 (与职业经历页完全一致)
         const observerOptions = {
-            threshold: 0.3 // 统一使用 0.3
+            threshold: 0.3 
         };
 
         const observer = new IntersectionObserver((entries) => {
@@ -176,7 +191,6 @@
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
                 } else {
-                    // 滚动离开时动画重置，保持两页交互行为高度统一
                     entry.target.classList.remove('active');
                 }
             });
