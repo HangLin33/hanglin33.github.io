@@ -4,174 +4,318 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel: Cornwall | Hang Lin</title>
-    <link rel="shortcut icon" href="assets/img/lh/lh-circle.jpg">
-    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
     <style>
         :root {
-            --apple-bg: #f5f5f7;
-            --frame-bg: #ffffff;
-            --text-dark: #1d1d1f;
-            --text-secondary: #86868b;
+            /* Apple 风格配色 */
+            --bg-color: #f5f5f7;       /* 浅灰背景 */
+            --card-bg: #ffffff;        /* 纯白画框 */
+            --text-main: #1d1d1f;      /* 深灰黑文字 */
+            --text-sub: #86868b;       /* 次级文字灰 */
+            --shadow-sm: 0 4px 6px rgba(0,0,0,0.02);
+            --shadow-hover: 0 20px 40px rgba(0,0,0,0.08);
         }
 
         body {
-            background-color: var(--apple-bg);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-            color: var(--text-dark);
+            background-color: var(--bg-color);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+            color: var(--text-main);
             margin: 0;
-            padding-top: 80px;
+            padding-top: 60px; /* 给固定导航栏留位 */
+            -webkit-font-smoothing: antialiased; /* 让字体更清晰 */
         }
 
-        /* --- 导航栏修复 (核心部分) --- */
+        /* --- 1. 导航栏 (强制两端对齐修复版) --- */
         .navbar {
-            background-color: rgba(255, 255, 255, 0.8) !important;
+            background-color: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            height: 60px; /* 统一高度 */
+            height: 60px;
+            position: fixed;
+            top: 0; width: 100%;
+            z-index: 1000;
         }
 
-        /* 强制 container 撑满并两端对齐 */
-        .navbar .container {
-            display: flex !important;
-            justify-content: space-between !important;
-            align-items: center !important;
-            max-width: 1400px; /* 与图片网格保持一致的最大宽度 */
-            padding: 0 30px;   /* 确保文字不紧贴屏幕边缘 */
-        }
-
-        .navbar-brand {
-            font-weight: 600 !important;
-            font-size: 1.1rem !important;
-            color: var(--text-dark) !important;
-            margin: 0 !important; /* 去除默认 margin */
-            padding: 0 !important;
-        }
-
-        /* 关闭按钮样式 */
-        .btn-close-custom {
-            color: var(--text-dark) !important;
-            border: 1px solid var(--text-dark) !important;
-            font-size: 0.8rem !important;
-            font-weight: 500;
-            padding: 5px 15px !important;
-            border-radius: 20px !important;
-            text-decoration: none !important;
-            transition: all 0.3s;
-        }
-
-        .btn-close-custom:hover {
-            background-color: var(--text-dark) !important;
-            color: white !important;
-        }
-
-        /* --- 页面其他内容样式 --- */
-        .header-content {
-            text-align: center;
-            padding: 80px 20px 40px;
-        }
-        .header-content h1 {
-            font-size: clamp(3rem, 8vw, 5rem);
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            margin-bottom: 10px;
-        }
-        .header-content p {
-            font-size: 1.4rem;
-            color: var(--text-secondary);
-        }
-
-        .region-section { padding: 40px 0; }
-
-        .region-header {
-            position: sticky;
-            top: 60px; 
-            background-color: rgba(245, 245, 247, 0.9);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            padding: 20px 40px;
-            margin-bottom: 30px;
-            border-bottom: 1px solid rgba(0,0,0,0.03);
-        }
-
-        .gallery-grid {
-            columns: 3 300px;
-            column-gap: 30px;
-            padding: 0 40px;
-            max-width: 1500px;
+        .nav-container {
+            width: 100%;
+            max-width: 1600px; /* 限制最大宽度，避免在大屏上太散 */
             margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between; /* 核心：左右推开 */
+            align-items: center;
+            height: 100%;
         }
 
-        .photo-card {
-            break-inside: avoid;
+        .brand-logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .close-btn {
+            color: var(--text-main);
+            border: 1px solid rgba(0,0,0,0.2);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .close-btn:hover {
+            background: var(--text-main);
+            color: white;
+            border-color: var(--text-main);
+        }
+
+        /* --- 2. 页面大标题 --- */
+        .hero-header {
+            text-align: center;
+            padding: 100px 20px 60px;
+        }
+        .hero-header h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.03em;
+        }
+        .hero-header p {
+            font-size: 1.3rem;
+            color: var(--text-sub);
+            font-weight: 400;
+        }
+
+        /* --- 3. 分区样式 (Sticky Header) --- */
+        .gallery-section {
+            margin-bottom: 80px;
+        }
+
+        .section-header {
+            position: sticky; /* 吸附效果 */
+            top: 60px;        /* 吸附在导航栏下方 */
+            z-index: 800;
+            background: rgba(245, 245, 247, 0.95); /* 与背景色一致但半透明 */
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.03);
             margin-bottom: 30px;
-            background: var(--frame-bg);
-            padding: 12px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-            opacity: 0;
-            transform: translateY(20px);
         }
-        .photo-card.show { opacity: 1; transform: translateY(0); }
-        .photo-card img { width: 100%; height: auto; border-radius: 8px; display: block; }
-        
-        .photo-info { padding: 12px 5px 2px; font-size: 0.85rem; }
-        .photo-info strong { display: block; color: var(--text-dark); }
-        .photo-info span { color: var(--text-secondary); font-size: 0.75rem; }
 
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: -0.01em;
+        }
+        .section-header span {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+        }
+
+        /* --- 4. 瀑布流网格 (核心布局) --- */
+        .gallery-grid {
+            column-count: 3;          /* 默认3列 */
+            column-gap: 40px;         /* 列间距 */
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* --- 5. 画框卡片 --- */
+        .photo-card {
+            break-inside: avoid;      /* 防止照片被切断 */
+            background: var(--card-bg);
+            padding: 12px;            /* 白框厚度 */
+            border-radius: 12px;
+            margin-bottom: 40px;      /* 上下卡片间距 */
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        box-shadow 0.4s ease;
+            cursor: zoom-in;          /* 鼠标变成放大镜 */
+            
+            /* 初始隐藏，用于动画 */
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* 动画触发后的状态 */
+        .photo-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .photo-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: var(--shadow-hover);
+            z-index: 2;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: auto;             /* 高度自适应 */
+            display: block;
+            border-radius: 4px;       /* 图片本身的微圆角 */
+        }
+
+        .caption {
+            margin-top: 12px;
+            padding: 0 4px;
+        }
+        .caption h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin: 0 0 2px 0;
+            color: var(--text-main);
+        }
+        .caption p {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            margin: 0;
+        }
+
+        /* --- 响应式适配 --- */
+        @media (max-width: 1024px) {
+            .gallery-grid { column-count: 2; column-gap: 30px; }
+        }
         @media (max-width: 768px) {
-            .gallery-grid { columns: 1; padding: 0 20px; }
-            .region-header { padding: 15px 20px; top: 55px; }
-            .navbar .container { padding: 0 20px; }
+            .nav-container { padding: 0 20px; }
+            .hero-header h1 { font-size: 2.5rem; }
+            .section-header { top: 60px; }
+            .header-inner, .gallery-grid { padding: 0 20px; }
+            .gallery-grid { column-count: 1; } /* 手机端单列 */
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="../../index.html">HANG LIN</a>
-            <a href="../../index.html" class="btn-close-custom">Close</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index.html" class="brand-logo">HANG LIN</a>
+            <a href="../../index.html" class="close-btn">Close</a>
         </div>
     </nav>
 
-    <header class="header-content">
+    <header class="hero-header">
         <h1>Cornwall</h1>
-        <p>A journey through the edge of England.</p>
+        <p>A collection of moments from the edge of England.</p>
     </header>
 
-    <section class="region-section">
-        <div class="region-header">
-            <h2>Penzance & Around</h2>
-            <span>Exploring the historic harbor and the Mount.</span>
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Towns</h2>
+                <span>St Ives, Falmouth & Streets</span>
+            </div>
         </div>
+        
         <div class="gallery-grid">
             <div class="photo-card">
-                <img src="../../img/uk/cornwall/cornwall.jpg" alt="St Michael's Mount">
-                <div class="photo-info">
-                    <strong>St Michael's Mount</strong>
-                    <span>Penzance · May 2025</span>
+                <img src="img/uk/cornwall/st_ives_street.jpg" alt="St Ives Street">
+                <div class="caption">
+                    <h4>St Ives Alley</h4>
+                    <p>May 2025</p>
                 </div>
             </div>
+
+            <div class="photo-card">
+                <img src="img/uk/cornwall/falmouth_port.jpg" alt="Falmouth">
+                <div class="caption">
+                    <h4>Falmouth Harbor</h4>
+                    <p>Morning mist</p>
+                </div>
+            </div>
+
             </div>
     </section>
 
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Penzance</h2>
+                <span>St Michael's Mount & The Harbor</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="img/uk/cornwall/mount.jpg" alt="St Michael's Mount">
+                <div class="caption">
+                    <h4>The Mount</h4>
+                    <p>Low tide walk</p>
+                </div>
+            </div>
+            
+            <div class="photo-card">
+                <img src="img/uk/cornwall/penzance_pool.jpg" alt="Jubilee Pool">
+                <div class="caption">
+                    <h4>Jubilee Pool</h4>
+                    <p>Art Deco architecture</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Land's End</h2>
+                <span>Cliffs, Minack Theatre & Nature</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="img/uk/cornwall/minack.jpg" alt="Minack Theatre">
+                <div class="caption">
+                    <h4>Minack Theatre</h4>
+                    <p>Performance with a view</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="img/uk/cornwall/cliff_edge.jpg" alt="Cliffs">
+                <div class="caption">
+                    <h4>The Edge</h4>
+                    <p>Atlantic Ocean</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <script>
+        // 简单的进入动画 (Intersection Observer)
+        // 这一段代码负责让照片滑入显示
+        const observerOptions = {
+            threshold: 0.1, // 图片露出 10% 时触发
+            rootMargin: "0px 0px -50px 0px" // 提前一点触发
+        };
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // 动画只播放一次
                 }
             });
-        }, { threshold: 0.1 });
+        }, observerOptions);
 
         document.querySelectorAll('.photo-card').forEach(card => {
             observer.observe(card);
         });
     </script>
-
 </body>
 </html>
