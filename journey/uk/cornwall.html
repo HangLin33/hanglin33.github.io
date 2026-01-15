@@ -24,29 +24,50 @@
             padding-top: 80px;
         }
 
-        /* 1. 导航栏修复 */
+        /* --- 导航栏修复 (核心部分) --- */
         .navbar {
             background-color: rgba(255, 255, 255, 0.8) !important;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            height: 60px; /* 统一高度 */
         }
+
+        /* 强制 container 撑满并两端对齐 */
+        .navbar .container {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            max-width: 1400px; /* 与图片网格保持一致的最大宽度 */
+            padding: 0 30px;   /* 确保文字不紧贴屏幕边缘 */
+        }
+
         .navbar-brand {
+            font-weight: 600 !important;
+            font-size: 1.1rem !important;
             color: var(--text-dark) !important;
-            font-size: 1.2rem;
+            margin: 0 !important; /* 去除默认 margin */
+            padding: 0 !important;
         }
+
+        /* 关闭按钮样式 */
         .btn-close-custom {
             color: var(--text-dark) !important;
-            border-color: var(--text-dark) !important;
-            font-size: 0.85rem;
+            border: 1px solid var(--text-dark) !important;
+            font-size: 0.8rem !important;
+            font-weight: 500;
+            padding: 5px 15px !important;
+            border-radius: 20px !important;
+            text-decoration: none !important;
             transition: all 0.3s;
         }
+
         .btn-close-custom:hover {
-            background-color: var(--text-dark);
+            background-color: var(--text-dark) !important;
             color: white !important;
         }
 
-        /* 2. 标题设计 */
+        /* --- 页面其他内容样式 --- */
         .header-content {
             text-align: center;
             padding: 80px 20px 40px;
@@ -62,13 +83,11 @@
             color: var(--text-secondary);
         }
 
-        /* 3. 分区样式 (Sticky Section) */
-        .region-section {
-            padding: 40px 0;
-        }
+        .region-section { padding: 40px 0; }
+
         .region-header {
             position: sticky;
-            top: 60px; /* 吸附在导航栏下方 */
+            top: 60px; 
             background-color: rgba(245, 245, 247, 0.9);
             backdrop-filter: blur(10px);
             z-index: 100;
@@ -76,18 +95,7 @@
             margin-bottom: 30px;
             border-bottom: 1px solid rgba(0,0,0,0.03);
         }
-        .region-header h2 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin: 0;
-        }
-        .region-header span {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            font-weight: 400;
-        }
 
-        /* 4. 瀑布流网格 */
         .gallery-grid {
             columns: 3 300px;
             column-gap: 30px;
@@ -96,7 +104,6 @@
             margin: 0 auto;
         }
 
-        /* 5. 苹果画框卡片 */
         .photo-card {
             break-inside: avoid;
             margin-bottom: 30px;
@@ -108,39 +115,26 @@
             opacity: 0;
             transform: translateY(20px);
         }
-        .photo-card.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .photo-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-        }
-        .photo-card img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            display: block;
-        }
-        .photo-info {
-            padding: 12px 5px 2px;
-            font-size: 0.85rem;
-        }
+        .photo-card.show { opacity: 1; transform: translateY(0); }
+        .photo-card img { width: 100%; height: auto; border-radius: 8px; display: block; }
+        
+        .photo-info { padding: 12px 5px 2px; font-size: 0.85rem; }
         .photo-info strong { display: block; color: var(--text-dark); }
         .photo-info span { color: var(--text-secondary); font-size: 0.75rem; }
 
         @media (max-width: 768px) {
             .gallery-grid { columns: 1; padding: 0 20px; }
             .region-header { padding: 15px 20px; top: 55px; }
+            .navbar .container { padding: 0 20px; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-sm fixed-top">
+    <nav class="navbar fixed-top">
         <div class="container">
-            <a class="navbar-brand fw-bold me-auto" href="../../index.html">HANG LIN</a>
-            <a href="../../index.html" class="btn btn-sm btn-outline-dark rounded-pill px-3 btn-close-custom">Close</a>
+            <a class="navbar-brand" href="../../index.html">HANG LIN</a>
+            <a href="../../index.html" class="btn-close-custom">Close</a>
         </div>
     </nav>
 
@@ -162,57 +156,10 @@
                     <span>Penzance · May 2025</span>
                 </div>
             </div>
-            <div class="photo-card">
-                <img src="assets/img/travel/cornwall_square.jpg" alt="Penzance Harbor">
-                <div class="photo-info">
-                    <strong>Penzance Harbor</strong>
-                    <span>May 2025</span>
-                </div>
             </div>
-        </div>
-    </section>
-
-    <section class="region-section">
-        <div class="region-header">
-            <h2>St Ives</h2>
-            <span>The art capital of the coast.</span>
-        </div>
-        <div class="gallery-grid">
-            <div class="photo-card">
-                <img src="assets/img/travel/cornwall2.jpg" alt="St Ives Beach">
-                <div class="photo-info">
-                    <strong>Porthmeor Beach</strong>
-                    <span>St Ives · May 2025</span>
-                </div>
-            </div>
-            </div>
-    </section>
-
-    <section class="region-section">
-        <div class="region-header">
-            <h2>Land's End & Minack</h2>
-            <span>Where the land ends.</span>
-        </div>
-        <div class="gallery-grid">
-            <div class="photo-card">
-                <img src="assets/img/travel/cornwall_vertical.jpg" alt="Cliffs">
-                <div class="photo-info">
-                    <strong>Land's End Cliffs</strong>
-                    <span>Cliffs · May 2025</span>
-                </div>
-            </div>
-            <div class="photo-card">
-                <img src="assets/img/travel/cornwall3.jpg" alt="Minack Theatre">
-                <div class="photo-info">
-                    <strong>Minack Theatre</strong>
-                    <span>May 2025</span>
-                </div>
-            </div>
-        </div>
     </section>
 
     <script>
-        // 瀑布流进入动画
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
