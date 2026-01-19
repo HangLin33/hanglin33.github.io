@@ -1,0 +1,127 @@
+<section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>City</h2>
+                <span>Downtown & Harbour</span>
+            </div>
+        </div>
+        
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Harbor of Time and Tides</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-rocks.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Stacked Balance</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>
+        
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-singer.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>A Song on the Street</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-locks.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Promises in Rust</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-beatles.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>A Walk with the Beatles</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>          
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-underground.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Waiting for the Next Departure</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>               
+            
+            </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Seaside</h2>
+                <span>Sea & Surfing</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-coast.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Edge of the Water”</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>   
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-beach.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Walking the Tidal Flats”</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>   
+        
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-road.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Where Land Meets Motion”</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>  
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-town.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>The City Meets the Sea”</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>  
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-sea.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Riding the Open Water”</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>  
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-surfing.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Cutting Through the Waves”</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>  
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-sailboat.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Sailing into the Light”</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>  
+            
+        </div>
+    </section>
