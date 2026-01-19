@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel: Liverpool | Hang Lin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            /* Apple 风格配色 & 玻璃拟态变量 */
+            --bg-color: #f0f2f5;       /* 稍微深一点的背景，凸显玻璃感 */
+            /* 核心：玻璃画框背景色 (半透明白) */
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            /* 核心：玻璃边缘高光 */
+            --glass-border: 1px solid rgba(255, 255, 255, 0.5);
+            /* 核心：更深邃的玻璃阴影 */
+            --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            --shadow-glass-hover: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+            --text-main: #1d1d1f;
+            --text-sub: #86868b;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            /* 增加一个微妙的渐变背景，让玻璃效果更明显 */
+            background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+            color: var(--text-main);
+            margin: 0;
+            padding-top: 60px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- 导航栏 --- */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            height: 60px;
+            position: fixed;
+            top: 0; width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .brand-logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .close-btn {
+            color: var(--text-main);
+            border: 1px solid rgba(0,0,0,0.2);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .close-btn:hover {
+            background: var(--text-main);
+            color: white;
+            border-color: var(--text-main);
+        }
+
+        /* --- 页面大标题动画 --- */
+        /* 定义弹性弹出动画关键帧 */
+        @keyframes title-pop-in {
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+            60% { opacity: 1; transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .hero-header {
+            text-align: center;
+            padding: 100px 20px 60px;
+        }
+        .hero-header h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.03em;
+            /* 应用动画：时长0.8s，使用弹性贝塞尔曲线 */
+            animation: title-pop-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            opacity: 0; /* 初始隐藏 */
+        }
+        .hero-header p {
+            font-size: 1.3rem;
+            color: var(--text-sub);
+            font-weight: 400;
+            animation: title-pop-in 0.8s ease-out 0.2s forwards; /* 延迟一点出现 */
+            opacity: 0;
+        }
+
+        /* --- 分区样式 (Sticky Header) --- */
+        .gallery-section { margin-bottom: 80px; }
+        .section-header {
+            position: sticky; top: 60px; z-index: 800;
+            background: rgba(245, 245, 247, 0.85);
+            backdrop-filter: blur(15px); /* 增强模糊 */
+            -webkit-backdrop-filter: blur(15px);
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 30px;
+        }
+        .header-inner {
+            max-width: 1400px; margin: 0 auto; padding: 0 40px;
+            display: flex; align-items: baseline; gap: 15px;
+        }
+        .section-header h2 { font-size: 1.8rem; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+        .section-header span { font-size: 0.95rem; color: var(--text-sub); }
+
+        /* --- 瀑布流网格 --- */
+        .gallery-grid {
+            column-count: 3; column-gap: 40px;
+            max-width: 1400px; margin: 0 auto; padding: 0 40px;
+        }
+
+        /* --- 核心：玻璃拟态画框卡片 --- */
+        .photo-card {
+            break-inside: avoid;
+            /* 玻璃背景 */
+            background: var(--glass-bg);
+            /* 核心：毛玻璃模糊效果 */
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            /* 玻璃边框高光 */
+            border: var(--glass-border);
+            
+            padding: 12px;
+            border-radius: 16px; /* 更圆润一点 */
+            margin-bottom: 40px;
+            /* 玻璃阴影 */
+            box-shadow: var(--shadow-glass);
+            
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        box-shadow 0.4s ease, background 0.4s;
+            cursor: zoom-in; /* 鼠标变成放大镜提示可点击 */
+            
+            /* 初始隐藏，用于滚动入场动画 */
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+        }
+
+        .photo-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .photo-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-glass-hover);
+            background: rgba(255, 255, 255, 0.75); /* hover 时稍微亮一点 */
+            z-index: 2;
+        }
+
+        .photo-card img {
+            width: 100%; height: auto; display: block;
+            border-radius: 6px;
+            /* 给图片本身加一点点内阴影，更有嵌入感 */
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .caption { margin-top: 12px; padding: 0 4px; }
+        .caption h4 { font-size: 0.95rem; font-weight: 600; margin: 0 0 2px 0; color: var(--text-main); }
+        .caption p { font-size: 0.8rem; color: var(--text-sub); margin: 0; }
+
+        /* --- Lightbox (全屏灯箱) 样式 --- */
+        #lightbox {
+            position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); /* 深色背景强调内容 */
+            backdrop-filter: blur(20px); /* 背景极其模糊 */
+            -webkit-backdrop-filter: blur(20px);
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; /* 初始不可见不可点 */
+            transition: opacity 0.3s ease;
+        }
+        #lightbox.active { opacity: 1; pointer-events: all; }
+
+        #lightbox img {
+            max-width: 90%; max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        #lightbox.active img { transform: scale(1); } /* 图片弹出动画 */
+
+        #lightbox-close {
+            position: absolute; top: 30px; right: 40px;
+            color: white; font-size: 2rem; cursor: pointer;
+            transition: transform 0.2s;
+        }
+        #lightbox-close:hover { transform: scale(1.1); }
+
+        /* --- 响应式适配 --- */
+        @media (max-width: 1024px) { .gallery-grid { column-count: 2; column-gap: 30px; } }
+        @media (max-width: 768px) {
+            .nav-container { padding: 0 20px; }
+            .hero-header h1 { font-size: 2.5rem; }
+            .section-header { top: 60px; }
+            .header-inner, .gallery-grid { padding: 0 20px; }
+            .gallery-grid { column-count: 1; }
+            #lightbox-close { top: 20px; right: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index.html" class="brand-logo">HANG LIN</a>
+            <a href="/journey/uk/uk.html" class="close-btn">Close</a>
+        </div>
+    </nav>
+
+    <header class="hero-header">
+        </h1>Liverpool</h1>
+        <p>Music Meets the Sea</p>
+    </header>
+
+<section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>City</h2>
+                <span>Downtown & Harbour</span>
+            </div>
+        </div>
+        
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Harbor of Time and Tides</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-rocks.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Stacked Balance</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>
+        
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-singer.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>A Song on the Street</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-locks.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Promises in Rust</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-beatles.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>A Walk with the Beatles</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>          
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-underground.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Waiting for the Next Departure</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>               
+            
+            </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Seaside</h2>
+                <span>Sea & Surfing</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-coast.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Edge of the Water”</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>   
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-beach.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Walking the Tidal Flats”</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>   
+        
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-road.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Where Land Meets Motion”</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>  
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-town.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>The City Meets the Sea”</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>  
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-sea.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Riding the Open Water”</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>  
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-surfing.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Cutting Through the Waves”</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>  
+
+            <div class="photo-card">
+                <img src="../../img/uk/liverpool/liverpool-sailboat.jpg" alt="Liverpool">
+                <div class="caption">
+                    <h4>Sailing into the Light”</h4>
+                    <p>November 2021</p>
+                </div>
+            </div>  
+            
+        </div>
+    </section>
+
+
+    <div id="lightbox">
+        <i class="bi bi-x-lg" id="lightbox-close"></i>
+        <img id="lightbox-img" src="" alt="Fullscreen Image">
+    </div>
+
+
+    <script>
+        // 1. 滚动进入动画 (Intersection Observer)
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -100px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.photo-card').forEach(card => {
+            observer.observe(card);
+        });
+
+
+        // 2. Lightbox 交互逻辑
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeBtn = document.getElementById('lightbox-close');
+
+        // 点击卡片里的图片打开 Lightbox
+        document.querySelectorAll('.photo-card img').forEach(img => {
+            img.addEventListener('click', (e) => {
+                // 阻止冒泡，防止触发 card 的 hover 效果干扰
+                e.stopPropagation();
+                // 获取高清图路径 (这里简单起见直接用原图，实际项目中可以用 data-full-src 存高清图)
+                const imgSrc = img.getAttribute('src');
+                lightboxImg.src = imgSrc;
+                lightbox.classList.add('active');
+                // 禁止页面滚动
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // 关闭 Lightbox 的函数
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            // 恢复页面滚动
+            document.body.style.overflow = 'auto';
+            // 动画结束后清空 src，避免下次打开闪烁
+            setTimeout(() => { lightboxImg.src = ''; }, 300);
+        }
+
+        // 点击关闭按钮关闭
+        closeBtn.addEventListener('click', closeLightbox);
+
+        // 点击背景区域关闭 (点击图片本身不关闭)
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // 按 ESC 键关闭
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
