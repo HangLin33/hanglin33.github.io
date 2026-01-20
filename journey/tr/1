@@ -1,40 +1,48 @@
 <section class="gallery-section">
         <div class="section-header">
             <div class="header-inner">
-                <h2>City</h2>
-                <span>Buildings & Street</span>
+                <h2>Fire Balloon</h2>
+                <span>Fire Balloon At the Sky</span>
             </div>
         </div>
         
         <div class="gallery-grid">
             <div class="photo-card">
-                <img src="../../img/tr/istanbul/istanbul.jpg" alt="City">
+                <img src="../../img/tr/cappadocia/cappadocia.jpg" alt="Fire Balloon">
                 <div class="caption">
-                    <h4>The Watchful Tower of Istanbul</h4>
+                    <h4>A Sky Filled with Quiet Dreams</h4>
                     <p>July 2022</p>
                 </div>
             </div>
 
             <div class="photo-card">
-                <img src="../../img/tr/istanbul/ist-street.jpg" alt="City">
+                <img src="../../img/tr/cappadocia/cap-sunrise.jpg" alt="Fire Balloon">
                 <div class="caption">
-                    <h4>Crossing at the Pulse of the City</h4>
+                    <h4>Before Dawn, the Balloons Awaken</h4>
                     <p>July 2022</p>
                 </div>
             </div>
         
             <div class="photo-card">
-                <img src="../../img/tr/istanbul/ist-train.jpg" alt="City">
+                <img src="../../img/tr/cappadocia/cap-fire.jpg" alt="Fire Balloon">
                 <div class="caption">
-                    <h4>Rails Through History</h4>
+                    <h4>Before Dawn, We Rise</h4>
                     <p>July 2022</p>
                 </div>
             </div>
 
             <div class="photo-card">
-                <img src="../../img/tr/istanbul/ist-skyview.jpg" alt="City">
+                <img src="../../img/tr/cappadocia/cap-balloon.jpg" alt="Fire Balloon">
                 <div class="caption">
-                    <h4>Geometry of the Modern City</h4>
+                    <h4>Igniting the Sky</h4>
+                    <p>July 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/tr/cappadocia/cap-me.jpg" alt="Fire Balloon">
+                <div class="caption">
+                    <h4>Watching the Balloons Drift Away</h4>
                     <p>July 2022</p>
                 </div>
             </div>
@@ -45,43 +53,103 @@
     <section class="gallery-section">
         <div class="section-header">
             <div class="header-inner">
-                <h2>Mosque</h2>
-                <span>Faith</span>
+                <h2>City</h2>
+                <span>Street & Valley</span>
             </div>
         </div>
 
         <div class="gallery-grid">
             <div class="photo-card">
-                <img src="../../img/tr/cappadocia/ist-mosque.jpg" alt="City">
+                <img src="../../img/tr/cappadocia/cap-city.jpg" alt="City">
                 <div class="caption">
-                    <h4>The Path to the Blue Mosque</h4>
+                    <h4>A City Carved from Stone</h4>
                     <p>July 2022</p>
                 </div>
             </div>
 
             <div class="photo-card">
-                <img src="../../img/tr/cappadocia/ist-fountain.jpg" alt="City">
+                <img src="../../img/tr/cappadocia/cap-mountain.jpg" alt="City">
                 <div class="caption">
-                    <h4>Where Empires Gather</h4>
+                    <h4>Homes Inside the Mountain</h4>
                     <p>July 2022</p>
                 </div>
             </div>
         
             <div class="photo-card">
-                <img src="../../img/tr/cappadocia/ist-inmosque.jpg" alt="City">
+                <img src="../../img/tr/cappadocia/cap-hill.jpg" alt="City">
                 <div class="caption">
-                    <h4>Under the Dome of Time</h4>
+                    <h4>The Valley of Silent Spires</h4>
                     <p>July 2022</p>
                 </div>
             </div>
 
             <div class="photo-card">
-                <img src="../../img/tr/cappadocia/ist-me.jpg" alt="City">
+                <img src="../../img/tr/cappadocia/cap-valley.jpg" alt="City">
                 <div class="caption">
-                    <h4>A Moment of Wonder</h4>
+                    <h4>Carved by Time</h4>
                     <p>July 2022</p>
                 </div>
             </div>
+
+            <div class="photo-card">
+                <img src="../../img/tr/cappadocia/cap-longway.jpg" alt="City">
+                <div class="caption">
+                    <h4>Roads Written by Time</h4>
+                    <p>July 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/tr/cappadocia/cap-road.jpg" alt="City">
+                <div class="caption">
+                    <h4>The Long Road Through Cappadocia</h4>
+                    <p>July 2022</p>
+                </div>
+            </div>          
+
+            <div class="photo-card">
+                <img src="../../img/tr/cappadocia/cap-sunset.jpg" alt="City">
+                <div class="caption">
+                    <h4>Chasing the Sun in the Valley</h4>
+                    <p>July 2022</p>
+                </div>
+            </div> 
           
         </div>
     </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Galaxy</h2>
+                <span>Stars</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/tr/cappadocia/cap-galaxy.jpg" alt="Galaxy">
+                <div class="caption">
+                    <h4>Under a Billion Stars</h4>
+                    <p>July 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/tr/cappadocia/cap-milkyway.jpg" alt="Galaxy">
+                <div class="caption">
+                    <h4>The Milky Way Remembers</h4>
+                    <p>July 2022</p>
+                </div>
+            </div>          
+  
+            <div class="photo-card">
+                <img src="../../img/tr/cappadocia/cap-sandgalaxy.jpg" alt="Galaxy">
+                <div class="caption">
+                    <h4>Under the Milky Way of Stone</h4>
+                    <p>July 2022</p>
+                </div>
+            </div>   
+          
+        </div>
+    </section>  
