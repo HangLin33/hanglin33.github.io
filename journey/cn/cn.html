@@ -37,28 +37,31 @@
         header h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 0; font-style: italic; }
         header p { opacity: 0.5; letter-spacing: 5px; margin-top: 10px; text-transform: uppercase; font-size: 0.9rem; }
 
+        /* --- 核心布局修改 --- */
         .journey-grid {
-            display: flex;
+            display: grid;
+            /* 强制一行三列，自动填充 */
+            grid-template-columns: repeat(3, 1fr); 
             gap: 30px;
             width: 100%;
-            max-width: 1000px;
+            /* 增加最大宽度以容纳三个卡片 */
+            max-width: 1400px; 
             padding: 40px;
             box-sizing: border-box;
-            flex-wrap: wrap;
-            justify-content: center;
         }
 
         .city-card {
             position: relative;
-            flex: 1;
-            min-width: 350px;
-            height: 600px;
+            /* 高度稍微调小一点以适应三列布局的比例，或者保持 600px 也可以 */
+            height: 550px; 
             border-radius: 30px;
             overflow: hidden;
             text-decoration: none;
             color: white;
             transition: transform 0.6s cubic-bezier(0.2, 1, 0.2, 1), box-shadow 0.6s;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            /* 确保卡片内容裁剪 */
+            isolation: isolate; 
         }
 
         .city-card:hover { transform: scale(1.02) translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
@@ -67,27 +70,48 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center;
             transition: transform 1.2s ease; z-index: 1;
-            background-color: #222;
+            background-color: #222; /* 图片加载前的底色 */
         }
 
         .city-card:hover .card-bg { transform: scale(1.1); }
+        
         .overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%);
+            /* 调整渐变让文字更清晰 */
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.9) 100%);
             z-index: 2;
+            pointer-events: none; /* 让鼠标事件能穿透到下层 */
         }
 
-        .city-info { position: absolute; bottom: 50px; left: 40px; z-index: 3; }
-        .city-info h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin: 0; font-style: italic; }
-        .city-info p { font-size: 1rem; opacity: 0.8; margin-top: 5px; letter-spacing: 2px; }
+        /* 这里的类名必须和 HTML 中的 class="city-info" 对应 */
+        .city-info { 
+            position: absolute; 
+            bottom: 40px; 
+            left: 30px; 
+            right: 30px; /* 防止文字溢出 */
+            z-index: 3; 
+            text-align: left;
+        }
+        
+        .city-info h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin: 0; font-style: italic; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .city-info p { font-size: 0.95rem; opacity: 0.9; margin-top: 5px; letter-spacing: 1px; color: #ddd; }
+        
         .explore-btn {
             margin-top: 20px; display: inline-block; padding: 8px 20px;
             border: 1px solid rgba(255,255,255,0.4); border-radius: 20px;
             font-size: 0.8rem; backdrop-filter: blur(5px); transition: 0.3s;
         }
-        .city-card:hover .explore-btn { background: white; color: black; }
+        .city-card:hover .explore-btn { background: white; color: black; border-color: white; }
 
-        @media (max-width: 768px) { .city-card { min-width: 100%; height: 450px; } }
+        /* 响应式调整 */
+        @media (max-width: 1024px) {
+            .journey-grid { grid-template-columns: repeat(2, 1fr); max-width: 900px; } /* 平板变为两列 */
+        }
+        @media (max-width: 600px) {
+            .journey-grid { grid-template-columns: 1fr; padding: 20px; } /* 手机变为一列 */
+            .city-card { height: 450px; }
+            header h1 { font-size: 2.5rem; }
+        }
     </style>
 </head>
 <body>
@@ -103,7 +127,7 @@
         <a href="guangzhou.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/guangzhou/guangzhou.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>The River Never Rests</p>
                 <h2>Guangzhou</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -113,7 +137,7 @@
         <a href="shenzhen.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/shenzhen/shenzhen.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>A City That Chose Tomorrow</p>
                 <h2>Shenzhen</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -123,7 +147,7 @@
         <a href="shanghai.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/shanghai/shanghai.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>Between Ambition and Solitude</p>
                 <h2>Shanghai</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -133,7 +157,7 @@
         <a href="beijing.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/beijing/beijing.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>The Imperial Capital</p>
                 <h2>Beijing</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -143,7 +167,7 @@
         <a href="hongkong.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/hongkong/hongkong.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>A City Suspended in Motion</p>
                 <h2>Hong Kong</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -153,17 +177,17 @@
         <a href="macau.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/macau/macau.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>Time Folding Back on Itself</p>
                 <h2>Macau</h2>
                 <div class="explore-btn">Enter the City</div>
             </div>
-        </a>   
+        </a>    
         
         <a href="hangzhou.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/hangzhou/hangzhou.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>Water Learns to Be Calm</p>
                 <h2>Hangzhou</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -173,37 +197,37 @@
         <a href="tianjin.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/tianjin/tianjin.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>Emperor's Crossing</p>
                 <h2>Tianjin</h2>
                 <div class="explore-btn">Enter the City</div>
             </div>
-        </a>   
+        </a>    
         
         <a href="wenzhou.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/wenzhou/wenzhou.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>Driven by the Tide Within</p>
                 <h2>Wenzhou</h2>
                 <div class="explore-btn">Enter the City</div>
             </div>
-        </a>     
+        </a>      
         
         <a href="foshan.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/foshan/foshan.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>Roots Beneath the Modern World</p>
                 <h2>Foshan</h2>
                 <div class="explore-btn">Enter the City</div>
             </div>
-        </a>     
+        </a>      
         
         <a href="zhuhai.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/zhuhai/zhuhai.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>The Gentle Edge of the Sea</p>
                 <h2>Zhuhai</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -213,17 +237,7 @@
         <a href="dali.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/dali/dali.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
-                <p>Wind, Light, and an Unhurried Life</p>
-                <h2>Dali</h2>
-                <div class="explore-btn">Enter the City</div>
-            </div>
-        </a>
-        
-        <a href="dali.html" class="city-card">
-            <div class="card-bg" style="background-image: url('../../img/cn/dali/dali.jpg');"></div>
-            <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>Wind, Light, and an Unhurried Life</p>
                 <h2>Dali</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -233,7 +247,7 @@
         <a href="lijiang.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/lijiang/lijiang.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>Streets That Remember Footsteps</p>
                 <h2>Lijiang</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -243,7 +257,7 @@
         <a href="kunming.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/kunming/kunming.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>Spring, Repeating Itself</p>
                 <h2>Kunming</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -253,7 +267,7 @@
         <a href="nanjing.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/nanjing/nanjing.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>Layers of Silence and Memory</p>
                 <h2>Nanjing</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -263,7 +277,7 @@
         <a href="haikou.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/haikou/haikou.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>Heat, Palms, and Slower Time</p>
                 <h2>Haikou</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -273,16 +287,17 @@
         <a href="sanya.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/sanya/sanya.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>The Sun Refuses to Leave</p>
                 <h2>Sanya</h2>
                 <div class="explore-btn">Enter the City</div>
             </div>
         </a>
+
         <a href="guilin.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/guilin/guilin.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>Mountains Written in Ink</p>
                 <h2>Guilin</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -292,7 +307,7 @@
         <a href="nanning.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/nanning/nanning.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>Green, Quiet, and Growing</p>
                 <h2>Nanning</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -302,7 +317,7 @@
         <a href="hohhot.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/hohhot/hohhot.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>The Wind Knows Your Name</p>
                 <h2>Hohhot</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -312,7 +327,7 @@
         <a href="dalian.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/dalian/dalian.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>The City Faces the Sea</p>
                 <h2>Dalian</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -322,7 +337,7 @@
         <a href="fengyang.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/fengyang/fengyang.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>A Small Place, Holding History</p>
                 <h2>Fengyang</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -332,7 +347,7 @@
         <a href="chuzhou.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/chuzhou/chuzhou.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>Between Leaving and Staying</p>
                 <h2>Chuzhou</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -342,7 +357,7 @@
         <a href="taiyuan.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/taiyuan/taiyuan.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>Heavy Earth, Steady Heart</p>
                 <h2>Taiyuan</h2>
                 <div class="explore-btn">Enter the City</div>
@@ -352,22 +367,22 @@
         <a href="shijiazhuang.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/shijiazhuang/shijiazhuang.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>Ordinary Days, Solid Ground</p>
                 <h2>Shijiazhuang</h2>
                 <div class="explore-btn">Enter the City</div>
             </div>
-        </a>     
+        </a>      
         
         <a href="changsha.html" class="city-card">
             <div class="card-bg" style="background-image: url('../../img/cn/changsha/changsha.jpg');"></div>
             <div class="overlay"></div>
-            <div class="info">
+            <div class="city-info">
                 <p>Fire Beneath the Night</p>
                 <h2>Changsha</h2>
                 <div class="explore-btn">Enter the City</div>
             </div>
-        </a>           
+        </a>            
     </div>
 
 </body>
