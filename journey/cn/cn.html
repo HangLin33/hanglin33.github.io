@@ -1,52 +1,93 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Journey in China - Hang Lin</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:italic,wght@400;700&family=Noto+Serif+SC:wght@300;500&display=swap" rel="stylesheet">
     <style>
-        :root { --apple-bg: #0b0b0c; --apple-text: #f5f5f7; }
-        body { background-color: var(--apple-bg); color: var(--apple-text); font-family: 'Noto Serif SC', serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        :root {
+            --apple-bg: #0b0b0c;
+            --apple-text: #f5f5f7;
+        }
 
-        .back-btn { position: fixed; top: 30px; left: 30px; z-index: 1000; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); padding: 12px 24px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2); text-decoration: none; color: white; font-size: 14px; transition: 0.3s; }
-        
+        body {
+            background-color: var(--apple-bg);
+            color: var(--apple-text);
+            font-family: 'Noto Serif SC', serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 返回按钮 */
+        .back-btn {
+            position: fixed; top: 30px; left: 30px; z-index: 1000;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 12px 24px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2);
+            text-decoration: none; color: white; font-size: 14px; transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+
         header { text-align: center; padding: 100px 20px 40px; }
         header h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 0; font-style: italic; }
         header p { opacity: 0.5; letter-spacing: 5px; margin-top: 10px; text-transform: uppercase; font-size: 0.9rem; }
 
-        /* 中国区特殊的网格设计 */
         .journey-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
+            display: flex;
+            gap: 30px;
             width: 100%;
-            max-width: 1400px;
+            max-width: 1000px;
             padding: 40px;
             box-sizing: border-box;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .province-card {
+        .city-card {
             position: relative;
-            height: 350px;
-            border-radius: 20px;
+            flex: 1;
+            min-width: 350px;
+            height: 600px;
+            border-radius: 30px;
             overflow: hidden;
             text-decoration: none;
             color: white;
-            transition: transform 0.6s cubic-bezier(0.2, 1, 0.2, 1);
-            background-color: #1a1a1a;
+            transition: transform 0.6s cubic-bezier(0.2, 1, 0.2, 1), box-shadow 0.6s;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        .province-card:hover { transform: scale(1.03); }
-        .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; transition: 1.2s; }
-        .province-card:hover .card-bg { transform: scale(1.1); }
-        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.8) 100%); }
+        .city-card:hover { transform: scale(1.02) translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
 
-        .info { position: absolute; bottom: 25px; left: 25px; }
-        .info h2 { font-size: 1.5rem; margin: 0; font-weight: 500; }
-        .info p { font-size: 0.75rem; opacity: 0.6; margin-top: 5px; letter-spacing: 1px; }
+        .card-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            transition: transform 1.2s ease; z-index: 1;
+            background-color: #222;
+        }
 
-        @media (max-width: 768px) { .journey-grid { grid-template-columns: 1fr; } }
+        .city-card:hover .card-bg { transform: scale(1.1); }
+        .overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%);
+            z-index: 2;
+        }
+
+        .city-info { position: absolute; bottom: 50px; left: 40px; z-index: 3; }
+        .city-info h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin: 0; font-style: italic; }
+        .city-info p { font-size: 1rem; opacity: 0.8; margin-top: 5px; letter-spacing: 2px; }
+        .explore-btn {
+            margin-top: 20px; display: inline-block; padding: 8px 20px;
+            border: 1px solid rgba(255,255,255,0.4); border-radius: 20px;
+            font-size: 0.8rem; backdrop-filter: blur(5px); transition: 0.3s;
+        }
+        .city-card:hover .explore-btn { background: white; color: black; }
+
+        @media (max-width: 768px) { .city-card { min-width: 100%; height: 450px; } }
     </style>
 </head>
 <body>
