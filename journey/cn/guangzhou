@@ -172,13 +172,13 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="../../index.html" class="brand-logo">HANG LIN</a>
-            <a href="/journey/au/au.html" class="close-btn">Close</a>
+            <a href="/journey/cn/cn.html" class="close-btn">Close</a>
         </div>
     </nav>
 
     <header class="hero-header">
-        <h1>Brisbane</h1>
-        <p>A Season of Becoming</p>
+        <h1>Guangzhou</h1>
+        <p>Flowing with Light</p>
     </header>
 
     <section class="gallery-section">
@@ -192,215 +192,266 @@
         <div class="gallery-grid">            
             <div class="photo-card video-card">
                 <video autoplay loop muted playsinline>
-                    <source src="../../img/au/brisbane/auvideo.mp4" type="video/mp4">
+                    <source src="../../img/cn/guangzhou/video/ulinkidol2018.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 
                 <div class="video-badge"><i class="bi bi-play-fill"></i></div>
 
                 <div class="caption">
-                    <h4>My Brisbane Tour</h4>
+                    <h4>ULink Idol 2018</h4>
                     <p>Video Clip</p>
                 </div>
             </div>    
 
+            <div class="photo-card video-card">
+                <video autoplay loop muted playsinline>
+                    <source src="../../img/cn/guangzhou/video/graduation.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                
+                <div class="video-badge"><i class="bi bi-play-fill"></i></div>
+
+                <div class="caption">
+                    <h4>Graduation</h4>
+                    <p>Video Clip</p>
+                </div>
+            </div>   
+
             </div>
     </section>     
     
-    <section class="gallery-section">
+<section class="gallery-section">
         <div class="section-header">
             <div class="header-inner">
-                <h2>John Paul College</h2>
-                <span>Study Abroad Experience</span>
+                <h2>Aerial Photography</h2>
+                <span>A Visual Journey Through Guangzhou</span>
             </div>
         </div>
         
         <div class="gallery-grid">
             <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-school.jpg" alt="JPC">
+                <img src="../../img/cn/guangzhou/drone/guangzhou.jpg" alt="Aerial Photography">
                 <div class="caption">
-                    <h4>United as ULC</h4>
-                    <p>October 2021</p>
+                    <h4>Guangzhou After Dark</h4>
+                    <p>September 2023</p>
                 </div>
             </div>
+
             <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-jpcpic.jpg" alt="JPC">
+                <img src="../../img/cn/guangzhou/drone/gz-dronetower.jpg" alt="Aerial Photography">
                 <div class="caption">
-                    <h4>Campus Life</h4>
-                    <p>October 2021</p>
+                    <h4>Canton Tower in a Thousand Colors</h4>
+                    <p>September 2023</p>
                 </div>
             </div>
+        
             <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-schoolview.jpg" alt="JPC">
+                <img src="../../img/cn/guangzhou/drone/gz-dronebridge.jpg" alt="Aerial Photography">
                 <div class="caption">
-                    <h4>Paths We Walked Every Day</h4>
-                    <p>October 2021</p>
+                    <h4>River of Light, City of Motion</h4>
+                    <p>September 2023</p>
                 </div>
             </div>
+
             <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-garden.jpg" alt="JPC">
+                <img src="../../img/cn/guangzhou/drone/gz-dronepdbridge.jpg" alt="Aerial Photography">
                 <div class="caption">
-                    <h4>Quiet Suburb</h4>
-                    <p>October 2021</p>
+                    <h4>Bridges Over the Sleepless River</h4>
+                    <p>September 2023</p>
                 </div>
             </div>
+
             <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-class.jpg" alt="JPC">
+                <img src="../../img/cn/guangzhou/drone/gz-droneth.jpg" alt="Aerial Photography">
                 <div class="caption">
-                    <h4>Learning in Motion</h4>
-                    <p>October 2021</p>
+                    <h4>Urban Curves, Midnight Pulse</h4>
+                    <p>September 2023</p>
                 </div>
             </div>
-        </div>
+
+            <div class="photo-card">
+                <img src="../../img/cn/guangzhou/drone/gz-dronecross.jpg" alt="Aerial Photography">
+                <div class="caption">
+                    <h4>Crossroads from Above</h4>
+                    <p>January 2020</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/cn/guangzhou/drone/gz-dronefly.jpg" alt="Aerial Photography">
+                <div class="caption">
+                    <h4>Crossroads from Above</h4>
+                    <p>January 2020</p>
+                </div>
+            </div>         
+          
+            </div>
     </section>
 
-    <section class="gallery-section">
+<section class="gallery-section">
         <div class="section-header">
             <div class="header-inner">
-                <h2>Seaside</h2>
-                <span>River & Sea</span>
+                <h2>South China Agricultural University</h2>
+                <span>Science Meets Spring</span>
             </div>
         </div>
-
+        
         <div class="gallery-grid">
             <div class="photo-card">
-                <img src="../../img/au/brisbane/brisbane.jpg" alt="Seaside">
+                <img src="../../img/cn/guangzhou/agri/gz-agribloom.jpg" alt="South China Agricultural University">
                 <div class="caption">
-                    <h4>Rhythm of the Pacific</h4>
-                    <p>October 2021</p>
+                    <h4>First Light of Spring Blossoms</h4>
+                    <p>February 2019</p>
                 </div>
             </div> 
-            <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-coastline.jpg" alt="Seaside">
-                <div class="caption">
-                    <h4>Coastline</h4>
-                    <p>October 2021</p>
-                </div>
-            </div> 
-            <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-sea.jpg" alt="Seaside">
-                <div class="caption">
-                    <h4>Between Ocean and Sky</h4>
-                    <p>October 2021</p>
-                </div>
-            </div> 
-            <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-river.jpg" alt="Seaside">
-                <div class="caption">
-                    <h4>A Quiet Suburban Waterway</h4>
-                    <p>October 2021</p>
-                </div>
-            </div> 
-        </div>
-    </section>
 
-    <section class="gallery-section">
-        <div class="section-header">
-            <div class="header-inner">
-                <h2>City</h2>
-                <span>Street View</span>
-            </div>
-        </div>
+            <div class="photo-card">
+                <img src="../../img/cn/guangzhou/agri/gz-agriorangeflower.jpg" alt="South China Agricultural University">
+                <div class="caption">
+                    <h4>Golden Vines in the Garden</h4>
+                    <p>February 2019</p>
+                </div>
+            </div>          
 
-        <div class="gallery-grid">
             <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-hypertown.jpg" alt="City">
+                <img src="../../img/cn/guangzhou/agri/gz-agriwaterflower.jpg" alt="South China Agricultural University">
                 <div class="caption">
-                    <h4>Peace, Love, and the City</h4>
-                    <p>October 2021</p>
+                    <h4>Petals on Still Water</h4>
+                    <p>February 2019</p>
                 </div>
-            </div>    
+            </div>        
+
             <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-longview.jpg" alt="City">
+                <img src="../../img/cn/guangzhou/agri/gz-agriflowers.jpg" alt="South China Agricultural University">
                 <div class="caption">
-                    <h4>Brisbane Rising</h4>
-                    <p>October 2021</p>
-                </div>
-            </div>    
-            <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-tower.jpg" alt="City">
-                <div class="caption">
-                    <h4>Time Standing Tall</h4>
-                    <p>October 2021</p>
-                </div>
-            </div>       
-            <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-mansion.jpg" alt="City">
-                <div class="caption">
-                    <h4>Golden Hour</h4>
-                    <p>October 2021</p>
-                </div>
-            </div>           
-            <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-street.jpg" alt="City">
-                <div class="caption">
-                    <h4>Twilight at the Crossroads</h4>
-                    <p>October 2021</p>
+                    <h4>Bougainvillea in Full Bloom</h4>
+                    <p>February 2019</p>
                 </div>
             </div>     
+
             <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-sunsetstreet.jpg" alt="City">
+                <img src="../../img/cn/guangzhou/agri/gz-agrilake.jpg" alt="South China Agricultural University">
                 <div class="caption">
-                    <h4>City Sunset</h4>
-                    <p>October 2021</p>
+                    <h4>A Quiet Bridge in a Green Campus</h4>
+                    <p>February 2019</p>
                 </div>
-            </div>              
+            </div>                    
+          
+            </div>
+    </section>
+
+  <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>🐱</h2>
+                <span>🐾</span>
+            </div>
+        </div>
+        
+        <div class="gallery-grid">
             <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-colourfulbuilding.jpg" alt="City">
+                <img src="../../img/cn/guangzhou/cat/gz-catmirror.jpg" alt="🐱">
                 <div class="caption">
-                    <h4>Colors of Brisbane</h4>
-                    <p>October 2021</p>
+                    <h4>Mirror, Mirror</h4>
+                    <p>December 2017</p>
+                </div>
+            </div> 
+
+            <div class="photo-card">
+                <img src="../../img/cn/guangzhou/cat/gz-catbox.jpg" alt="🐱">
+                <div class="caption">
+                    <h4>The Perfect Fit</h4>
+                    <p>June 2018</p>
+                </div>
+            </div>          
+
+            <div class="photo-card">
+                <img src="../../img/cn/guangzhou/cat/gz-catsleeping.jpg" alt="🐱">
+                <div class="caption">
+                    <h4>Curled into a Dream</h4>
+                    <p>June 2018</p>
+                </div>
+            </div>          
+
+            <div class="photo-card">
+                <img src="../../img/cn/guangzhou/cat/gz-cattv.jpg" alt="🐱">
+                <div class="caption">
+                    <h4>Quietly Watching the World</h4>
+                    <p>Februray 2018</p>
+                </div>
+            </div>   
+
+            <div class="photo-card">
+                <img src="../../img/cn/guangzhou/cat/gz-catthink.jpg" alt="🐱">
+                <div class="caption">
+                    <h4>The Loaf Philosopher</h4>
+                    <p>June 2018</p>
+                </div>
+            </div>       
+
+            <div class="photo-card">
+                <img src="../../img/cn/guangzhou/cat/gz-catsleepy.jpg" alt="🐱">
+                <div class="caption">
+                    <h4>Too Tired to Care</h4>
+                    <p>Februray 2018</p>
                 </div>
             </div>    
+
             <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-night.jpg" alt="City">
+                <img src="../../img/cn/guangzhou/cat/gz-catsleep.jpg" alt="🐱">
                 <div class="caption">
-                    <h4>Reflections on the River</h4>
-                    <p>October 2021</p>
+                    <h4>Floating Nap</h4>
+                    <p>Februray 2018</p>
                 </div>
-            </div>           
+            </div>      
+
             <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-nightbridge.jpg" alt="City">
+                <img src="../../img/cn/guangzhou/cat/gz-catlying.jpg" alt="🐱">
                 <div class="caption">
-                    <h4>Lights Crossing</h4>
-                    <p>October 2021</p>
+                    <h4>Maximum Stretch Mode</h4>
+                    <p>Februray 2018</p>
                 </div>
-            </div>           
-            <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-nightgrass.jpg" alt="City">
-                <div class="caption">
-                    <h4>Night Vibes</h4>
-                    <p>October 2021</p>
-                </div>
-            </div>  
-        </div>
-    </section>
+            </div> 
+          
+            </div>
+    </section> 
 
     <section class="gallery-section">
         <div class="section-header">
             <div class="header-inner">
-                <h2>Camp & Homestay</h2>
-                <span>Wild Life</span>
+                <h2>Nansha</h2>
+                <span>Bridges, and Open Horizons</span>
             </div>
         </div>
-
+        
         <div class="gallery-grid">
             <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-sunset.jpg" alt="Camp">
+                <img src="../../img/cn/guangzhou/ns/gz-nsboat.jpg" alt="Nansha">
                 <div class="caption">
-                    <h4>When Light Refuses to Fade</h4>
-                    <p>October 2021</p>
+                    <h4>Blue Sails at Nansha Marina</h4>
+                    <p>September 2020</p>
                 </div>
-            </div>      
+            </div> 
+
             <div class="photo-card">
-                <img src="../../img/au/brisbane/bris-stars.jpg" alt="Camp">
+                <img src="../../img/cn/guangzhou/ns/gz-nsharbour.jpg" alt="Nansha">
                 <div class="caption">
-                    <h4>Under a Southern Sky</h4>
-                    <p>October 2021</p>
+                    <h4>Yachts Under a Summer Sky</h4>
+                    <p>September 2020</p>
                 </div>
-            </div>                
-        </div>
-    </section>      
+            </div>       
+
+            <div class="photo-card">
+                <img src="../../img/cn/guangzhou/ns/gz-nssailing.jpg" alt="Nansha">
+                <div class="caption">
+                    <h4>Crimson Sails, Quiet Waters</h4>
+                    <p>September 2020</p>
+                </div>
+            </div>    
+
+            </div>
+    </section>              
 
 
     <div id="lightbox">
