@@ -103,6 +103,28 @@
         }
         .city-card:hover .explore-btn { background: white; color: black; border-color: white; }
 
+        /* --- 🌟 核心功能：处理无照片的样式 (No Photo Style) --- */
+        
+        /* 当给 city-card 加上 no-photo 类时 */
+        .city-card.no-photo .card-bg {
+            background-image: none !important; /* 强制移除图片 */
+            background: linear-gradient(135deg, #2c2c2e 0%, #1c1c1e 100%); /* 优雅的深灰渐变 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 可选：在卡片中央显示 "Image Coming Soon" 水印 */
+        .city-card.no-photo .card-bg::after {
+            content: "Image Coming Soon"; /* 或者 "To Be Explored" */
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.05); /* 非常淡的文字，不抢视觉 */
+            font-style: italic;
+            letter-spacing: 2px;
+            transform: rotate(-5deg); /* 稍微倾斜一点更有设计感 */
+        }
+
         /* 响应式调整 */
         @media (max-width: 1024px) {
             .journey-grid { grid-template-columns: repeat(2, 1fr); max-width: 900px; } /* 平板变为两列 */
