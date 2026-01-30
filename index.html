@@ -155,15 +155,22 @@
 <div id="Greeting" class="section container-fluid bg-light" style="position: relative; overflow: hidden; padding: 100px 0;">
   
   <div class="scrolling-bg-layer" style="position: absolute; top: 0; left: 0; width: 100%; opacity: 0.08; pointer-events: none; z-index: 1;">
+    
     <div class="scroll-row left-to-right">
-      <span>Hello · 你好 · Bonjour · Hola · こんにちは · 안녕하세요 · Ciao · Hello · 你好 · Bonjour · Hola · こんにちは · 안녕하세요 · Ciao</span>
+      <span>Hello · 你好 · Bonjour · Hola · こんにちは · 안녕하세요 · Ciao · Hello · 你好 · Bonjour · Hola · こんにちは · 안녕하세요 · Ciao &nbsp;</span>
+      <span>Hello · 你好 · Bonjour · Hola · こんにちは · 안녕하세요 · Ciao · Hello · 你好 · Bonjour · Hola · こんにちは · 안녕하세요 · Ciao &nbsp;</span>
     </div>
+
     <div class="scroll-row right-to-left">
-      <span>Guten Tag · Olá · Привет · Namaste · Shalom · Welcome · Guten Tag · Olá · Привет · Namaste · Shalom · Welcome</span>
+      <span>Guten Tag · Olá · Привет · Namaste · Shalom · Welcome · Guten Tag · Olá · Привет · Namaste · Shalom · Welcome &nbsp;</span>
+      <span>Guten Tag · Olá · Привет · Namaste · Shalom · Welcome · Guten Tag · Olá · Привет · Namaste · Shalom · Welcome &nbsp;</span>
     </div>
+
     <div class="scroll-row left-to-right" style="margin-left: -50px;">
-      <span>Experience · Journeys · Poetry · CV · Projects · Designs · Experience · Journeys · Poetry · CV · Projects · Designs</span>
+      <span>Experience · Journeys · Poetry · CV · Projects · Designs · Experience · Journeys · Poetry · CV · Projects · Designs &nbsp;</span>
+      <span>Experience · Journeys · Poetry · CV · Projects · Designs · Experience · Journeys · Poetry · CV · Projects · Designs &nbsp;</span>
     </div>
+
   </div>
 
   <div class="section-inner-container" style="position: relative; z-index: 2; text-align: center; padding: 100px 0;">
@@ -179,37 +186,50 @@
 <style>
   .scrolling-bg-layer {
     user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .scroll-row {
     white-space: nowrap;
-    font-size: 12rem; /* 超大背景字 */
+    font-size: 12rem; 
     font-weight: 900;
     line-height: 1.1;
-    display: flex;
+    display: flex; /* 关键：让两个 span 横向排列 */
+    width: fit-content; /* 关键：让容器宽度等于内容宽度 */
   }
 
-  /* 向左滚动动画 */
+  /* 给文字之间加一点间距，防止两个 span 粘在一起 */
+  .scroll-row span {
+    padding-right: 0.2em; 
+  }
+
+  /* 逻辑修正：
+     为了无缝，动画必须移动正好 50% 的距离（因为我们有两个 span，总宽度是 200%，移动 50% 等于移动了一个 span 的长度）。
+  */
+
+  /* 第一行和第三行：向左移动 (文字看起来往左跑) */
   .left-to-right {
-    animation: scroll-l 40s linear infinite;
+    animation: scroll-left 60s linear infinite; /* 时间调慢点更优雅 */
   }
 
-  /* 向右滚动动画 */
+  /* 第二行：向右移动 (文字看起来往右跑) */
   .right-to-left {
-    animation: scroll-r 45s linear infinite;
+    animation: scroll-right 65s linear infinite;
   }
 
-  @keyframes scroll-l {
+  @keyframes scroll-left {
     0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    100% { transform: translateX(-50%); } /* 移动总宽度的 50% */
   }
 
-  @keyframes scroll-r {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
+  @keyframes scroll-right {
+    0% { transform: translateX(-50%); } /* 从 -50% 开始 */
+    100% { transform: translateX(0); }  /* 移动回 0 */
   }
 
-  /* 响应式调整：手机端字号减小 */
+  /* 响应式调整 */
   @media (max-width: 768px) {
     .scroll-row { font-size: 4rem; }
     h1 { font-size: 3rem !important; }
