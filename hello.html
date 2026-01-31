@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-EN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Private Message - Hang Lin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         :root { --apple-blue: #0071e3; }
         body { 
@@ -28,12 +29,12 @@
         }
         .back-link:hover { color: #1d1d1f; transform: translateX(-3px); }
 
-        input { 
+        input, textarea { 
             border-radius: 15px !important; padding: 12px 20px !important; 
-            border: 1px solid #ddd !important; margin-bottom: 15px; text-align: center; 
+            border: 1px solid #ddd !important; margin-bottom: 15px; 
         }
+        input { text-align: center; }
 
-        /* 核心：将 text 输入框模拟成圆点密码，但不锁定输入法 */
         .custom-password {
             -webkit-text-security: disc !important;
             text-security: disc !important;
@@ -44,6 +45,20 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         .hint-text { color: var(--apple-blue); font-weight: 600; margin: 20px 0; font-size: 1.1rem; line-height: 1.5; }
+
+        /* 回复框样式 */
+        .reply-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: left;
+        }
+        .reply-label {
+            font-size: 0.9rem;
+            color: #86868b;
+            margin-bottom: 8px;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -80,10 +95,24 @@
         <div class="mb-2"><span class="badge rounded-pill bg-success px-3">Unlocked</span></div>
         <h4 id="display-name" class="fw-bold text-dark"></h4>
         <p id="message-text" class="text-secondary mt-3" style="font-size: 1.1rem; white-space: pre-line;"></p>
+        
+        <div class="reply-section">
+            <span class="reply-label">Leave a reply back to me:</span>
+            <textarea id="replyMsg" class="form-control" rows="3" placeholder="Say something..."></textarea>
+            <button id="btn-send" onclick="sendReply()" class="btn btn-sm btn-dark rounded-pill px-4 mt-2">Send Reply</button>
+            <p id="reply-status" class="small mt-2" style="display:none;"></p>
+        </div>
+
         <hr class="my-4">
         <button onclick="location.reload()" class="btn btn-sm btn-outline-secondary rounded-pill px-4">Exit</button>
     </div>
 </div>
+
+<script>
+    // 3. 初始化 EmailJS (替换为你自己的 ID !!!)
+    (function() {
+        emailjs.init("service_hanglin33"); // 替换这里：例如 "user_xyz123..."
+    })();
 
 <script>
     // 数据配置
@@ -238,7 +267,7 @@
         },
     };
 
-    let currentUserHash = "";
+let currentUserHash = "";
 
     function findUser() {
         const rawName = document.getElementById('friendName').value.trim();
@@ -265,6 +294,9 @@
         const answer = document.getElementById('secretKey').value.trim();
         if (!answer) return;
 
+        // 如果你没有填满所有数据，这里可能会报错，建议加上 database 判断
+        if (!database[currentUserHash]) return;
+
         try {
             const bytes = CryptoJS.AES.decrypt(database[currentUserHash].msg, answer);
             const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
@@ -282,8 +314,51 @@
                 alert("答案不对哦，请检查是否包含空格或标点。");
             }
         } catch (e) {
+            console.error(e);
             alert("解锁失败，请确保答案正确。");
         }
+    }
+
+    // 4. 发送留言功能
+    function sendReply() {
+        const replyText = document.getElementById('replyMsg').value.trim();
+        const senderName = document.getElementById('friendName').value.trim();
+        const btn = document.getElementById('btn-send');
+        const status = document.getElementById('reply-status');
+
+        if (!replyText) {
+            alert("Please write something first!");
+            return;
+        }
+
+        // UI 变为发送中状态
+        btn.disabled = true;
+        btn.innerText = "Sending...";
+
+        // 发送参数 (对应 EmailJS 模板里的 {{from_name}} 和 {{message}})
+        const templateParams = {
+            from_name: senderName,
+            message: replyText
+        };
+
+        // 替换为你的 Service ID 和 Template ID
+        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+            .then(function() {
+                // 成功
+                status.style.display = "block";
+                status.style.color = "green";
+                status.innerText = "Message sent successfully! Hang will see it soon.";
+                btn.innerText = "Sent";
+                document.getElementById('replyMsg').value = ""; // 清空输入框
+            }, function(error) {
+                // 失败
+                console.log('FAILED...', error);
+                status.style.display = "block";
+                status.style.color = "red";
+                status.innerText = "Failed to send. Please try again.";
+                btn.disabled = false;
+                btn.innerText = "Send Reply";
+            });
     }
 </script>
 </body>
