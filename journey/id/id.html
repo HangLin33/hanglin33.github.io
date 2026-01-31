@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-EN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -86,6 +86,40 @@
         .city-card:hover .explore-btn { background: white; color: black; }
 
         @media (max-width: 768px) { .city-card { height: 450px; } }
+
+/* --- 🌟 核心功能：处理无照片的样式 (No Photo Style) --- */
+        
+        /* 1. 基础背景设置 */
+        .city-card.no-photo .card-bg {
+            background-image: none !important; 
+            background: linear-gradient(135deg, #3a3a3c 0%, #1c1c1e 100%); /*稍微调亮了一点起始色*/
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 2. 关键修复：在无图模式下，隐藏那层黑色渐变遮罩 */
+        /* 这样背景里的文字就不会被挡住，且背景色会更纯净 */
+        .city-card.no-photo .overlay {
+            display: none;
+        }
+
+        /* 3. 调整文字样式 */
+        .city-card.no-photo .card-bg::after {
+            content: "Image Coming Soon"; 
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem; /* 字体稍微加大 */
+            
+            /* 关键修复：颜色调亮 */
+            /* 之前是 0.05 (太淡)，现在改为 0.15 (清晰可见的水印感) */
+            color: rgba(255, 255, 255, 0.15); 
+            
+            font-style: italic;
+            letter-spacing: 2px;
+            transform: rotate(-5deg);
+            white-space: nowrap; /* 防止文字换行 */
+        }
+        
     </style>
 </head>
 <body>
@@ -98,13 +132,13 @@
     </header>
 
     <div class="journey-grid">
-        <a href="bali.html" class="city-card">
+        <a href="bali.html" class="city-card no-photo">
             <div class="card-bg" style="background-image: url('../../img/id/bali.jpg');"></div>
             <div class="overlay"></div>
             <div class="city-info">
                 <p>SPIRITUAL SANCTUARY</p>
                 <h2>Bali</h2>
-                <div class="explore-btn">Enter the Island</div>
+                <div class="explore-btn">Comming Soon</div>
             </div>
         </a>
     </div>
