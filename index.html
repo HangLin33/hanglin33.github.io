@@ -414,123 +414,279 @@
       }
     </style>
 
+<div id="projects" class="section container-fluid bg-light" style="padding: 80px 0;">
+  <div class="section-inner-container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+    
+    <div class="mb-5 text-center">
+      <h2 style="color: #1d1d1f; font-weight: 700; letter-spacing: -0.02em;">Research & Projects</h2>
+      <p style="color: #86868b; font-size: 1.1rem;">Click on any card to flip and explore research methodologies & key findings.</p>
+    </div>
+
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
       
       <div class="col">
-        <div class="project-card">
-          <div class="card-header-top">
-            <span class="domain-tag">Data Mining</span>
-            <span class="tool-badge">Python / XGBoost</span>
+        <div class="flip-card" onclick="this.classList.toggle('is-flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <span class="category-tag">Data Mining</span>
+              <h5 class="fw-bold mt-2">Demand Forecasting</h5>
+              <div class="card-footer-mini mt-auto"><span class="badge bg-dark">Python (XGBoost)</span> <i class="bi bi-arrow-repeat"></i></div>
+            </div>
+            <div class="flip-card-back">
+              <h6 class="fw-bold mb-3 border-bottom pb-2">Key Findings</h6>
+              <ul class="list-unstyled small text-start">
+                <li class="mb-2"><strong>Model:</strong> Forecasted sector-level demand on 5k+ records to capture nonlinear market dynamics.</li>
+                <li><strong>Optimization:</strong> Mitigated model overfitting using Ridge/Lasso regularization, optimizing prediction pipelines for robust data forecasting.</li>
+              </ul>
+            </div>
           </div>
-          <h5 class="project-title">Demand Forecasting & Data Mining</h5>
-          <ul class="project-bullets">
-            <li>Forecasted sector-level demand on 5k+ records to capture nonlinear market dynamics.</li>
-            <li>Mitigated model overfitting using Ridge/Lasso regularization, optimizing prediction pipelines.</li>
-          </ul>
         </div>
       </div>
 
       <div class="col">
-        <div class="project-card">
-          <div class="card-header-top">
-            <span class="domain-tag">Applied Analytics</span>
-            <span class="tool-badge">R / OLS</span>
+        <div class="flip-card" onclick="this.classList.toggle('is-flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <span class="category-tag">Applied Analytics</span>
+              <h5 class="fw-bold mt-2">Digital Behavior Insights</h5>
+              <div class="card-footer-mini mt-auto"><span class="badge bg-dark">R / OLS</span> <i class="bi bi-arrow-repeat"></i></div>
+            </div>
+            <div class="flip-card-back">
+              <h6 class="fw-bold mb-3 border-bottom pb-2">Key Findings</h6>
+              <ul class="list-unstyled small text-start">
+                <li class="mb-2"><strong>Analysis:</strong> Analyzed digital purchasing behaviors using R, applying OLS models and bootstrap simulations (1,000+ iterations).</li>
+                <li><strong>Impact:</strong> Translated raw survey data into actionable insights, identifying key metrics driving user engagement and conversion.</li>
+              </ul>
+            </div>
           </div>
-          <h5 class="project-title">Digital Behavior & Conversion</h5>
-          <ul class="project-bullets">
-            <li>Analyzed digital purchasing behaviors using R, applying OLS models and bootstrap simulations (1k+ iterations).</li>
-            <li>Translated raw survey data into actionable insights, identifying key metrics driving user engagement.</li>
-          </ul>
         </div>
       </div>
 
       <div class="col">
-        <div class="project-card">
-          <div class="card-header-top">
-            <span class="domain-tag">Digital Strategy</span>
-            <span class="tool-badge">VR / AI</span>
+        <div class="flip-card" onclick="this.classList.toggle('is-flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <span class="category-tag">Digital Strategy</span>
+              <h5 class="fw-bold mt-2">AI/VR Product Ecosystems</h5>
+              <div class="card-footer-mini mt-auto"><span class="badge bg-dark">Strategy</span> <i class="bi bi-arrow-repeat"></i></div>
+            </div>
+            <div class="flip-card-back">
+              <h6 class="fw-bold mb-3 border-bottom pb-2">Key Findings</h6>
+              <ul class="list-unstyled small text-start">
+                <li class="mb-2"><strong>Design:</strong> Designed B2B governance for a VR/AI ecosystem, mapping out scalable enterprise revenue models and privacy policies.</li>
+                <li><strong>Execution:</strong> Conducted strategic analysis to align technical features with institutional needs and deployment goals.</li>
+              </ul>
+            </div>
           </div>
-          <h5 class="project-title">AI/VR Product Strategy & Ecosystems</h5>
-          <ul class="project-bullets">
-            <li>Designed B2B governance for a VR/AI ecosystem, mapping scalable enterprise revenue models.</li>
-            <li>Conducted strategic ecosystem analysis to align technical features with market deployment goals.</li>
-          </ul>
         </div>
       </div>
 
       <div class="col">
-        <div class="project-card">
-          <div class="card-header-top">
-            <span class="domain-tag">Econometrics</span>
-            <span class="tool-badge">OLS / AIC</span>
+        <div class="flip-card" onclick="this.classList.toggle('is-flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <span class="category-tag">Econometrics</span>
+              <h5 class="fw-bold mt-2">Pricing Determinants</h5>
+              <div class="card-footer-mini mt-auto"><span class="badge bg-dark">Data Diagnostics</span> <i class="bi bi-arrow-repeat"></i></div>
+            </div>
+            <div class="flip-card-back">
+              <h6 class="fw-bold mb-3 border-bottom pb-2">Key Findings</h6>
+              <ul class="list-unstyled small text-start">
+                <li class="mb-2"><strong>Model:</strong> Built multivariable pricing models via OLS regression, evaluating product attributes for price elasticity.</li>
+                <li><strong>Cleaning:</strong> Diagnosed and resolved data irregularities (heteroskedasticity/multicollinearity) using AIC/BIC criteria.</li>
+              </ul>
+            </div>
           </div>
-          <h5 class="project-title">Pricing Determinants & Diagnostics</h5>
-          <ul class="project-bullets">
-            <li>Built multivariable pricing models via OLS regression to determine product price elasticity.</li>
-            <li>Diagnosed and resolved data irregularities (heteroskedasticity/multicollinearity) using AIC/BIC criteria.</li>
-          </ul>
         </div>
       </div>
 
       <div class="col">
-        <div class="project-card">
-          <div class="card-header-top">
-            <span class="domain-tag">Risk Management</span>
-            <span class="tool-badge">Financial Modeling</span>
+        <div class="flip-card" onclick="this.classList.toggle('is-flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <span class="category-tag">Corporate Finance</span>
+              <h5 class="fw-bold mt-2">Financial Risk Valuation</h5>
+              <div class="card-footer-mini mt-auto"><span class="badge bg-dark">Modeling</span> <i class="bi bi-arrow-repeat"></i></div>
+            </div>
+            <div class="flip-card-back">
+              <h6 class="fw-bold mb-3 border-bottom pb-2">Key Findings</h6>
+              <ul class="list-unstyled small text-start">
+                <li class="mb-2"><strong>Metrics:</strong> Quantified financial risk calculating Macaulay duration/convexity effects, evaluating NPV/IRR viability.</li>
+                <li><strong>Sensitivity:</strong> Modeled interest rate sensitivities to assess asset stability, applying quantitative risk management.</li>
+              </ul>
+            </div>
           </div>
-          <h5 class="project-title">Financial Risk Valuation & Modeling</h5>
-          <ul class="project-bullets">
-            <li>Quantified financial risk via Macaulay duration and convexity, evaluating viability via NPV/IRR.</li>
-            <li>Modeled interest rate sensitivities to assess asset valuation stability and manage structural risk.</li>
-          </ul>
         </div>
       </div>
 
       <div class="col">
-        <div class="project-card">
-          <div class="card-header-top">
-            <span class="domain-tag">Macroeconomics</span>
-            <span class="tool-badge">VAR Model</span>
+        <div class="flip-card" onclick="this.classList.toggle('is-flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <span class="category-tag">Macroeconomics</span>
+              <h5 class="fw-bold mt-2">Policy Response Analysis</h5>
+              <div class="card-footer-mini mt-auto"><span class="badge bg-dark">VAR Model</span> <i class="bi bi-arrow-repeat"></i></div>
+            </div>
+            <div class="flip-card-back">
+              <h6 class="fw-bold mb-3 border-bottom pb-2">Key Findings</h6>
+              <ul class="list-unstyled small text-start">
+                <li class="mb-2"><strong>Framework:</strong> Modeled dynamic market responses to policy shocks using a Vector Autoregression (VAR) framework.</li>
+                <li><strong>Impact:</strong> Processed macroeconomic time-series data to evaluate structural tools on industrial output.</li>
+              </ul>
+            </div>
           </div>
-          <h5 class="project-title">Macro-Policy Dynamic Response</h5>
-          <ul class="project-bullets">
-            <li>Modeled dynamic market responses to policy shocks using a Vector Autoregression (VAR) framework.</li>
-            <li>Processed macroeconomic time-series data to evaluate the impact of structural tools on industrial output.</li>
-          </ul>
         </div>
       </div>
 
       <div class="col">
-        <div class="project-card">
-          <div class="card-header-top">
-            <span class="domain-tag">Qualitative Research</span>
-            <span class="tool-badge">UX / AI</span>
+        <div class="flip-card" onclick="this.classList.toggle('is-flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <span class="category-tag">Qualitative Research</span>
+              <h5 class="fw-bold mt-2">UX & AI Efficiency</h5>
+              <div class="card-footer-mini mt-auto"><span class="badge bg-dark">Interviews</span> <i class="bi bi-arrow-repeat"></i></div>
+            </div>
+            <div class="flip-card-back">
+              <h6 class="fw-bold mb-3 border-bottom pb-2">Key Findings</h6>
+              <ul class="list-unstyled small text-start">
+                <li class="mb-2"><strong>Execution:</strong> Evaluated AI agent efficiency vs search engines via interviews, applying thematic coding to user data.</li>
+                <li><strong>Synthesis:</strong> Synthesized feedback to identify problem-solving bottlenecks, delivering actionable UX metrics.</li>
+              </ul>
+            </div>
           </div>
-          <h5 class="project-title">Qualitative UX & AI Efficiency</h5>
-          <ul class="project-bullets">
-            <li>Evaluated AI agent efficiency vs search engines via interviews and thematic coding of user data.</li>
-            <li>Synthesized qualitative feedback to identify bottlenecks, delivering actionable UX improvement metrics.</li>
-          </ul>
         </div>
       </div>
 
       <div class="col">
-        <div class="project-card">
-          <div class="card-header-top">
-            <span class="domain-tag">Macro Modeling</span>
-            <span class="tool-badge">Solow Model</span>
+        <div class="flip-card" onclick="this.classList.toggle('is-flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <span class="category-tag">Economic Modeling</span>
+              <h5 class="fw-bold mt-2">Cross-Country Capital</h5>
+              <div class="card-footer-mini mt-auto"><span class="badge bg-dark">Solow Model</span> <i class="bi bi-arrow-repeat"></i></div>
+            </div>
+            <div class="flip-card-back">
+              <h6 class="fw-bold mb-3 border-bottom pb-2">Key Findings</h6>
+              <ul class="list-unstyled small text-start">
+                <li class="mb-2"><strong>Tracking:</strong> Analyzed cross-country accumulation using datasets and the Solow growth model to track productivity.</li>
+                <li><strong>Evaluation:</strong> Evaluated the impact of historical economic shocks on long-term GDP trajectories and structural resilience.</li>
+              </ul>
+            </div>
           </div>
-          <h5 class="project-title">Cross-Country Economic Modeling</h5>
-          <ul class="project-bullets">
-            <li>Analyzed capital accumulation using macroeconomic datasets and the Solow growth model.</li>
-            <li>Evaluated the impact of historical economic shocks on long-term GDP trajectories and resilience.</li>
-          </ul>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="flip-card" onclick="this.classList.toggle('is-flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <span class="category-tag">Business Analytics</span>
+              <h5 class="fw-bold mt-2">ESG & Corporate Analytics</h5>
+              <div class="card-footer-mini mt-auto"><span class="badge bg-dark">R (Tidyverse)</span> <i class="bi bi-arrow-repeat"></i></div>
+            </div>
+            <div class="flip-card-back">
+              <h6 class="fw-bold mb-3 border-bottom pb-2">Key Findings</h6>
+              <ul class="list-unstyled small text-start">
+                <li class="mb-2"><strong>Analysis:</strong> Analyzed market shock impacts on corporate valuations using R and USD-adjusted financial datasets.</li>
+                <li><strong>Reporting:</strong> Developed executive-level data visualizations via ggplot2 to translate complex ESG metrics into insights.</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
     </div>
   </div>
 </div>
+
+<style>
+  /* ====== 3D Flip Card Styles ====== */
+  
+  .flip-card {
+    background-color: transparent;
+    height: 260px; /* 固定高度确保网格整齐 */
+    perspective: 1000px; /* 创造 3D 空间深度感 */
+    cursor: pointer;
+  }
+
+  /* 悬浮时的轻微上浮提示 */
+  .flip-card:hover .flip-card-inner:not(.is-flipped) {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  }
+
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1), box-shadow 0.6s ease;
+    transform-style: preserve-3d;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+  }
+
+  /* 点击反转并放大的核心动画 */
+  .flip-card.is-flipped .flip-card-inner {
+    transform: rotateY(180deg) scale(1.08); /* 旋转 180 度，并放大 8% */
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15); /* 放大时的深阴影，增加悬浮感 */
+    z-index: 100; /* 确保放大时覆盖在其他卡片之上 */
+  }
+
+  /* 正面和背面的共同样式 */
+  .flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Safari 兼容 */
+    backface-visibility: hidden;
+    border-radius: 20px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+
+  /* 正面专属样式 */
+  .flip-card-front {
+    background-color: #ffffff;
+    align-items: flex-start; /* 内容靠左对齐 */
+    text-align: left;
+  }
+
+  /* 背面专属样式 */
+  .flip-card-back {
+    background-color: #f8f9fc; /* Apple 的浅灰色背景 */
+    color: #1d1d1f;
+    transform: rotateY(180deg); /* 初始状态是反过来的 */
+    overflow-y: auto; /* 如果文字太多允许内部滚动 */
+  }
+  
+  /* 美化背面滚动条 */
+  .flip-card-back::-webkit-scrollbar { width: 4px; }
+  .flip-card-back::-webkit-scrollbar-thumb { background: #d2d2d7; border-radius: 10px; }
+
+  /* 标签和小部件样式 */
+  .category-tag {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #0071e3; /* Apple Blue */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .card-footer-mini {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #86868b;
+  }
+  
+  /* 确保父容器在放大时不会被裁剪 */
+  .col { z-index: 1; transition: z-index 0s step-end 0.6s; }
+  .col:has(.is-flipped) { z-index: 10; transition: z-index 0s step-start; }
+</style>
 
 <style>
   /* 核心自定义样式 - 直接放入 index.html 的 <style> 块 */
