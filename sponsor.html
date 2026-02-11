@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsor | Hang Lin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root { 
+            --apple-blue: #0071e3; 
+            --apple-green: #34c759; /* 微信绿 */
+            --apple-blue-alipay: #00a1e9; /* 支付宝蓝 */
+        }
+        
+        body { 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
+            min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif; 
+            margin: 0; padding: 20px;
+        }
+
+        /* 导航返回 */
+        .back-link { 
+            position: absolute; top: 30px; left: 30px; text-decoration: none; 
+            color: #86868b; font-size: 15px; transition: 0.3s; font-weight: 500;
+        }
+        .back-link:hover { color: #1d1d1f; transform: translateX(-3px); }
+
+        /* 核心：玻璃拟态卡片 */
+        .sponsor-card { 
+            background: rgba(255, 255, 255, 0.7); 
+            backdrop-filter: blur(25px) saturate(180%); 
+            -webkit-backdrop-filter: blur(25px) saturate(180%); 
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 30px; padding: 40px; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08); 
+            max-width: 420px; width: 100%; 
+            text-align: center; position: relative; 
+            animation: slideUp 0.6s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+        }
+
+        @keyframes slideUp { 
+            from { opacity: 0; transform: translateY(30px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        .sponsor-card h2 { font-weight: 700; color: #1d1d1f; margin-bottom: 10px; letter-spacing: -0.02em; }
+        .sponsor-card p { color: #86868b; font-size: 0.95rem; margin-bottom: 30px; line-height: 1.5; }
+
+        /* iOS 风格的 Segmented Control (分段控制器) */
+        .toggle-container {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 14px;
+            display: flex;
+            padding: 4px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 10px 0;
+            border: none;
+            background: transparent;
+            font-size: 15px;
+            font-weight: 600;
+            color: #86868b;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* 选中状态的滑块背景 */
+        .toggle-bg {
+            position: absolute;
+            top: 4px; left: 4px;
+            width: calc(50% - 4px);
+            height: calc(100% - 8px);
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1;
+        }
+
+        .toggle-btn.active.wechat { color: var(--apple-green); }
+        .toggle-btn.active.alipay { color: var(--apple-blue-alipay); }
+
+        /* 二维码展示区 */
+        .qr-wrapper {
+            background: white;
+            padding: 15px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            display: inline-block;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: opacity 0.3s ease;
+        }
+
+        /* 底部感谢语 */
+        .thank-you {
+            font-size: 0.85rem;
+            color: #a1a1a6;
+            margin-top: 10px;
+        }
+
+        .coffee-btn {
+            margin-top: 25px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            background: #FFDD00; color: #000; font-weight: 600; text-decoration: none;
+            padding: 12px 24px; border-radius: 20px; font-size: 0.9rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .coffee-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 221, 0, 0.4); color: #000;}
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-link"><i class="bi bi-arrow-left"></i> Home</a>
+
+    <div class="sponsor-card">
+        <h2>Buy me a coffee ☕️</h2>
+        <p>If you enjoy my work, consider supporting me. Your tip fuels my late-night coding and next journey!</p>
+
+        <div class="toggle-container">
+            <div class="toggle-bg" id="toggle-bg"></div>
+            <button class="toggle-btn active wechat" onclick="switchQR('wechat')">
+                <i class="bi bi-wechat"></i> WeChat Pay
+            </button>
+            <button class="toggle-btn alipay" onclick="switchQR('alipay')">
+                <i class="bi bi-alipay"></i> Alipay
+            </button>
+        </div>
+
+        <div class="qr-wrapper">
+            <img id="qr-img" class="qr-code" src="assets/img/qr-wechat.jpg" alt="Scan to tip">
+        </div>
+
+        <div class="thank-you" id="thank-msg">
+            Scan with WeChat to support
+        </div>
+
+        <a href="https://www.buymeacoffee.com/yourusername" target="_blank" class="coffee-btn">
+            🌍 Global / Credit Card
+        </a>
+    </div>
+
+    <script>
+        // 配置你的二维码图片路径
+        const qrData = {
+            wechat: {
+                src: "assets/img/qr-wechat.jpg", // ⚠️ 替换成你的微信收款码路径
+                msg: "Scan with WeChat to support",
+                transform: "translateX(0)"
+            },
+            alipay: {
+                src: "assets/img/qr-alipay.jpg", // ⚠️ 替换成你的支付宝收款码路径
+                msg: "Scan with Alipay to support",
+                transform: "translateX(100%)" // 滑块移动到右边
+            }
+        };
+
+        function switchQR(type) {
+            const img = document.getElementById('qr-img');
+            const bg = document.getElementById('toggle-bg');
+            const msg = document.getElementById('thank-msg');
+            const btns = document.querySelectorAll('.toggle-btn');
+
+            // 1. 切换按钮激活状态
+            btns.forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.toggle-btn.${type}`).classList.add('active');
+
+            // 2. 移动白色滑块背景
+            bg.style.transform = qrData[type].transform;
+
+            // 3. 淡出二维码 -> 替换图片 -> 淡入二维码
+            img.style.opacity = 0;
+            setTimeout(() => {
+                img.src = qrData[type].src;
+                msg.innerText = qrData[type].msg;
+                img.style.opacity = 1;
+            }, 300); // 等待淡出动画完成
+        }
+    </script>
+</body>
+</html>
