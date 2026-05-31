@@ -1,0 +1,129 @@
+        :root { 
+            --apple-blue: #0071e3; 
+            --apple-green: #34c759; /* 微信绿 */
+            --apple-blue-alipay: #00a1e9; /* 支付宝蓝 */
+        }
+        
+        body { 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
+            min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif; 
+            margin: 0; padding: 20px;
+        }
+
+        /* 导航返回 */
+        .back-link { 
+            position: absolute; top: 30px; left: 30px; text-decoration: none; 
+            color: #86868b; font-size: 15px; transition: 0.3s; font-weight: 500;
+        }
+        .back-link:hover { color: #1d1d1f; transform: translateX(-3px); }
+
+        /* 核心：玻璃拟态卡片 */
+        .sponsor-card { 
+            background: rgba(255, 255, 255, 0.7); 
+            backdrop-filter: blur(25px) saturate(180%); 
+            -webkit-backdrop-filter: blur(25px) saturate(180%); 
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 30px; 
+            padding: 50px 40px; /* 增加了上下内边距，让卡片更大气 */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08); 
+            max-width: 500px; /* 进一步放大卡片最大宽度 */
+            width: 100%; 
+            text-align: center; 
+            position: relative; 
+            animation: slideUp 0.6s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+        }
+
+        @keyframes slideUp { 
+            from { opacity: 0; transform: translateY(30px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        .sponsor-card h2 { font-weight: 700; font-size: 2rem; color: #1d1d1f; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .sponsor-card p { color: #86868b; font-size: 1.05rem; margin-bottom: 30px; line-height: 1.5; }
+
+        /* iOS 风格的 Segmented Control (分段控制器) */
+        .toggle-container {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 14px;
+            display: flex;
+            padding: 5px;
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 12px 0; /* 加高了按钮 */
+            border: none;
+            background: transparent;
+            font-size: 16px; /* 放大了按钮字体 */
+            font-weight: 600;
+            color: #86868b;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* 选中状态的滑块背景 */
+        .toggle-bg {
+            position: absolute;
+            top: 5px; left: 5px;
+            width: calc(50% - 5px);
+            height: calc(100% - 10px);
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1;
+        }
+
+        .toggle-btn.active.wechat { color: var(--apple-green); }
+        .toggle-btn.active.alipay { color: var(--apple-blue-alipay); }
+
+        /* 二维码展示区 */
+        .qr-wrapper {
+            background: white;
+            padding: 20px; /* 增加了白底边框的厚度 */
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            display: inline-block;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        /* 核心修复：放大了二维码的尺寸 */
+        .qr-code {
+            width: 280px;  /* 从 200px 变更为 280px */
+            height: 280px; /* 从 200px 变更为 280px */
+            object-fit: cover;
+            border-radius: 12px;
+            transition: opacity 0.3s ease;
+        }
+
+        /* 底部感谢语 */
+        .thank-you {
+            font-size: 0.95rem; /* 放大了提示文字 */
+            color: #a1a1a6;
+            margin-top: 10px;
+        }
+
+        .coffee-btn {
+            margin-top: 30px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            background: #FFDD00; color: #000; font-weight: 600; text-decoration: none;
+            padding: 14px 28px; border-radius: 25px; font-size: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .coffee-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 221, 0, 0.4); color: #000;}
+        
+        @media (max-width: 500px) {
+            .qr-code { width: 230px; height: 230px; } /* 手机屏幕上稍微缩小，防溢出 */
+            .sponsor-card { padding: 40px 20px; }
+        }

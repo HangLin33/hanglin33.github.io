@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel: London | Hang Lin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            /* Apple 风格配色 & 玻璃拟态变量 */
+            --bg-color: #f0f2f5;       /* 稍微深一点的背景，凸显玻璃感 */
+            /* 核心：玻璃画框背景色 (半透明白) */
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            /* 核心：玻璃边缘高光 */
+            --glass-border: 1px solid rgba(255, 255, 255, 0.5);
+            /* 核心：更深邃的玻璃阴影 */
+            --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            --shadow-glass-hover: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+            --text-main: #1d1d1f;
+            --text-sub: #86868b;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            /* 增加一个微妙的渐变背景，让玻璃效果更明显 */
+            background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+            color: var(--text-main);
+            margin: 0;
+            padding-top: 60px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- 导航栏 --- */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            height: 60px;
+            position: fixed;
+            top: 0; width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .brand-logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .close-btn {
+            color: var(--text-main);
+            border: 1px solid rgba(0,0,0,0.2);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .close-btn:hover {
+            background: var(--text-main);
+            color: white;
+            border-color: var(--text-main);
+        }
+
+        /* --- 页面大标题动画 --- */
+        /* 定义弹性弹出动画关键帧 */
+        @keyframes title-pop-in {
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+            60% { opacity: 1; transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .hero-header {
+            text-align: center;
+            padding: 100px 20px 60px;
+        }
+        .hero-header h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.03em;
+            /* 应用动画：时长0.8s，使用弹性贝塞尔曲线 */
+            animation: title-pop-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            opacity: 0; /* 初始隐藏 */
+        }
+        .hero-header p {
+            font-size: 1.3rem;
+            color: var(--text-sub);
+            font-weight: 400;
+            animation: title-pop-in 0.8s ease-out 0.2s forwards; /* 延迟一点出现 */
+            opacity: 0;
+        }
+
+        /* --- 分区样式 (Sticky Header) --- */
+        .gallery-section { margin-bottom: 80px; }
+        .section-header {
+            position: sticky; top: 60px; z-index: 800;
+            background: rgba(245, 245, 247, 0.85);
+            backdrop-filter: blur(15px); /* 增强模糊 */
+            -webkit-backdrop-filter: blur(15px);
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 30px;
+        }
+        .header-inner {
+            max-width: 1400px; margin: 0 auto; padding: 0 40px;
+            display: flex; align-items: baseline; gap: 15px;
+        }
+        .section-header h2 { font-size: 1.8rem; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+        .section-header span { font-size: 0.95rem; color: var(--text-sub); }
+
+        /* --- 瀑布流网格 --- */
+        .gallery-grid {
+            column-count: 3; column-gap: 40px;
+            max-width: 1400px; margin: 0 auto; padding: 0 40px;
+        }
+
+        /* --- 核心：玻璃拟态画框卡片 --- */
+        .photo-card {
+            break-inside: avoid;
+            /* 玻璃背景 */
+            background: var(--glass-bg);
+            /* 核心：毛玻璃模糊效果 */
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            /* 玻璃边框高光 */
+            border: var(--glass-border);
+            
+            padding: 12px;
+            border-radius: 16px; /* 更圆润一点 */
+            margin-bottom: 40px;
+            /* 玻璃阴影 */
+            box-shadow: var(--shadow-glass);
+            
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        box-shadow 0.4s ease, background 0.4s;
+            cursor: zoom-in; /* 鼠标变成放大镜提示可点击 */
+            
+            /* 初始隐藏，用于滚动入场动画 */
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+        }
+
+        .photo-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .photo-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-glass-hover);
+            background: rgba(255, 255, 255, 0.75); /* hover 时稍微亮一点 */
+            z-index: 2;
+        }
+
+        .photo-card img {
+            width: 100%; height: auto; display: block;
+            border-radius: 6px;
+            /* 给图片本身加一点点内阴影，更有嵌入感 */
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .caption { margin-top: 12px; padding: 0 4px; }
+        .caption h4 { font-size: 0.95rem; font-weight: 600; margin: 0 0 2px 0; color: var(--text-main); }
+        .caption p { font-size: 0.8rem; color: var(--text-sub); margin: 0; }
+
+        /* --- Lightbox (全屏灯箱) 样式 --- */
+        #lightbox {
+            position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); /* 深色背景强调内容 */
+            backdrop-filter: blur(20px); /* 背景极其模糊 */
+            -webkit-backdrop-filter: blur(20px);
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; /* 初始不可见不可点 */
+            transition: opacity 0.3s ease;
+        }
+        #lightbox.active { opacity: 1; pointer-events: all; }
+
+        #lightbox img {
+            max-width: 90%; max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        #lightbox.active img { transform: scale(1); } /* 图片弹出动画 */
+
+        #lightbox-close {
+            position: absolute; top: 30px; right: 40px;
+            color: white; font-size: 2rem; cursor: pointer;
+            transition: transform 0.2s;
+        }
+        #lightbox-close:hover { transform: scale(1.1); }
+
+        /* --- 响应式适配 --- */
+        @media (max-width: 1024px) { .gallery-grid { column-count: 2; column-gap: 30px; } }
+        @media (max-width: 768px) {
+            .nav-container { padding: 0 20px; }
+            .hero-header h1 { font-size: 2.5rem; }
+            .section-header { top: 60px; }
+            .header-inner, .gallery-grid { padding: 0 20px; }
+            .gallery-grid { column-count: 1; }
+            #lightbox-close { top: 20px; right: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index.html" class="brand-logo">HANG LIN</a>
+            <a href="/journey/uk/uk.html" class="close-btn">Close</a>
+        </div>
+    </nav>
+
+    <header class="hero-header">
+        <h1>London</h1>
+        <p>Fragments from a city that never settles.</p>
+    </header>
+
+<section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Light and Shadow</h2>
+                <span>London Out of Focus</span>
+            </div>
+        </div>
+        
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/light/london-lightbridge.jpg" alt="Light and Shadow">
+                <div class="caption">
+                    <h4>Tower Bridge</h4>
+                    <p>August 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/light/london-lighteye.jpg" alt="Light and Shadow">
+                <div class="caption">
+                    <h4>London Eye</h4>
+                    <p>August 2022</p>
+                </div>
+            </div>
+        
+            <div class="photo-card">
+                <img src="../../img/uk/london/light/london-lightvauxhall.jpg" alt="Light and Shadow">
+                <div class="caption">
+                    <h4>Vauxhall</h4>
+                    <p>August 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/light/london-lightbell.jpg" alt="Light and Shadow">
+                <div class="caption">
+                    <h4>Big Ben</h4>
+                    <p>August 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/light/london-lightbank.jpg" alt="Light and Shadow">
+                <div class="caption">
+                    <h4>Bank</h4>
+                    <p>August 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/light/london-lightshard.jpg" alt="Light and Shadow">
+                <div class="caption">
+                    <h4>The Shard</h4>
+                    <p>August 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/light/london-lightcanteen.jpg" alt="Light and Shadow">
+                <div class="caption">
+                    <h4>COPPA</h4>
+                    <p>August 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/light/london-lightucl.jpg" alt="Light and Shadow">
+                <div class="caption">
+                    <h4>UCL</h4>
+                    <p>August 2022</p>
+                </div>
+            </div>
+          
+            </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Greenwich</h2>
+                <span>Where the Journey Toward the Stars Began</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/greenwich/london-greenmansion.jpg" alt="Greenwich">
+                <div class="caption">
+                    <h4>Where the Sky Meets the City</h4>
+                    <p>June 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/greenwich/london-greenhill.jpg" alt="Greenwich">
+                <div class="caption">
+                    <h4>A City Measured in Green</h4>
+                    <p>June 2022</p>
+                </div>
+            </div>
+        
+            <div class="photo-card">
+                <img src="../../img/uk/london/greenwich/london-greenpath.jpg" alt="Greenwich">
+                <div class="caption">
+                    <h4>The Prime Meridian View</h4>
+                    <p>June 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/greenwich/london-greeno2.jpg" alt="Greenwich">
+                <div class="caption">
+                    <h4>Across Time and Water</h4>
+                    <p>June 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/greenwich/london-greencity.jpg" alt="Greenwich">
+                <div class="caption">
+                    <h4>The River That Remembers Time</h4>
+                    <p>June 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/greenwich/london-greenstatus.jpg" alt="Greenwich">
+                <div class="caption">
+                    <h4>The Watcher of Greenwich</h4>
+                    <p>June 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/greenwich/london-greentele.jpg" alt="Greenwich">
+                <div class="caption">
+                    <h4>Pointing Toward the Stars</h4>
+                    <p>June 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/greenwich/london-greeninstruments.jpg" alt="Greenwich">
+                <div class="caption">
+                    <h4>An instrument for measuring the stars</h4>
+                    <p>June 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/greenwich/london-greencable.jpg" alt="Greenwich">
+                <div class="caption">
+                    <h4>Crossing the Ordinary Sky</h4>
+                    <p>June 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/greenwich/london-greencablecar.jpg" alt="Greenwich">
+                <div class="caption">
+                    <h4>Suspended at Dusk</h4>
+                    <p>March 2024</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/greenwich/london-greeno2cable.jpg" alt="Greenwich">
+                <div class="caption">
+                    <h4>Stillness Over the Thames</h4>
+                    <p>March 2024</p>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Hyde Park</h2>
+                <span>A Quiet Chapter of London</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/hydepark/london-hydetrees.jpg" alt="Hyde Park">
+                <div class="caption">
+                    <h4>A Corridor of Falling Leaves</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/hydepark/london-hydebuoy.jpg" alt="Hyde Park">
+                <div class="caption">
+                    <h4>The Quiet Edge of the Lake</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/hydepark/london-hydeman.jpg" alt="Hyde Park">
+                <div class="caption">
+                    <h4>Feeding the Moment</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>
+            
+            <div class="photo-card">
+                <img src="../../img/uk/london/hydepark/london-hydelady.jpg" alt="Hyde Park">
+                <div class="caption">
+                    <h4>Where Humans and Wings Meet</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/hydepark/london-hydebird.jpg" alt="Hyde Park">
+                <div class="caption">
+                    <h4>Stillness on the Water</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/hydepark/london-hydelake.jpg" alt="Hyde Park">
+                <div class="caption">
+                    <h4>Rules, Broken Softly</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/hydepark/london-hydewheel.jpg" alt="Hyde Park">
+                <div class="caption">
+                    <h4>Circles in the London Sky</h4>
+                    <p>Feburary 2022</p>
+                </div>
+            </div>
+            
+            <div class="photo-card">
+                <img src="../../img/uk/london/hydepark/london-hydegate.jpg" alt="Hyde Park">
+                <div class="caption">
+                    <h4>A Heart Beneath the Arch</h4>
+                    <p>Feburary 2022</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Regent's Park</h2>
+                <span>Where the City Learns to Breathe</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/regentspark/london-regentavenue.jpg" alt="Regent's Park">
+                <div class="caption">
+                    <h4>Where Autumn Walks in Silence</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/regentspark/london-regentgarden.jpg" alt="Regent's Park">
+                <div class="caption">
+                    <h4>Autumn, Carefully Arranged</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/regentspark/london-regentbird.jpg" alt="Regent's Park">
+                <div class="caption">
+                    <h4>A Pause Between Wings and Leaves</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/regentspark/london-regentautumn.jpg" alt="Regent's Park">
+                <div class="caption">
+                    <h4>An Autumn Corridor of Time</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/regentspark/london-regentleaf.jpg" alt="Regent's Park">
+                <div class="caption">
+                    <h4>The Last Leaf Holding On</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/regentspark/london-regentreader.jpg" alt="Regent's Park">
+                <div class="caption">
+                    <h4>Reading Between Seasons</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/regentspark/london-regentman.jpg" alt="Regent's Park">
+                <div class="caption">
+                    <h4>Sitting with the Afternoon</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/regentspark/london-regentcouple.jpg" alt="Regent's Park">
+                <div class="caption">
+                    <h4>Two People, One Quiet Afternoon</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/regentspark/london-regentlake.jpg" alt="Regent's Park">
+                <div class="caption">
+                    <h4>Under the Willow, the City Breathes</h4>
+                    <p>March 2023</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/regentspark/london-regentprimrose.jpg" alt="Regent's Park">
+                <div class="caption">
+                    <h4>Under the Willow, the City Breathes</h4>
+                    <p>March 2023</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/regentspark/london-regentnight.jpg" alt="Regent's Park">
+                <div class="caption">
+                    <h4>A Walk Lit by Streetlights</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>
+
+            </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Sherlock Holmes' Residence</h2>
+                <span>A Study of Mind, Matter, and Mystery</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/bakerstreet/london-bakerhome.jpg" alt="Baker Street">
+                <div class="caption">
+                    <h4>The Address That Became a Legend</h4>
+                    <p>October 2021</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/bakerstreet/london-bakerroom.jpg" alt="Baker Street">
+                <div class="caption">
+                    <h4>Where Every Object Has a Story</h4>
+                    <p>October 2021</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/bakerstreet/london-bakertable.jpg" alt="Baker Street">
+                <div class="caption">
+                    <h4>The Chemistry of Deduction</h4>
+                    <p>October 2021</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/bakerstreet/london-bakerbox.jpg" alt="Baker Street">
+                <div class="caption">
+                    <h4>A Life Packed in Silence</h4>
+                    <p>October 2021</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/bakerstreet/london-bakership.jpg" alt="Baker Street">
+                <div class="caption">
+                    <h4>Measuring Time by Curiosity</h4>
+                    <p>October 2021</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/bakerstreet/london-bakerstatus.jpg" alt="Baker Street">
+                <div class="caption">
+                    <h4>Notes Before the Conclusion</h4>
+                    <p>October 2021</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Amusement Park</h2>
+                <span>Where Joy Is Engineered</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/park/london-parkhightrain.jpg" alt="Amusement Park">
+                <div class="caption">
+                    <h4>A Structure Built for Screams</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/park/london-parkcoaster.jpg" alt="Amusement Park">
+                <div class="caption">
+                    <h4>Before the Drop</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/park/london-parktrack.jpg" alt="Amusement Park">
+                <div class="caption">
+                    <h4>Where Steel Meets Autumn</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/park/london-parkweed.jpg" alt="Amusement Park">
+                <div class="caption">
+                    <h4>Soft Things Near Fast Machines</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/park/london-parkwater.jpg" alt="Amusement Park">
+                <div class="caption">
+                    <h4>The Moment Water Erupts</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Aerial London</h2>
+                <span>London, Seen from a Distance</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/drone/london-droneriver.jpg" alt="Aerial London">
+                <div class="caption">
+                    <h4>The City Arranged by Water</h4>
+                    <p>Feburary 2022</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/drone/london-dronebridge.jpg" alt="Aerial London">
+                <div class="caption">
+                    <h4>Crossing Between Two Banks</h4>
+                    <p>Feburary 2022</p>
+                </div>
+            </div>            
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/drone/london-dronetrain.jpg" alt="Aerial London">
+                <div class="caption">
+                    <h4>Lines That Never Sleep</h4>
+                    <p>Feburary 2022</p>
+                </div>
+            </div>   
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/drone/london-dronetower.jpg" alt="Aerial London">
+                <div class="caption">
+                    <h4>Holding the River Open</h4>
+                    <p>Feburary 2022</p>
+                </div>
+            </div>   
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/drone/london-dronesnow.jpg" alt="Aerial London">
+                <div class="caption">
+                    <h4>Snow Falling Over Stone and Steel</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>              
+            
+        <div class="photo-card">
+                <img src="../../img/uk/london/drone/london-dronesunset.jpg" alt="Aerial London">
+                <div class="caption">
+                    <h4>When the City Faces the Sun</h4>
+                    <p>Feburary 2022</p>
+                </div>
+            </div>               
+
+        </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Kew Garden</h2>
+                <span>Where Time Slows and Things Grow</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/kewgarden/london-kewmansion.jpg" alt="Kew Garden">
+                <div class="caption">
+                    <h4>Still Water, Old House</h4>
+                    <p>November 2022</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/kewgarden/london-kewland.jpg" alt="Kew Garden">
+                <div class="caption">
+                    <h4>Geometry of Growth</h4>
+                    <p>November 2022</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/kewgarden/london-kewwahou.jpg" alt="Kew Garden">
+                <div class="caption">
+                    <h4>The Desert Under Glass</h4>
+                    <p>November 2022</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/kewgarden/london-kewwarm.jpg" alt="Kew Garden">
+                <div class="caption">
+                    <h4>A Palace for Plants</h4>
+                    <p>November 2022</p>
+                </div>
+            </div>   
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/kewgarden/london-kewhouse.jpg" alt="Kew Garden">
+                <div class="caption">
+                    <h4>Inside a Living Cathedral</h4>
+                    <p>November 2022</p>
+                </div>
+            </div> 
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/kewgarden/london-kewwater.jpg" alt="Kew Garden">
+                <div class="caption">
+                    <h4>Water Finds Its Way Home</h4>
+                    <p>November 2022</p>
+                </div>
+            </div> 
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/kewgarden/london-kewflower.jpg" alt="Kew Garden">
+                <div class="caption">
+                    <h4>A Rose Pausing Beneath Glass Skies</h4>
+                    <p>November 2022</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/kewgarden/london-kewforest.jpg" alt="Kew Garden">
+                <div class="caption">
+                    <h4>Where the Path Learns to Breathe</h4>
+                    <p>November 2022</p>
+                </div>
+            </div>         
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/kewgarden/london-kewpath.jpg" alt="Kew Garden">
+                <div class="caption">
+                    <h4>A Walk Toward Silence</h4>
+                    <p>November 2022</p>
+                </div>
+            </div>            
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/kewgarden/london-kewsunset.jpg" alt="Kew Garden">
+                <div class="caption">
+                    <h4>When Glass Turns Golden</h4>
+                    <p>November 2022</p>
+                </div>
+            </div>                  
+
+            </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Royal Event</h2>
+                <span>Rituals of a Living Monarchy</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/royalactivity/london-royband.jpg" alt="Royal Event">
+                <div class="caption">
+                    <h4>The Ceremony Begins</h4>
+                    <p>June 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/royalactivity/london-royguard.jpg" alt="Royal Event">
+                <div class="caption">
+                    <h4>Tradition on Horseback</h4>
+                    <p>June 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/royalactivity/london-roykate.jpg" alt="Royal Event">
+                <div class="caption">
+                    <h4>A Moment Carried Forward</h4>
+                    <p>June 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/royalactivity/london-royme.jpg" alt="Royal Event">
+                <div class="caption">
+                    <h4>Inside the Crowd</h4>
+                    <p>June 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/royalactivity/london-royflight.jpg" alt="Royal Event">
+                <div class="caption">
+                    <h4>The Sky Bears the Flag</h4>
+                    <p>June 2022</p>
+                </div>
+            </div>            
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/royalactivity/london-roylisq.jpg" alt="Royal Event">
+                <div class="caption">
+                    <h4>Where I Stand</h4>
+                    <p>September 2022</p>
+                </div>
+            </div>   
+            
+            <div class="photo-card">
+                <img src="../../img/uk/london/royalactivity/london-roywest.jpg" alt="Royal Event">
+                <div class="caption">
+                    <h4>Waiting for History</h4>
+                    <p>September 2022</p>
+                </div>
+            </div>   
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/royalactivity/london-royqueue.jpg" alt="Royal Event">
+                <div class="caption">
+                    <h4>The Long Goodbye</h4>
+                    <p>September 2022</p>
+                </div>
+            </div>   
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/royalactivity/london-royqueen.jpg" alt="Royal Event">
+                <div class="caption">
+                    <h4>The Queen in Reflection</h4>
+                    <p>September 2022</p>
+                </div>
+            </div>     
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/royalactivity/london-roymus.jpg" alt="Royal Event">
+                <div class="caption">
+                    <h4>The Sound of Continuity</h4>
+                    <p>May 2023</p>
+                </div>
+            </div>                 
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/royalactivity/london-royking.jpg" alt="Royal Event">
+                <div class="caption">
+                    <h4>The Weight of Time</h4>
+                    <p>May 2023</p>
+                </div>
+            </div>  
+
+            </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>League of Legend</h2>
+                <span>The Crowd Roars</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/lol/london-lolwin.jpg" alt="League of Legend">
+                <div class="caption">
+                    <h4>When the Game Became a Stadium</h4>
+                    <p>May 2023</p>
+                </div>
+            </div>
+
+            </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>University College London</h2>
+                <span>Where Time Studies With Us</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/ucl/london-uclwel.jpg" alt="UCL">
+                <div class="caption">
+                    <h4>The First Step Into Elsewhere</h4>
+                    <p>September 2021</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/ucl/london-uclram.jpg" alt="UCL">
+                <div class="caption">
+                    <h4>Where Everyday Life Begins</h4>
+                    <p>September 2021</p>
+                </div>
+            </div>       
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/ucl/london-uclact.jpg" alt="UCL">
+                <div class="caption">
+                    <h4>A Campus That Breathes Music</h4>
+                    <p>September 2023</p>
+                </div>
+            </div>                      
+            
+        <div class="photo-card">
+                <img src="../../img/uk/london/ucl/london-uclmain.jpg" alt="UCL">
+                <div class="caption">
+                    <h4>A Quiet Season of Becoming</h4>
+                    <p>November 2022</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/ucl/london-uclsnow.jpg" alt="UCL">
+                <div class="caption">
+                    <h4>Winter, Gathered in Light</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/ucl/london-uclaur.jpg" alt="UCL">
+                <div class="caption">
+                    <h4>Winter, Gathered in Light</h4>
+                    <p>May 2024</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/ucl/london-uclsky.jpg" alt="UCL">
+                <div class="caption">
+                    <h4>The Night Keeps Our Secrets</h4>
+                    <p>May 2024</p>
+                </div>
+            </div>              
+            
+        <div class="photo-card">
+                <img src="../../img/uk/london/ucl/london-uclgard.jpg" alt="UCL">
+                <div class="caption">
+                    <h4>Spring Finds Its Way Into Study</h4>
+                    <p>March 2024</p>
+                </div>
+            </div>    
+
+            </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>King's College London</h2>
+                <span>Learning Carved in Time</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/ucl/london-kingschur.jpg" alt="KCL">
+                <div class="caption">
+                    <h4>The Sanctuary of Thought</h4>
+                    <p>July 2022</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../../img/uk/london/ucl/london-kingslib.jpg" alt="KCL">
+                <div class="caption">
+                    <h4>A Cathedral of Books</h4>
+                    <p>July 2022</p>
+                </div>
+            </div>      
+
+            </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Imperial College London</h2>
+                <span>Scientific and Technological Advance Research</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/ucl/london-ictower.jpg" alt="KCL">
+                <div class="caption">
+                    <h4>Queen's Tower</h4>
+                    <p>September 2022</p>
+                </div>
+            </div>
+            
+            </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Borough Market</h2>
+                <span>The Living Pantry of London</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/boroughmarket/london-bormarket.jpg" alt="Borough Market">
+                <div class="caption">
+                    <h4>The Pulse of the Market</h4>
+                    <p>Feburary 2023</p>
+                </div>
+            </div>
+            
+        <div class="photo-card">
+                <img src="../../img/uk/london/boroughmarket/london-borpeople.jpg" alt="Borough Market">
+                <div class="caption">
+                    <h4>A Crowd Beneath Iron and Light</h4>
+                    <p>Feburary 2023</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/boroughmarket/london-boroyster.jpg" alt="Borough Market">
+                <div class="caption">
+                    <h4>Salt, Steel, and Patience</h4>
+                    <p>Feburary 2023</p>
+                </div>
+            </div>         
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/boroughmarket/london-borcheese.jpg" alt="Borough Market">
+                <div class="caption">
+                    <h4>A Cathedral of Cheese</h4>
+                    <p>Feburary 2023</p>
+                </div>
+            </div>                
+            
+        <div class="photo-card">
+                <img src="../../img/uk/london/boroughmarket/london-borfish.jpg" alt="Borough Market">
+                <div class="caption">
+                    <h4>The Day’s Catch on Ice</h4>
+                    <p>Feburary 2023</p>
+                </div>
+            </div>     
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/boroughmarket/london-borleg.jpg" alt="Borough Market">
+                <div class="caption">
+                    <h4>Time Hanging on a Ham Stand</h4>
+                    <p>Feburary 2023</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/boroughmarket/london-borcane.jpg" alt="Borough Market">
+                <div class="caption">
+                    <h4>A Zero-Waste Corner of the City</h4>
+                    <p>Feburary 2023</p>
+                </div>
+            </div>     
+
+            </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Chinese New Year</h2>
+                <span>A City in Celebration</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/CNY/london-chnshow.jpg" alt="Chinese New Year">
+                <div class="caption">
+                    <h4>Celebration Beneath Nelson’s Column</h4>
+                    <p>Janurary 2023</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/CNY/london-chntown.jpg" alt="Chinese New Year">
+                <div class="caption">
+                    <h4>A River of Red Through the City</h4>
+                    <p>Janurary 2023</p>
+                </div>
+            </div>
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/CNY/london-chnbooth.jpg" alt="Chinese New Year">
+                <div class="caption">
+                    <h4>Hands Folding Fortune</h4>
+                    <p>Janurary 2023</p>
+                </div>
+            </div>
+
+            </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Zoo</h2>
+                <span>Encounters with the Wild in the Heart of London</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/zoo/london-zoobird.jpg" alt="Zoo">
+                <div class="caption">
+                    <h4>The Silent Guardian by the Stream</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>            
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/zoo/london-zoocamel.jpg" alt="Zoo">
+                <div class="caption">
+                    <h4>A Desert Soul under the Winter Sun</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>    
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/zoo/london-zoogreen.jpg" alt="Zoo">
+                <div class="caption">
+                    <h4>Stillness in Green</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>    
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/zoo/london-zoomonkey.jpg" alt="Zoo">
+                <div class="caption">
+                    <h4>A Quiet Pause in the Canopy</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>   
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/zoo/london-zoopenguins.jpg" alt="Zoo">
+                <div class="caption">
+                    <h4>Conversations by the Water</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>   
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/zoo/london-zoopig.jpg" alt="Zoo">
+                <div class="caption">
+                    <h4>Side by Side</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>   
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/zoo/london-zoosheep.jpg" alt="Zoo">
+                <div class="caption">
+                    <h4>Resting in the Afternoon Light</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>   
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/zoo/london-zooturtle.jpg" alt="Zoo">
+                <div class="caption">
+                    <h4>Time Moves Slowly Here</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>   
+
+            </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Snow</h2>
+                <span>A City in Quiet Motion</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/snow/london-snowstreet.jpg" alt="Snow">
+                <div class="caption">
+                    <h4>A Silent Street Under Snow</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>     
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/snow/london-snowucl.jpg" alt="Snow">
+                <div class="caption">
+                    <h4>Snowfall on the City Lights</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/snow/london-snowman.jpg" alt="Snow">
+                <div class="caption">
+                    <h4>Framing the Snowfall</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>  
+
+            </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>Snow</h2>
+                <span>A City in Quiet Motion</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/hollandpark/london-holgard.jpg" alt="Holland Park">
+                <div class="caption">
+                    <h4>Autumn Silence in the Japanese Garden</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>    
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/hollandpark/london-holwater.jpg" alt="Holland Park">
+                <div class="caption">
+                    <h4>Where Water Whispers Through Stone</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>    
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/hollandpark/london-holpeacock.jpg" alt="Holland Park">
+                <div class="caption">
+                    <h4>The Jewel of Holland Park</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>                
+
+            </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>British Museum</h2>
+                <span>A Civilization Remembering Itself</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/british museum/london-musgate.jpg" alt="British Museum">
+                <div class="caption">
+                    <h4>The Threshold of Civilization</h4>
+                    <p>May 2022</p>
+                </div>
+            </div>    
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/british museum/london-musbadge.jpg" alt="British Museum">
+                <div class="caption">
+                    <h4>Tracing Jade Through Time</h4>
+                    <p>May 2022</p>
+                </div>
+            </div>   
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/british museum/london-musplate.jpg" alt="British Museum">
+                <div class="caption">
+                    <h4>Scenes Within Stone</h4>
+                    <p>May 2022</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/british museum/london-musjade.jpg" alt="British Museum">
+                <div class="caption">
+                    <h4>Where Jade Is Born</h4>
+                    <p>May 2022</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/british museum/london-musfan.jpg" alt="British Museum">
+                <div class="caption">
+                    <h4>An Empire in Carved Silence</h4>
+                    <p>May 2022</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/british museum/london-musarmour.jpg" alt="British Museum">
+                <div class="caption">
+                    <h4>Steel Woven with Authority</h4>
+                    <p>May 2022</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/british museum/london-muspaper.jpg" alt="British Museum">
+                <div class="caption">
+                    <h4>Lines That Remember</h4>
+                    <p>May 2022</p>
+                </div>
+            </div>  
+            
+        <div class="photo-card">
+                <img src="../../img/uk/london/british museum/london-musboat.jpg" alt="British Museum">
+                <div class="caption">
+                    <h4>Voyage Preserved in Wood</h4>
+                    <p>May 2022</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/british museum/london-musglass.jpg" alt="British Museum">
+                <div class="caption">
+                    <h4>Reflections of Time</h4>
+                    <p>May 2022</p>
+                </div>
+            </div>  
+
+            </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="section-header">
+            <div class="header-inner">
+                <h2>London Street</h2>
+                <span>Where History, Youth, and Nightfall Meet</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetunderground.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>Angels over the Underground</h4>
+                    <p>December 2022</p>
+                </div>
+            </div> 
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetoxford.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>Stars Over Oxford Street</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetregent.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>Angels Above Regent Street</h4>
+                    <p>December 2022</p>
+                </div>
+            </div>  
+            
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetriver.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>Autumn Light on the Thames</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>             
+            
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetalbert.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>Gold Against the Sky</h4>
+                    <p>September 2022</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetcamden.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>Camden Never Sleeps</h4>
+                    <p>March 2022</p>
+                </div>
+            </div> 
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetboys.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>Concrete Speaks in Color</h4>
+                    <p>October 2022</p>
+                </div>
+            </div>             
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetcof.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>A Corner of Turquoise Calm</h4>
+                    <p>September 2021</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetunder.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>Mind the Gap: London in Motion</h4>
+                    <p>September 2021</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetkx.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>Where Knowledge Meets the City</h4>
+                    <p>October 2021</p>
+                </div>
+            </div>              
+            
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetmall.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>The City Dresses for Christmas</h4>
+                    <p>Janurary 2023</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetship.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>A Boat Waiting for Nightfall</h4>
+                    <p>August 2022</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetguitarman.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>A Song for the River at Night</h4>
+                    <p>August 2022</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetmus.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>A Sea of Sound and Light</h4>
+                    <p>April 2022</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streettower.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>Gothic Power: The Heart of Westminster</h4>
+                    <p>October 2021</p>
+                </div>
+            </div>  
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetpara.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>Parliament by the River</h4>
+                    <p>October 2021</p>
+                </div>
+            </div>              
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetguard.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>The Discipline of Tradition</h4>
+                    <p>October 2021</p>
+                </div>
+            </div>    
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetcathedral.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>Where Kings Are Remembered</h4>
+                    <p>October 2021</p>
+                </div>
+            </div> 
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetcathgar.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>Quiet Gothic Breathing</h4>
+                    <p>October 2021</p>
+                </div>
+            </div> 
+
+        <div class="photo-card">
+                <img src="../../img/uk/london/street/london-streetcastle.jpg" alt="London Street">
+                <div class="caption">
+                    <h4>Stone Walls of the Crown</h4>
+                    <p>October 2021</p>
+                </div>
+            </div> 
+            
+            
+    <div id="lightbox">
+        <i class="bi bi-x-lg" id="lightbox-close"></i>
+        <img id="lightbox-img" src="" alt="Fullscreen Image">
+    </div>            
+
+    <script>
+        // 1. 滚动进入动画 (Intersection Observer)
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -100px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.photo-card').forEach(card => {
+            observer.observe(card);
+        });
+
+
+        // 2. Lightbox 交互逻辑
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeBtn = document.getElementById('lightbox-close');
+
+        // 点击卡片里的图片打开 Lightbox
+        document.querySelectorAll('.photo-card img').forEach(img => {
+            img.addEventListener('click', (e) => {
+                // 阻止冒泡，防止触发 card 的 hover 效果干扰
+                e.stopPropagation();
+                // 获取高清图路径 (这里简单起见直接用原图，实际项目中可以用 data-full-src 存高清图)
+                const imgSrc = img.getAttribute('src');
+                lightboxImg.src = imgSrc;
+                lightbox.classList.add('active');
+                // 禁止页面滚动
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // 关闭 Lightbox 的函数
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            // 恢复页面滚动
+            document.body.style.overflow = 'auto';
+            // 动画结束后清空 src，避免下次打开闪烁
+            setTimeout(() => { lightboxImg.src = ''; }, 300);
+        }
+
+        // 点击关闭按钮关闭
+        closeBtn.addEventListener('click', closeLightbox);
+
+        // 点击背景区域关闭 (点击图片本身不关闭)
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // 按 ESC 键关闭
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>

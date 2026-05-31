@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflections | Hang Lin</title>
+    <link rel="shortcut icon" href="assets/img/lh/lh-circle.jpg">
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="css/about_me.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-sm navbar-dark fixed-top">
+        <div class="container d-flex justify-content-between">
+            <a class="navbar-brand fw-bold" href="index.html">HANG LIN</a>
+            <a href="index.html" class="btn btn-sm btn-outline-light rounded-pill px-3">Close</a>
+        </div>
+    </nav>
+
+    <section class="theme-section">
+        <div class="bg-layer" data-bg="assets/img/about_me/cayugalake.jpg"></div>
+        <div class="content-layer">
+            <h1 class="hero-title reveal">I don’t believe much in <span class="highlight">regret</span>.</h1>
+            <p class="sub-text reveal">
+                Every decision we make is the most honest choice we could offer at that moment — shaped by who we were, what we knew, and what we were capable of then.
+            </p>
+            <p class="sub-text reveal" style="transition-delay: 0.3s;">
+                If given the same moment again, I believe I would still choose the same path. And if that is true, what is there to regret?
+            </p>
+        </div>
+    </section>
+
+    <section class="theme-section">
+        <div class="bg-layer" data-bg="assets/img/about_me/sea_wave.jpg"></div>
+        <div class="content-layer">
+            <h1 class="hero-title reveal">From Struggle to <span class="highlight">Strength</span>.</h1>
+            <p class="sub-text reveal">
+                For many years, I lived with <span class="highlight">anxiety</span> — the kind that makes breathing feel difficult, as if air itself must be earned.
+            </p>
+            <p class="sub-text reveal" style="transition-delay: 0.3s;">
+                It took nearly ten years to understand it, live with it, and eventually overcome it.
+            </p>
+        </div>
+    </section>
+
+    <section class="theme-section">
+        <div class="bg-layer" data-bg="assets/img/about_me/autumn_tree.jpg"></div>
+        <div class="content-layer">
+            <h1 class="hero-title reveal">Breathe <span class="highlight">Freely</span>.</h1>
+            <p class="sub-text reveal">
+                I don’t see that time as something lost. It taught me patience, attention, and respect for quiet moments.
+            </p>
+            <p class="sub-text reveal" style="transition-delay: 0.3s;">
+                Today, I move forward without urgency, only with a clearer sense of presence, and gratitude for being able to breathe again.
+            </p>
+            <a href="index.html" class="back-home reveal" style="transition-delay: 0.6s;">Back to Home</a>
+        </div>
+    </section>
+
+    <script>
+        // 1. 背景图片预加载与显示逻辑
+        document.querySelectorAll('.bg-layer').forEach(layer => {
+            const imgUrl = layer.getAttribute('data-bg');
+            if (imgUrl) {
+                const img = new Image();
+                img.src = imgUrl;
+                img.onload = () => {
+                    layer.style.backgroundImage = `url('${imgUrl}')`;
+                    layer.style.opacity = '1'; // 加载完成后淡入显示
+                };
+            }
+        });
+
+        // 2. 滚动触发逻辑 (与职业经历页完全一致)
+        const observerOptions = {
+            threshold: 0.3 
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                } else {
+                    entry.target.classList.remove('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.theme-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+    <!-- Language toggle (floating) -->
+    <a id="lang-toggle" href="#" role="button" aria-label="Switch language" style="position:fixed; top:16px; right:16px; z-index:9999; width:40px; height:40px; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); color:#fff; border-radius:50%; font-weight:bold; text-decoration:none; cursor:pointer;">中</a>
+    <script src="js/lang.js"></script>
+</body>
+</html>

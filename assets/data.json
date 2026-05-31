@@ -1,0 +1,267 @@
+{
+    "greeting": {
+        "heading": "Hello, World!",
+        "description": "I make things for iOS and the Web."
+    },
+    "intro": {
+        "heading": "\"You know, I'm something of a <span style=\"color: var(--azure);\">scientist</span> myself.\"",
+        "description": "I enjoy experimenting with new technologies to make software that is user-friendly and functional. Originally aimed at personal problems, several of my endeavors have since been helpful to family members and internet users worldwide. It's incredibly rewarding to know that I'm making a positive impact beyond my own needs!",
+        "timeline": [
+            {
+                "title": "Dip, Computing Studies <br>and Information Systems",
+                "subtitle": "Douglas College",
+                "date": "September 2020 - April 2022",
+                "img" : "assets/img/logos/douglas-college.jpg"
+            },
+            {
+                "title": "BSc, Computing Science",
+                "subtitle": "Simon Fraser University",
+                "date": "January 2023 - Present",
+                "img" : "assets/img/logos/sfu.png"
+            },
+            {
+                "title": "Web Developer",
+                "subtitle": "iData Research",
+                "date": "May 2024 - Present",
+                "img" : "assets/img/logos/idata-research.png"
+            }
+        ]
+    },
+    "skills": {
+        "heading": "Skills",
+        "color": "var(--orange)",
+        "muted_color": "#ff9238",
+        "description": "My greatest strength is my ability to quickly grasp new concepts and adapt to different programming languages, tools, and platforms. This flexibility has allowed me to pull off a diverse array of projects of all shapes and sizes!",
+        "list": [
+            {
+                "heading": "Web development",
+                "cover_description": "With exposure to modern fullstack web technologies and experience working on web projects of all sizes and complexities, I'm ready to tackle any challenge thrown my way! 👊",
+                "description": "I have a strong background with modern full-stack web technologies like Node.js, Express, and React thanks to my undergrad coursework and projects. All in all, I've enjoyed using these technologies to create robust and scalable web applications, and I'm always trying to learn more.\nThat being said, many of my personal projects thrive on the simplicity and elegance of vanilla web technologies and GitHub Pages. For (smaller) personal projects, I've found that they're quick to set up and, best of all, cost nothing to publish and show off to the world! :D\nThis portfolio was made with vanilla HTML/CSS, JavaScript, and a sprinkle of Bootstrap for a responsive design. ✨",
+                "img": "assets/img/mockups/iphone/iphone-altsource-viewer-2.png",
+                "img_type": "device",
+                "img_alt": "iphone-web-app",
+                "bootstrap_icon": "bi-globe2",
+                "md_size": 6
+            },
+            {
+                "heading": "Mobile development",
+                "cover_description": "As a passionate Apple fan, I've spent a lot of my free time learning about iOS and, more recently, getting the hang of iOS development.",
+                "description": "I've always been fascinated by user-friendly software, a passion that led me to iOS development. I've built a number of side projects to familiarize myself with iOS frameworks and principles. One of my coolest project to date is \"DontEatMyContent,\" a tweak for the iOS YouTube app which prevents display cutouts from interfering with videos for a better viewing experience.\n\nI also dabbled in Android app development in a college course, creating \"BCExplorer,\" an app that highlights must-see attractions in British Columbia.",
+                "img": "assets/img/mockups/iphone/iphone-today-1.png",
+                "img_type": "device",
+                "img_alt": "iphone-app",
+                "no_padding_bottom": true,
+                "bootstrap_icon": "bi-phone",
+                "md_size": 6
+            },
+            {
+                "heading": "Automation & scripting",
+                "cover_description": "Command-line tools are goated 🐐 – they look simple yet are so incredibly powerful. They're my go-to when I need to get the job done without unnecessary frills.",
+                "description": "Shell scripting became a valuable tool in my toolkit in my software development journey. I've used it for a variety of things, from automating tasks, compiling and packaging C code into iOS tweaks, to tinkering with system services. Its versatility and compatibility with Unix-based systems make it the perfect tool for automating repetitive tasks.",
+                "img": "assets/img/window-terminal.png",
+                "img_type": "window",
+                "img_alt": "terminal",
+                "center_image": true,
+                "bootstrap_icon": "bi-terminal",
+                "md_size": 6,
+                "lg_size": 8
+            },
+            {
+                "heading": "Database programming",
+                "cover_description": "\"Why did the database engineer leave his wife?\"",
+                "description": "\"She had one-to-many relationships.\" 🥁\nI gained a strong understanding of relational (MySQL, PostgreSQL) and non-relational (MongoDB) database systems during my undergrad career.  This knowledge has allowed me to design efficient schemas and optimize complex queries for specific project needs.",
+                "center_image": true,
+                "bootstrap_icon": "bi-hdd-rack",
+                "md_size": 6,
+                "lg_size": 4
+            }
+        ]
+    },
+    "github_username": "therealFoxster",
+    "projects": {
+        "heading": "Project Highlights",
+        "color": "#f63e54",
+        "muted_color": "#f76476",
+        "description": "Still thinking of a good description for this section...",
+        "list": [
+            {
+                "heading": "DontEatMyContent",
+                "cover_description": "Prevent the notch/Dynamic Island from munching on 2:1 video content in YouTube.",
+                "topics": [
+                    "c",
+                    "ios",
+                    "youtube",
+                    "objective-c",
+                    "reverse-engineering",
+                    "iphone",
+                    "notch",
+                    "dynamic-island"
+                ],
+                "img": "assets/img/mockups/iphone/iphone-donteatmycontent.png",
+                "img_type": "device landscape",
+                "img_alt": "donteatmycontent-demo",
+                "center_image": true,
+                "md_size": 6,
+                "lg_size": 8,
+                "custom_url_2": {
+                    "text": "View iDownloadBlog article",
+                    "url": "https://www.idownloadblog.com/2022/09/22/donteatmycontent/"
+                }
+            },
+            {
+                "heading": "uYouPlus",
+                "cover_description": "Enhance your YouTube experience.",
+                "topics": [
+                    "c",
+                    "ios",
+                    "youtube",
+                    "objective-c",
+                    "reverse-engineering"
+                ],
+                "img": "assets/img/mockups/iphone/iphone-uyouplus.png",
+                "img_type": "device",
+                "img_alt": "uyouplus-demo",
+                "max_width": "350px",
+                "md_size": 6,
+                "lg_size": 4
+            },
+            {
+                "heading": "altsource-viewer",
+                "cover_description": "View your favorite AltStore source.",
+                "topics": [
+                    "javascript",
+                    "css",
+                    "html",
+                    "ios",
+                    "altstore",
+                    "altstore-beta",
+                    "altstore-repo",
+                    "altstore-source"
+                ],
+                "img": "assets/img/mockups/iphone/iphone-altsource-viewer-1.png",
+                "max_width": "350px",
+                "img_type": "device",
+                "img_alt": "altsource-demo",
+                "md_size": 6,
+                "lg_size": 4,
+                "custom_url_2": {
+                    "text": "View deployment",
+                    "url": "https://therealfoxster.github.io/altsource-viewer/"
+                }
+            },
+            {
+                "heading": "CollabHub",
+                "cover_description": "Fullstack (PERN) project management application.",
+                "topics": [
+                    "react",
+                    "nodejs",
+                    "javascript",
+                    "express",
+                    "typescript",
+                    "postgresql",
+                    "scss",
+                    "full-stack"
+                ],
+                "img": "assets/img/mockups/macbook/macbook-collabhub.png",
+                "img_type": "device landscape",
+                "img_alt": "collabhub-demo",
+                "md_size": 6,
+                "lg_size": 8
+            },
+            {
+                "heading": "Pairs",
+                "cover_description": "100 Days of Swift - Milestone Project 11 (UIKit): Card matching game.",
+                "topics": [
+                    "swift",
+                    "ios",
+                    "uikit",
+                    "catransform3d"
+                ],
+                "img": "assets/img/mockups/ipad/ipad-pairs.png",
+                "img_type": "device landscape",
+                "img_alt": "pairs-demo",
+                "md_size": 6,
+                "lg_size": 8
+            },
+            {
+                "heading": "Today",
+                "cover_description": "A simple and calming reminders app.",
+                "topics": [
+                    "swift",
+                    "uikit",
+                    "reminders",
+                    "eventkit"
+                ],
+                "img": "assets/img/mockups/iphone/iphone-today-2.png",
+                "img_type": "device",
+                "img_alt": "today-demo",
+                "max_width": "350px",
+                "md_size": 6,
+                "lg_size": 4
+            }
+        ],
+        "old": [
+            {
+                "heading": "portfolio",
+                "cover_description": "The web page you're looking at. Made with vanilla HTML, CSS, JavaScript, and a pinch of Bootstrap for a responsive design.",
+                "topics": [
+                    "html",
+                    "css",
+                    "javascript",
+                    "bootstrap",
+                    "portfolio"
+                ],
+                "img": "assets/img/window-portfolio.png",
+                "img_type": "window",
+                "img_alt": "portfolio-demo",
+                "center_image": true,
+                "md_size": 6,
+                "lg_size": 8
+            },
+            {
+                "not_on_github": true,
+                "heading": "Foxster",
+                "cover_description": "YouTube channel dedicated to uploading electronic music in the NCS video layout.",
+                "custom_url": "https://youtube.com/@FoxsterNCS",
+                "custom_url_text": "View on YouTube",
+                "topics": [
+                    "youtube",
+                    "music",
+                    "video",
+                    "vfx"
+                ],
+                "img": "assets/img/iphone-foxster-fanmade.png",
+                "img_type": "device",
+                "img_alt": "foxster-fanmade-youtube",
+                "max_width": "350px",
+                "md_size": 6,
+                "lg_size": 4
+            }
+        ]
+    },
+    "socials": [
+        {
+            "platform": "github",
+            "username": "therealFoxster"
+        },
+        {
+            "platform": "reddit",
+            "username": "therealFoxster",
+            "username_prefix": "u/"
+        },
+        {
+            "platform": "youtube",
+            "username": "foxster.mp4",
+            "username_prefix": "@"
+        },
+        {
+            "platform": "instagram",
+            "username": "maybehuy"
+        },
+        {
+            "platform": "linkedin",
+            "username": "huybui-vq",
+            "username_prefix": "in/"
+        }
+    ]
+}

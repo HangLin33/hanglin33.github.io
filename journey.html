@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Global Journey - Hang Lin</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"></script>
+
+    <link rel="stylesheet" href="css/journey.css">
+</head>
+<body>
+
+<a href="index.html" class="back-home">← Back to Home</a>
+
+<div class="map-container">
+    <div class="header">
+        <h2>Global Journey</h2>
+        <p>Explore my footprints. <span style="color:var(--apple-orange); font-weight:bold;">Orange</span> indicates visited regions.</p>
+    </div>
+    <div id="world-map"></div>
+    <div class="quick-nav">
+    <h3>Quick Access</h3>
+    <div class="nav-buttons">
+        <a href="journey/usa/usa.html">🇺🇸United States</a>
+        <a href="journey/uk/uk.html">🇬🇧United Kingdom</a>
+        <a href="journey/fr/fr.html">🇫🇷France</a>
+        <a href="journey/de/de.html">🇩🇪Germany</a>
+        <a href="journey/it/it.html">🇮🇹Italy</a>
+        <a href="journey/ch/ch.html">🇨🇭Switzerland</a>
+        <a href="journey/no/no.html">🇳🇴Norway</a>
+        <a href="journey/tr/tr.html">🇹🇷Turkey</a>
+        <a href="journey/ae/ae.html">🇦🇪UAE</a>
+        <a href="journey/cn/cn.html">🇨🇳China</a>
+        <a href="journey/th/th.html">🇹🇭Thailand</a>
+        <a href="journey/my/my.html">🇲🇾Malaysia</a>
+        <a href="journey/sg/sg.html">🇸🇬Singapore</a>
+        <a href="journey/id/id.html">🇮🇩Indonesia</a>
+        <a href="journey/mv/mv.html">🇲🇻Maldives</a>
+        <a href="journey/au/au.html">🇦🇺Australia</a>
+    </div>
+</div>
+</div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        // 1. 定义去过的国家列表 (CN 和 TW 都在这里)
+        const visitedCodes = [
+            "CN", "TW", "GB", "FR", "DE", "IT", "CH", "NO", "US", 
+            "MV", "TH", "MY", "SG", "ID", "AU", "AE", "TR"
+        ];
+
+        // 2. 链接映射
+        const links = {
+            "CN": "journey/cn/cn.html", "TW": "journey/cn/cn.html",
+            "GB": "journey/uk/uk.html", "FR": "journey/fr/fr.html", "DE": "journey/de/de.html",
+            "IT": "journey/it/it.html", "CH": "journey/ch/ch.html", "NO": "journey/no/no.html",
+            "US": "journey/usa/usa.html", "MV": "journey/mv/mv.html", "TH": "journey/th/th.html",
+            "MY": "journey/my/my.html", "SG": "journey/sg/sg.html", "ID": "journey/id/id.html",
+            "AU": "journey/au/au.html", "AE": "journey/ae/ae.html", "TR": "journey/tr/tr.html"
+        };
+
+        const map = new jsVectorMap({
+            selector: "#world-map",
+            map: "world",
+            zoomButtons: false,
+            zoomOnScroll: true,
+
+            // 【核心修复】：告诉地图这些国家是“已选中”的
+            selectedRegions: visitedCodes,
+
+            regionStyle: {
+                // 1. 没去过的国家：灰色
+                initial: {
+                    fill: '#e5e5e7',
+                    stroke: '#ffffff',
+                    strokeWidth: 1,
+                    fillOpacity: 1
+                },
+                // 2. 鼠标悬停效果
+                hover: {
+                    fillOpacity: 0.8,
+                    cursor: 'pointer'
+                },
+                // 3. 【绝对生效】被选中的国家（去过的）：显示橙色
+                selected: {
+                    fill: '#ff9f0a', // 强制橙色
+                    fillOpacity: 1
+                }
+            },
+
+            // 点击逻辑
+            onRegionClick: function(event, code) {
+                let target = code === "TW" ? "CN" : code;
+                if (links[target]) {
+                    window.location.href = links[target];
+                }
+            },
+
+            // 提示框逻辑 (纯文本)
+            onRegionTooltipShow(event, tooltip, code) {
+                let name = tooltip.text();
+                
+                // 强制修正台湾显示
+                if (code === "TW" || code === "CN") {
+                    name = "China";
+                }
+
+                if (visitedCodes.includes(code)) {
+                    tooltip.text(name + " (Explore My Footprints📷)");
+                } else {
+                    tooltip.text(name);
+                }
+            }
+        });
+    });
+</script>
+
+    <!-- Language toggle (floating) -->
+    <a id="lang-toggle" href="#" role="button" aria-label="Switch language" style="position:fixed; top:16px; right:16px; z-index:9999; width:40px; height:40px; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); color:#fff; border-radius:50%; font-weight:bold; text-decoration:none; cursor:pointer;">中</a>
+    <script src="js/lang.js"></script>
+</body>
+</html>

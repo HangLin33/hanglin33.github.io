@@ -1,0 +1,98 @@
+        :root {
+            --apple-bg: #f5f5f7;
+            --apple-orange: #ff9f0a; /* 你的橙色 */
+            --dark-gray: #1d1d1f;
+        }
+
+        body { 
+            background-color: var(--apple-bg); 
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0; padding: 0;
+        }
+
+        /* 返回按钮 */
+        .back-home {
+            position: fixed; top: 25px; left: 25px; z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            padding: 10px 22px; border-radius: 50px; 
+            border: 1px solid rgba(0,0,0,0.1);
+            text-decoration: none; color: var(--dark-gray); 
+            font-size: 14px; font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+        .back-home:hover { transform: scale(1.05); background: #fff; }
+
+        .map-container {
+            max-width: 1200px; margin: 80px auto; padding: 20px;
+            background: #ffffff; border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+
+        .header { padding: 20px 30px; }
+        .header h2 { font-size: 2rem; font-weight: 800; color: var(--dark-gray); margin: 0 0 10px 0; }
+        .header p { color: #86868b; margin: 0; }
+
+        #world-map { width: 100%; height: 600px; }
+
+        /* 纯黑提示框，无边框 */
+        .jvm-tooltip {
+            background-color: #1d1d1f !important;
+            border-radius: 6px !important;
+            padding: 8px 12px !important;
+            font-family: inherit !important;
+            color: #fff !important;
+            border: none !important; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .quick-nav {
+            padding: 30px;
+            border-top: 1px solid #f2f2f2;
+        }
+        .quick-nav h3 {
+            font-size: 0.9rem;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        .nav-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .nav-buttons a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            background: #f5f5f7;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        /* 悬停效果 */
+        .nav-buttons a:hover {
+            background: #ffffff;
+            border-color: var(--apple-orange);
+            color: var(--apple-orange);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 159, 10, 0.15);
+        }
+        /* 特别标注地图上难找的国家 */
+        .nav-buttons a.highlight {
+            background: rgba(255, 159, 10, 0.1);
+            color: var(--apple-orange);
+        }
+        /* 适配移动端 */
+        @media (max-width: 768px) {
+            .nav-buttons {
+                gap: 8px;
+            }
+            .nav-buttons a {
+                padding: 6px 14px;
+                font-size: 13px;
+            }
+        }

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-EN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Message - Hang Lin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link rel="stylesheet" href="css/hello.css">
+</head>
+<body>
+
+<div class="message-card">
+    <a href="index.html" class="back-link">← Home</a>
+    <h2 class="fw-bold mb-4" id="card-title">Secret Box</h2>
+    
+    <div id="step-1" class="fade-in">
+        <p class="text-secondary small mb-3">请输入你的名字以开始</p>
+        <input type="text" id="friendName" class="form-control" placeholder="What's your name?">
+        <button onclick="findUser()" class="btn btn-dark w-100 rounded-pill py-2">Next</button>
+    </div>
+
+    <div id="step-2">
+        <p class="small text-secondary mb-1">Hello, <span id="span-name" class="fw-bold text-dark"></span></p>
+        <div id="pwd-hint" class="hint-text"></div>
+        
+        <input 
+            type="text" 
+            id="secretKey" 
+            class="form-control custom-password" 
+            placeholder="Enter the Answer/请输入答案"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+        >
+        
+        <button onclick="unlock()" class="btn btn-primary w-100 rounded-pill py-2">Unlock Message</button>
+    </div>
+
+    <div id="secret-message">
+        <div class="mb-2"><span class="badge rounded-pill bg-success px-3">Unlocked</span></div>
+        <h4 id="display-name" class="fw-bold text-dark"></h4>
+        <p id="message-text" class="text-secondary mt-3" style="font-size: 1.1rem; white-space: pre-line;"></p>
+        
+        <div class="reply-section">
+            <span class="reply-label">Leave a reply back to me:</span>
+            <textarea id="replyMsg" class="form-control" rows="3" placeholder="Say something..."></textarea>
+            <button id="btn-send" onclick="sendReply()" class="btn btn-sm btn-dark rounded-pill px-4 mt-2">Send Reply</button>
+            <p id="reply-status" class="small mt-2" style="display:none;"></p>
+        </div>
+
+        <hr class="my-4">
+        <button onclick="location.reload()" class="btn btn-sm btn-outline-secondary rounded-pill px-4">Exit</button>
+    </div>
+</div>
+
+<script>
+    // 3. 初始化 EmailJS (替换为你自己的 ID !!!)
+    (function() {
+        emailjs.init("1UfrqSRxBNSgnCHIt"); // 替换这里：例如 "user_xyz123..."
+    })();
+
+    // 数据配置
+    const database = {
+        "834edd5e939e8bec7322de962416ea9b8a8b0456fd0785abb576236b423d0ef1": {
+            hint: "2025年10月10号我们微信说的第一句话是什么？",
+            msg: "U2FsdGVkX1+TqHzEKyg0Ryl4kiqA9XNd1r8ymnu+zzjtgNPrk4yh5V7HJESuAsgxk9PoM1tqJQA8q3Nq9s7PahiZBmYEX684LvDehoaFSMdayu84m8MXDrSaE+H0EjK2RYXR8BvFtuRvfennwfr03Kdxij6XJAGF5Jrhrz9b3eQ="
+        },
+        "8e4334cc78bd6fc57657d1f94a14231aea8d4b5c8a3e5d47dcfd9d5082422be6": {
+            hint: "2026年1月1号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1/6MnOyDve9WnjBb16gaIhNvNeIdekJMOLhtKUxJJl7RCxUkhRrLpaOdETJGeUFWqTFNagSwc9egH40tlfKaCYao9aHZUprHXrTY+LimMGNcNpFT4ZOpb2QGJbMaVRNo/HvtnJEMg8JIA=="
+        },
+        "97c208970ade50e4741ff18dc58b1dbd9861403cec19126f0aa68fce8ca68cd0": {
+            hint: "2026年1月1号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1+1uSwKfoRxXow0k7/RSNN//otdaO505BoMzfo/DJpb8N0R9gIWetEPbwzghKONCtLd28UgfstU3vQMndqmaMzjjG5qnIGE7Vz7ERKlQoJqQLUwYzyb/iHeMBN3YsuDFdfFUhh4PBqMSs7RoTpcEGI4r3hz7eioJpHqpEtN0W39Gk24xVbn4aMXnLEeVPpQDMNH2Ds5+bwPzg=="
+        },
+        "8de2bd4d98e465b242f304b40a7af5d4868ffb267820ea0c8bb217887cf0eb94": {
+            hint: "2025年12月1号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1/uNzImff9qhkxDG3y5sdQz6Ho2juOPGNPta8DYqxqd+oIX7zeDmJEVx/x6rJ4x5x1huh0047YXpuZ7WsqV+GbYcuDXjqpe+F6rTmTVx4KwNHw9/SaFxsoSb8OW8y/xVmIaLl+CANK1mOoNFu7Pxmepgq07tfN1SMMt42ZWbnD36kJ5hycoQm9kaGk3vKk8Obm8pkvc7W53SCtiGkRqHZNiWsaQA/jGIjU="
+        },
+        "3de3d62a3bf2d4dd4d474ae01bcdbc652115cc05937f2503a9a48d2b90a5a61e": {
+            hint: "2025年12月20号我们微信的最后一句话是什么？",
+            msg: "U2FsdGVkX19rRZbo5VJGv+WU5xWNqRT0++e+xKBmF/Y6owtsv+B9pgbPrfeLqfdEZaHqIlKKC3RoNW9vn6GQW1rEY8/F8fpTixst0PBWqmsiHO1Y2goiYzm8aG83aR5PGr033Q0QYrUJDvLgTIkcbAdmtuMQWLwfD9TB0eESLItvew0VXe2bvpX5G53JTdozrWM02Cjn4E1eHJsd8Vc//PrxZ+1StpZ7BA0alWWHr9+ycFWK1qJO+TYip6DjtxlAgHEMp7sRIfjMydzqXUfj9/SDo+1o3IBjG/1gxQi93HM="
+        },
+        "f5952237843d18a46aa3d44df7be9b56439e754e245faed1c4ccc27de1a8c7e7": {
+            hint: "2026年1月2号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1+b4QpWKo5LodYydPwJlITkvNm+UqjZS+IJDMB5oL+OjPyzTwAuzWLs4GuZZDuTjNndO60ry64qau8v8AGKskD5oig3D3UJ8nX/hAOV6GuiNN4PICCUIOPjpR+oo9rxds1gLVH3xfmXbmFap8UywMvQE9Y97UANS68RUsgGCGNtVs8SArckV63KfDjFyBhY1EUNqUW1pK+Q43cfW4bav6/YGBSzkN1F8pjmxh8IokyyGU4mgMUM5/F3/frtBbAiUtFAdvRz+ZobJm5y8kTINtNjCRtE0/4w0foMzHgbdWghrU/brXnvDpDm0oCM5bHr6McP9nGUdoNFqLB893utr8xNGqXsgMqKxx0="
+        },
+        "2299b8564f94478b5ab0ef6a76cf7376ceede59823063ad40ca35c0b3d7c5319": {
+            hint: "2026年1月5号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX19sufos/iITr81eddK17r0gHTyuyhQZy8rn8rrkQ3gxWTRcW0rGrzP09OFENjGN6Vt3lII0tZbs+wae3aYbOM0FaiEIwgnL5spatfputBREyVEcWsjzutMftVc7x4Jbi5MWfuaETrxYJJt5rOm9R/XfxHUlF3a7uA8bc6RHnWG91gxAU8EQCUBcuGTWQ5e+VxBwab+kc9E+iWxbWqRby3jQzUqalRHRGdz41j4G/q03UH3SDqIWPwba"
+        },
+        "e270bf7de0d3f04117e51cda276a37be957f6d9f528a00930aebb4bf249fa5ce": {
+            hint: "2026年1月1号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1+KbCMsgQluWG6YEz7PUDmatTdNKJmPJlHPjdEF8inDzKC3XhaUXPmgZ1j2y8HePzAAgfEc3xVR/5NZV0OJe/dhheonxUM1VTA/kdRjkfbUoY1UQFz/nMwe2tH6g2tx9tlyjyOVIOf7ZN6h0kwbqVKFnvP2WcuydAMczSr++qaBqovsBf8Gu7xK"
+        },
+        "46423390767ab5b47e4251cbf598d8cc6ce8fdc82511a2341e7f4e9ea6df16ae": {
+            hint: "2026年1月1号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1+6dk6A4WhE/srqNZHo7CLZqN2iSZKb4lsIMEJf5D5Pn5AVd3aj+9xLtKWr2Z0AVh04SkNq/fLasGWqqxbxvE96dokur78I6mQa+RBozlS+kCuXZ0f76uxo4NaelgPdT9un0Dak3UOshM+gsPsRc2B/nnmwQJmYsHXHosmOHcrffE0Cfw4fzNt7xfvjNZC/q811gcI9SekFmg=="
+        },
+        "fb785cee607395ffee21c2238a9c4d3322a4262b8120877c39ec491dbaf726e4": {
+            hint: "2025年12月1号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX19FXHTm21AMwTDxUXRbP/PX6yPogoZkOOwV0uN/RBNnNlnTUoRXekOEHGV6wlOuiVHLu0Sm9XUwWsHcGOp5ZjZb3uyNNnW3Km4AagUg/eHnHTIwe8UZ9kQDlR5cfQDlDrFtBW3HFriJpoWO6qZICmJ4MeQIrsgA/JA="
+        },
+        "925a235b4f96629281786a8d530b353bf5d1c3f341b263e525393fb12c1e62d5": {
+            hint: "2025年12月2号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1+nht5P1ivVyRopD2aiRmS4l92xyrRCifKBpIS11bGRn0BNrSvC5AXKTU1cYredx7pdNjPg+3nSk4oulq/u8/3SmUJrVY+eMfPVjAhTE3UUmvQMq6GCdtLg9wDnDnRzdLUOxdDSyKjZCGlJB34k6+m64QX0ZZwb/WM="
+        },
+        "2321d5ef115cf0bcb17a11aac51b973df29598df2e12eae5c5bda0f073f96edc": {
+            hint: "2025年12月25号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1/5pxcMP0JETkm7Pimux37eClM1v58eO11wlJp/YW9jrakAkjl5XuhVhOlq2A7MNzWLKbvOM+mI4BAPaQVog5NOIxrLkvAizF8="
+        },
+        "4e9f0bee61c5f95ff7dd3a6ec7f0fc4bf27f83690cd49965f68ed490283525f7": {
+            hint: "2025年12月19号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1+WkpOUdtBjuC3p8UFAO8GDizeRSWE+eL+CrxEfioQFqwgHKAYFnm8VHLYzhljdlIhHwTYEdJ2/HiOfHDaT2EPnvKfTtLhq9y6GV5ppgnDZyCZ88Rhaxc8JAY00QvJ00IqN04KwIYg1S+pboL00L7aE1knf1Pvp7Afg3KSrybQvygXVS9CAAnQVxsc78L4+3p7f2xFAnkYYXA=="
+        },
+        "13ac3418cbb58643f6d2a175864d850aad2ada430ad5af770b45af26021c3fc7": {
+            hint: "2025年9月7号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1/adCjSAWyvxEvh51uY4cwCFUca2qSw5Bhmlh+pre0b4H5nOhdPvELtaOyZpgx153KYUeLE+QcHQA=="
+        },
+        "3c4d917b7b61c6446e7feba58eb61abfc61a044e05150705d346d66dced0e05f": {
+            hint: "2026年1月2号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1+WH3lY5fYYIwz8ppv/GNXftU4nm5OpYT/0Xkr92O1W44CnSTKm6HXMKa/SEktgKSVpLGpnlsabCk1gvf2a1/H8wyTzOU0ZmyY5iNzNicdErkiTwKQyxvgHZ5zkFljbOOeh0wKFmAHOyg=="
+        },
+        "3b33759e9cba420691455a2fb8e477ac8f20bda8997b05198aedebd629703a46": {
+            hint: "2026年1月5号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX19GF6E0uZ2V6f7NGG/XU6ImYsXFhjc+it9qNvM1N1K2iHgBoN773fqUDfMLYRe1lz9ZybmoP+pp+Sffwrx4IwtRPqRV8qqxlnYOHqCTdyjnct2ftjaLOtlzmwwBfnjK1Da7x05nwASTU4+03olc84vyNsjk1uvIivQbErxh1NpDCZ6GTGQWNZGrCvF4Y5pZ6nSe6BWvM9DQtN2CsEHZGL5lsUXOpDNnDbJIg+eLZs1TO9CEGgxWhbL+wz28Dbg4DUfehJEQ1KVyBdaUh6emh5hYnnQB7QpGXqQ="
+        },
+        "92edfa49a821569a7d0a2f283ecf2267c7b74e51900594f53e3966430d9b6707": {
+            hint: "2025年12月15号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX19BwDxUdfehgJWIzh6461QhTGrgYzKz6q2iT2ArQRBGUPvnow50+b8/U79yyiJN/sL8rsZkCOv3fBn7w0SBP2Dxi11eW5ZzNd1ojV01asRhX90/PQkh9cmG"
+        },
+        "39e8fe1cec3e5744fdd814946ccf092b239706ce34e86e0f3c80a48a4745cf44": {
+            hint: "2026年1月7号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX18cNq65n5ESnYrRyJBPHrT0NbjLLWmND8nqbgiZm7kLh4lVD14a1C0UWDvqE4YAt4KzNJRBl6phVt3D7iQABnBi19lq4ZqxJgKruWkmWhXK1szn4KVyb+/6aoCNSi15EZ/afg7r5DG8zw=="
+        },
+        "94905548f9baa3cf7f52e4d288d54abe7cc799eeed7e9df668ccadb7cce93c6a": {
+            hint: "2026年1月7号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1+mlaoxxC8SmoZbpLQj50/NupKuA0o3OtvFuK/lpCc2+KZiPFQEKfrHdIFeFkX9TPgH8Qgx1Ff+ZMS7k0I3zz/iRGl9/rkxBfKFOHgVdRHxbp+ZGC+ayRyS8C/UYBdm4194ofl5bA3inQ=="
+        },
+        "9cb3de560062c5ea896bc3843552da4bfe8f0ac5735ae164e616357e2c9e3878": {
+            hint: "2026年1月1号我们微信的最后一句话是什么？",
+            msg: "U2FsdGVkX1/Zdi90afoYvSQsaL169RJJLE8cyfTKuro+Xzg9+73b0+LGuXgkxValtiVMf2MaPCEoPpUNKWoXQb76Ftx3J52RuwrpbfOQqXDGAdh+S5UGbOAPWSSIKC9MnJOLKkw04TfxrafsV+tF+wO9YYfuNgXd/Kab4Zwaqz/ojuAYu+jI5/1hUpI2QB+bQ9ZPnd6edyyR9e56JZumPQ=="
+        },
+        "0e698578e9456c1f8a23493dd1025bee89df02d3f9a0a1516518edc27aecebdd": {
+            hint: "2026年1月1号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX18PRlagliS9/mZHzQ1BTbQ2bQpEzYCdXni1mjIzmU+8ghYVUSuwbwPQjoiX80GITpdrLTvz1nQcghuxiOtIqx6vwO9Fk9zEpX4ahLw/UbLRbcuQXYNjBhWhh5QcVhd1J9VNb8EODjgXA48zgEEgAN9JxvztUJ1LkN7damlGRyPbzXEiXCRnJr4GNBZhJJW0O8/hfh2EA/fflutmrX2zB/sw/YhCRdQZdn9dDoO+rb+zbrqDTkjLIkxPPrUt2N4tcH+bf+74AJ3m0+CorXIkn6cGW1ZNWYsrXzuxVqt3LUB3vY1e5EEUGIujeWs/cyYlxHqaxwqWYxmEOYulyOqx6kJDul4lMVoCcSBPenieIITgCYj+xzHjIi0jMJ8QLp8ST2ulk2OSi7QEmwtlqpSHRHINaE/hcEYoA2s="
+        },
+        "9f4b8200d80782f12948e68532a4cd1a8816493ff3967219457a9511bcc0ee46": {
+            hint: "2025年12月17号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1/2ADCK+aDnToniME+Fx9DoBuid5L4lVpYzkmdjGaYqQZpwonfV/9kp8f78zDS3kyKn3MzjNPijLbfqIM1yS1H7bLS92axxQeE+JsF6Q9rU8TSfDGqxTntWel4ZSwzNX3DI1IxLuc9z3YxKXxQ5BcCbXgNnNpctiZtNrZxGhCky1SImYGjU16qhAXX89zOm8pIPbwBy0MbxPg=="
+        },
+        "e2cf00358c14ca03a61ee8e70948dfe598cb201a2ec6ca7e90c4c27150bb0ac9": {
+            hint: "2025年7月9号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX19y8uICHfiEbi5DbqIyafEubd9qPzv7IJu3o3VamvL7XO95FfozFO0/JL8QBWMBzRpz59Y5F2ScmwS7cKT4jhEfGaGAqdhaODkbwQVwt6XmH2qg6C3S5X9kiN3KR98Gx21Ieg5CBXj477H+52ZOFSwVKHwz1wFpgVN8OGn5lVWZqctohXnRxeWB/B8+KtuxTTBmI0N27ToO+9D+uMkk44kj5WUAWwAKdLp3MeLxNniZ28Wu9zVSHZOv"
+        },
+        "319c679d71a0da727fcacf507b4a85131525eeaa00ccc41e9d687ced6a4cd041": {
+            hint: "2025年12月17号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1+oNY9Y/tLyR4aqrXSgkvEA8LwSKPrAXcIRWxGEasVB8YoCrDMolCtQjR8xZEglLvdu/29SVMvZsg=="
+        },
+        "5be60a94919e49bbc0572049a2cb5e851d25468d430984edcdb2364a2beb068a": {
+            hint: "2025年12月15号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX19J5J+Gc8aLLZ5n+MY8Qsm3jgfxFquvFjwqwACiQtt/hdNyGRVSazTBijrzzkaHxnxZ3aBklPV9vJX6T1MxNJ0RsdczF9Je18y71VW2oHGp0IpDHvlmfNVAY75SX2u4/+UJ73/b6HnkrAKpRHQmKbOSc3zHgEenEucYaCrClOZ4z5M7/Um1IjoQ0uGYNLw+xodnHMcA2S/ntg=="
+        },
+        "45599ed755c6b8989e47382c7b3ba9bded8d483d54f27efc9e823c787e8bda16": {
+            hint: "2026年1月5号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX19UmA2X0AW4rnrBzBKfJMGZIB8fZAD7ghKhtzhlHWpbaMzmN7+QMUr2H9lNp4VBr3BpN/gpZJ7c1yHlTzts6o/pFsxrTdlRkbu1G/NtwYC8kT+1HcXZLRXiYn3uetQd+OXnOCsjkm8XAQ=="
+        },
+        "43080acdc4d95069041a29e08783ede72830af0b9e646b195d6aa307bb7e1702": {
+            hint: "2026年1月2号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX19bfvPQp2BIyLMBxXZM/L1XAY+s633NubctStzGNwETD6vJFhegQFtehoEvPLKxxIFm1xylJzJ+IWloTE5F4HKBUEjXJPHzS97WZIzvcUbCByCSuOTaSug7"
+        },
+        "351ea71e6193c9f830029a41815a013994a65805796d26ad47c04fdf535a247f": {
+            hint: "2026年1月6号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX18r6LqU5siItbYiQN8IwVAaKUxcrrwx2tHqZN1iHJLNh3mEmbIK45FVgHYRCfoXV1Mr1EI9j6LeHDnNxqYgSkuXoWHDDGhEm8ABoGxJWnP880lU74M/ZkKA+5UD20AgmQBLkHXgsrhBzVsddMjxoxyIgzmRjgWIWKPy3ZorL1z+rF5nTEKdHmDR"
+        },
+        "4ee6fc17e828cab05d78a3516b2e065c23d388dd0bf3e2e2362ab7d9aa313bdf": {
+            hint: "2026年1月9号我们微信的第二句话是什么？",
+            msg: "U2FsdGVkX1/8L2o/Rm7ZUVR6ta/FldTCxfACebkpdo5X/I0iG4F2pmeQpZ8UaFPR4rYayEGSemocOrseh16ARVjGN1HQS7gRXOwcVpk9J2bJfIjb38vnSjh66QemyxUx"
+        },
+        "6903889cabee289857d72f919f5f4a2cfaebc6c3d0dce065becc78d501fe7425": {
+            hint: "2026年1月8号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1+tkDnr73344p4I6ibPZwQrF+0yVJxHAMzz81kqGBvPqLFzvwSczbwVb+C9FC3YUYfZMt3XpnPOhoEUQo9CP0ZZI9S0p6nWUPOG3Rxu9uk/jzWEx3WG6fcrJPPDo2L3iZ4p+nG6MejkKQHnhcwfz773dWKSgiQkiiMbLMngGUHZ+IP3ABgHA2Cq"
+        },
+        "4699c9766275af408c98d478843ec2e84b8c36bb30efaf6d8710b471a9dd6ffb": {
+            hint: "2026年1月6号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1+bE78+bUqqW+3fc1JnrSavwk2ABTDkSZEkfN1BpE5JNR7o3WHFdIeTLBRsOQJTsTpNJaOOXLQScsshLIDy6Vu+gLtQKe1cV4M/4IFnmLvn2i8Y3s7V+YzqTOGhSCDwZYBk3XjQjL+D0WsIGBMHYw/LRpOpTG1CfeU="
+        },
+        "66b94b6361801a6f33d6182d57e50dac84b2200ff18ad3aeda4aa5926fa6d873": {
+            hint: "2026年1月9号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX19mMXBVesDfhprzjqopIFqVoxeNrKap0l02Qo9BRDHvYNAEAWGmj5rzRigNK0FrQnWK2vil9pZaymxIckPVdcScHvGu9Z1Ddl2GsPHSMx/QRShcf9rODFI9"
+        },
+        "60e33c2229b1a9710de42f4e9bead236de6f527a1d9122043295528a81a8335b": {
+            hint: "2025年12月13号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1+DroibC5GXbiomFHw2NRLCq9O5NRHyCba2w8AkLGoLIXwjDWQChtajjG3x/JwGdKpf10i4csoIRFiBm5iDAs2inVsyQqTlWnVepmgi1l5mYadh4CRga+uOEY/QzNp+i7vTfFklcUYWsq2F7QCHpUHkqN2H7YQXhZO00c3bQPuyZV6yON8SOITsWxEy/R0d9oUx9Z/CpXXTGTnJF9AwgrsqK4m0i2enhFtCaYssBV9y/ZEDJ2r6/q5Fyhbz57nHsFbXJHpyqqeYH/80xuJxw8AcjBc7PFsiYNZbcY5O+Rqo4yFkWF8EGEwRpsqbiMRuD917sZ8d6zkg19wfMGeIRzCQDTIP45dn0MM="
+        },
+        "d288ededc30934d3ae337d2e5e0a6dba7c366744d96867f6a67dafaee7efd7f1": {
+            hint: "2025年12月20号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1+n7OgMwxFHdVO35YMR3+/QJCELZYnBm8ZYSOmEbNLms/TmsVjyChbcbQsKZxVeKZ8I9wBAAURKVTLQwwyyFXVQtpovV9Svpp+582JmanpMrVP/9U2S8J4JKYQab7X7in+txrmPtpbiUg=="
+        },
+        "48f205b1fd6096f7152b26bd4ff9fbdb48e7a77ee8012a393e89d36330688da6": {
+            hint: "2025年12月17号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX1+rNnujb2b8G/ckHG6Hl/JgogFOH3RiiMm658zgD0JlAz3/Hq/07KqQ7qW7lsNWO/4rrBo65dYES6og7tlf4clFRWTIWXUbRA0bIshDH+ydwLbBjfczRW92S/iz8Dqpj+whBoFbZYTYGSp5PkRg35rkbD+JNU81EO0="
+        },
+        "fcb64aa60abb5867469b4e061d3ef649973abfb446b80371c606b8c1fd769f90": {
+            hint: "2025年12月31号我们微信的第一句话是什么？",
+            msg: "U2FsdGVkX19cfdkFZAAD/8H3cI52VwOj9ktKYdc6i+XELW2jc1Ztb1Y3fmVTjDlBs0kWpClwcPmhepVWSx7Bc3w3WaXnMz7o2lyujn3CoM7CbWpUNKHqmGrMHOXcv4CW1p+LTCWLzrvMj6F+sjlMKTxJef3oAF/oBCwgNSjUigg="
+        },
+        "9cdb3c2b53be21dadb1c48583b875959819597463fcf6f7ea41ceb765c73371b": {
+            hint: "2025年12月2日我们微信说的第一句话是什么？",
+            msg: "U2FsdGVkX1+yYijm4BUESObNwaaYD0ddeEJg+q51Hr64MQyd1ndkDIrmaC9GC1xAPSpl0sI1gqUMC/bEwGMZOcSz3Ru0cnGJunWovAuVwTKGzwDvleiWPj3x0YjO2HyOMYwznFImn9af6ND2IRGHci4Ru/h9I8kG2DLLW/USWrcQxLBRpdzIMZ1LwwlEXfcastPfxAKLqDIoE931Pyc7+YL/Khs2CyFi6+wCjz7Ds6woWSsPI01E/N/bH7Cc4kA96cMLpWOyNkWxr0xHoQg1AM7cxNoAGmzlP2IJQqaM23Krz/F6IiV6tcjuZ+B8idixpmXXs04SAL0Jt8dTp93R3dJ1Jy8liahsx9hKxudzguE="
+        },
+        "45c416ca4e7644d0e2acf875bca9f6ce35bd3a78bc17c181f7e5089ab9d35c30": {
+            hint: "我们微信2025年11月25号说的第一句话是什么？",
+            msg: "U2FsdGVkX1+0fZP1Yl/jInUBwX7MJZPrPEkGX8L0lRktUMiwvN6wWU+fVaA2oGPYDemuhTLFDJ3/sVYdNIxc/sGre1vdIPe6QApPCRoZWUVt+YRBq5nY9+Rdj24ZukGru1Qg0g2KOEmAPGVRVnqB9BRq7/ZiibsJ2FVz2x8tmWRDpEDaBOLuTxKTBNPBgvmx30OItNu8AbUaJWRfmLGrMjW+Zln1HLBulEccbtmzLz9KXM162QbEG0j2zEtFlt5m832c2xYbElfzxBF3xJ512AuKDUsKkZ3gJvigLUrHk8Sk1fghaRh7T9MvLIKuSafS"
+        },
+        "6af57926d117f604c58eec4e6f2b8badc613ae38cc9c98736b151851ff19839b": {
+            hint: "我们微信2026年1月14号说的第一句话是什么？",
+            msg: "U2FsdGVkX1+NssdJ14uIVOBHIA7Py70d84IExwz2Z7tBkUP4wrxktqXPhyfC+Gu6+9gzmMAY054jxPRwuoWa1vWYF8TMZddVTO8XZZxk+8TWeWojKnvG1nIIiB4qOx1geQd/Ey5s5C6CXgCqJ96A4JqD6FSjxwqTESH4hkVRsZpJlRdzKlolEkaEV6CD5mylRDkBqNjnwHPwzfaQQl9pWwEwd0lApOGdTtzKu7yXhgJiBHXNDd2dAj7lzUHvTaYcAHBoMwZzH5HhQyHCOXBP0am5YW6ZkFn0Q20eYDmDE2Y="
+        },   
+        "64f2aa54dda62a69a10f058a5e439e6adb355733c3bc16507021a984a738c20b": {
+            hint: "我们微信2026年1月23号说的第一句话是什么？",
+            msg: "U2FsdGVkX1+nMnJ1k6jrAj49lGcRKR5YK6Y6CdO0PmJrr2TEwA87n2J/taWyiTsyKr+bV1hzjryZfYYUkKaN9XUE6hPa8L3dYPxrxBurbkp+8RbLVwP1FNmgPa/xaZwYgSgcC5QEbDJVYJXT6nWsVJhwF0xQ2ZMvVpwTj1iamrObQBjs8pVeH3oSiinFSOVxaqZV6SkghVLFAJoVwag5FQ=="
+        },
+        "48f205b1fd6096f7152b26bd4ff9fbdb48e7a77ee8012a393e89d36330688da6": {
+            hint: "我们微信2025年12月17号说的第一句话是什么？",
+            msg: "U2FsdGVkX1+6VZ828+VJ/8m5k3SQyKftlcVkZvsRqe4/sok46aL2XQjkeHMi2Sj97It0sbrzjn0htBEZ3uXx/FI/DC5W5WAnBrvWOsm3wUn0I/39tIVJ1ZpBdic2J3Mi/PfG9Rt8PlQAcJxpwNuVHRZSM5ZkqjoSnX3Hj72/w5eV+GnUcoOp4kLlNiTvjjTAhaXm3/yi9o6y4np5NkVCRhJcUs0/Takl1BULZ4IpxM5zUGsc/5D6oeQk/WIKMruHUcPNRhPkIjdqNvKlZD+jBn+xyo9L4ee6U/U17NW9kXjhknukpocxKp2S2Yq5SYJB"
+        },      
+        "8d937c5e4137d76b31020d5d2b9ddc71033d3f9bcf3b17ddbf38448ed3b8aa18": {
+            hint: "我们微信2025年12月16号说的最后一句话是什么？",
+            msg: "U2FsdGVkX1+kB4PHAA+f/YvnOL6lrIjhCB0pPJ+ZH6lNYwut3M4z87NMvZQb8rVYzn4HhNtYbKJhuCTd6nKxpx3fTMob8Q5/HEbQ/yP9yYPvEawmOpAPEi7Htd64jJjapTEnmOY275i2Ug2t6MW+GLLITQP5aB1lLnKC4+9vg6NZpkJGnCmFS3dQUapRqkNSC4AUJFrIhE/cXXAFdTkGETpdWcs7kpaIO1vGJjXtpb5eq4EveeZWcjeX1smhwSeNZFbzIXHf0QKtT708u/2Nsr2EPjWCCgI3j+dXbCTGrn/PeabCVLHpIV+sE8Hbnq4AdnULRWS6UF5szmeRRA2ckw=="
+        },     
+        "5ad4233f74e634167ce02103ec971954150ff798d8733dd52fade73c6e695e93": {
+            hint: "我们在哪个平台认识的(注意大小写)",
+            msg: "U2FsdGVkX1/NFFuC+PD6A8e6naxxrLSJOrEPLoZjH4DzSsjl6LuQ0VNTdNbVWYQW4IleXDjjWEsyLpi6RVWQXQxzw8QF8OHh35QXivgeDgvh6f/vaz6huUk4OTyK9J4QKpdZbXrTuwYsDX8/GCdAA2ZC3uOZX3rdrMtbKd332FlPMDAYgY6w5vSs/P6iENqo9vfw6JIRNfx1CasroMQY6BdYgkA29Vq5Y44rREEYudn608w8BmIvPjBf44sWDDcbO9KkOBTrwcDEMDka7tUf9wQWCvkCL3rX6fmU+3Bc3pI="
+        },   
+        "bbe66c76bdabd6974dd49e3d266015887ed9c4ca08ea459393cf75a4750a4977": {
+            hint: "我们微信2026年1月29日说的第一句话是什么？",
+            msg: "U2FsdGVkX1/BWsN2fKEMsiRh4tAydwJ6hK/AIKIxPwK3B2iZq9ricZk0maV7PqKmY5exbEes26E0bq9VGeHm+C7OlcPzvZv5BOlxTeghHO4="
+        },        
+        "4fec46de233d1e16ad84cc5a8da1d77434eb9ff12e6605f3566115d88c9556db": {
+            hint: "我们微信2026年1月8号我说的第一句话是什么？",
+            msg: "U2FsdGVkX19uLJTiuJuV0cX+x7qMyYabOgCYkdtMuNcC/UQbWvLCTxQbpnraK0E78ECpQEii46I8ow54bg7S+IxgttFMxLdoGBuNXa+qGdCp1jskqZJPrzTyTvp2NaXQBi92y0+8VuVO3dmO8h9TzkfI7poQ+Q+U0QU90Fbr73Cyy7LigWOgbDAeGOC6zU0DgswrzXADNKOR4DACtehAoQ=="
+        },
+        "fb05c2f0531e3b74350fd21fa8cc1e0674910cba47d595011e0d49991af88918": {
+            hint: "我们微信2025年12月29号我说的第一句话是什么？",
+            msg: "U2FsdGVkX1+UVb6HyMmBvyu4CV1yf/4CPdDaeH0fnD/nrP9X8ONxCsaO5qVyOZfgbH1rcu5LP8ADv2z0p8Ur+kImUyQUB/hXRiXB0xiUCuHU+WTLemmd+RrHq4Eg5S1iL/SzD+JxM+KPZWhGrrNlVRP4taoOCIBJSDUdtdNRNTdcOw5NC1ivcGpNGvif8FgWP8mHtdJjmPcZjeL73diWDNQeaMwHKWuAFEjOYslNcTB/9ebCwl+Lbbgxyjc1lADS4hF++40K/7fC95BGG1C43cy4biS+FLX/4D3ZySqSbVJ8uq3591jgp84RaCVU6uYj"
+        },   
+        "9a3cc5a9a6295f5e8e99b74df89805fda1021f4774effe86de8c3c8d8cd65bb4": {
+            hint: "我们微信2026年1月15号说的第一句话是什么？",
+            msg: "U2FsdGVkX1+iBUrDWBXzQKt4/ugsCns2oDd5hw5azvGWHTHJF1x5MKOcP07E8R/JCxjETRA+s/hMVFCH4zpUE3r26k8MdhvfT0Uy2MqII1WJ9/Dhd2m8JefenbtB+4tYnBcvoec77wIAaphk5UzV1jDpJ2bwvg58GXTeuQCjKR/0347AjBFACo2ZS4IQAJP5OdCcUMBcBfh+Xka+I6QF6hG1hb8RoToWTy1KTnFrBjc="
+        },   
+        "9a3cc5a9a6295f5e8e99b74df89805fda1021f4774effe86de8c3c8d8cd65bb4": {
+            hint: "我们微信2026年1月15号说的第一句话是什么？",
+            msg: "U2FsdGVkX1/fNiBTfbJVSTRREnP8GyzLFfea2RTulAvIx+sdBmTnlgvaH9Oo6NyOR0UD1Xb7PFd7mwTv4RElcM2UjxTe7wyf5kTZIzcxHh9AA2XgBbjLJPRjbsX2vZU9x7jlKEME+a9+Q3pnsU9trJbS6yxo/L/xIJWxd3nyy34CIxo1ONHyXwFFgjnk7pla0Zg3UBiaKdMireoTyVJG5LYvtigl06eJnDRWmyYz8LycbjRq0T0wkIExQ3PXAoXBr0AnkrGGaJ6A2k6nKpaDyPWfYNPC5fJKSydvlsSR279rQk7KKuxIErcpcazJFm8WR2KZl8a8ZF1Xp0WCAfFR9w=="
+        },    
+        "99096caaf017e6cb2e4177305ee64afa12d98947ae43c2bc6dee1f79f6c8dffb": {
+            hint: "我们的小区名字",
+            msg: "U2FsdGVkX19TtYiY6LAQIuVYvLqwUBLNhvv8+PyyVU1DZMZ5pAn8cmmHip+7xzlvv/TEnh1dSpo5PE545vGWTEgceezxTUbI+Vl06DxEFXfZQF1hYMoyOf0IzQLWJ66QWh2JVAgb7POKw4M3+ouIChKGwsjBCoodNBOXdmhlFcHdqzZyoSty8mXSRun03/jG"
+        },
+        "fcd3ed2c7a8b25dbcfb6bf828c336f5543d582006e7e9e6ba9778a052b32e899": {
+            hint: "我们的小区名字",
+            msg: "U2FsdGVkX195522d1/DxvnXWAzJ3BFvLiiO7S4ePWZY8ySrkmR1eZlEy/UJ9BZbXgmNjHyTfSEHphSeif68jmuwhjUF0w3SOkV5BvbkUrsTIbzHKkqvIh/wl6xnSe93Vt8R87jG7waFd+4US7oe7x1PYOcJL3mqtMp3eULs4b2hdOfTQhezcfScypII79KmaZFLItg8JY8d5QICjMzGdGJNvabDvEKOWux0gPqYKdsuMQ+C0wSNOFpmdIx42cjfhtJ9ms7P/syyvG7TIAp21jrJ1u4e8i8MONnkhNE6YVDU="
+        },        
+    };
+
+let currentUserHash = "";
+
+    function findUser() {
+        const rawName = document.getElementById('friendName').value.trim();
+        if (!rawName) return;
+        
+        const nameHash = CryptoJS.SHA256(rawName).toString();
+
+        if (database[nameHash]) {
+            currentUserHash = nameHash;
+            document.getElementById('span-name').innerText = rawName;
+            document.getElementById('pwd-hint').innerText = database[nameHash].hint;
+            
+            document.getElementById('step-1').style.display = "none";
+            const step2 = document.getElementById('step-2');
+            step2.style.display = "block";
+            step2.classList.add('fade-in');
+            document.getElementById('card-title').innerText = "Identity Verified";
+        } else {
+            alert("抱歉，没找到对应的秘密。请确保名字输入正确。");
+        }
+    }
+
+    function unlock() {
+        const answer = document.getElementById('secretKey').value.trim();
+        if (!answer) return;
+
+        // 如果你没有填满所有数据，这里可能会报错，建议加上 database 判断
+        if (!database[currentUserHash]) return;
+
+        try {
+            const bytes = CryptoJS.AES.decrypt(database[currentUserHash].msg, answer);
+            const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
+
+            if (decryptedData) {
+                document.getElementById('display-name').innerText = "To: " + document.getElementById('friendName').value.trim();
+                document.getElementById('message-text').innerText = decryptedData;
+                
+                document.getElementById('step-2').style.display = "none";
+                const secretBox = document.getElementById('secret-message');
+                secretBox.style.display = "block";
+                secretBox.classList.add('fade-in');
+                document.getElementById('card-title').innerText = "Special Message";
+            } else {
+                alert("答案不对哦，请检查是否包含空格或标点。");
+            }
+        } catch (e) {
+            console.error(e);
+            alert("解锁失败，请确保答案正确。");
+        }
+    }
+
+    // 4. 发送留言功能
+    function sendReply() {
+        const replyText = document.getElementById('replyMsg').value.trim();
+        const senderName = document.getElementById('friendName').value.trim();
+        const btn = document.getElementById('btn-send');
+        const status = document.getElementById('reply-status');
+
+        if (!replyText) {
+            alert("Please write something first!");
+            return;
+        }
+
+        // UI 变为发送中状态
+        btn.disabled = true;
+        btn.innerText = "Sending...";
+
+        // 发送参数 (对应 EmailJS 模板里的 {{from_name}} 和 {{message}})
+        const templateParams = {
+            from_name: senderName,
+            message: replyText
+        };
+
+        // 替换为你的 Service ID 和 Template ID
+        emailjs.send('service_hanglin33', 'template_anuaewi', templateParams)
+            .then(function() {
+                // 成功
+                status.style.display = "block";
+                status.style.color = "green";
+                status.innerText = "Message sent successfully! Hang will see it soon.";
+                btn.innerText = "Sent";
+                document.getElementById('replyMsg').value = ""; // 清空输入框
+            }, function(error) {
+                // 失败
+                console.log('FAILED...', error);
+                status.style.display = "block";
+                status.style.color = "red";
+                status.innerText = "Failed to send. Please try again.";
+                btn.disabled = false;
+                btn.innerText = "Send Reply";
+            });
+    }
+</script>
+    <!-- Language toggle (floating) -->
+    <a id="lang-toggle" href="#" role="button" aria-label="Switch language" style="position:fixed; top:16px; right:16px; z-index:9999; width:40px; height:40px; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); color:#fff; border-radius:50%; font-weight:bold; text-decoration:none; cursor:pointer;">中</a>
+    <script src="js/lang.js"></script>
+</body>
+</html>

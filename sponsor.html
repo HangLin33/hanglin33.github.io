@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsor | Hang Lin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/sponsor.css">
+</head>
+<body>
+
+    <a href="index.html" class="back-link"><i class="bi bi-arrow-left"></i> Home</a>
+
+    <div class="sponsor-card">
+        <h2>Buy me a coffee ☕️</h2>
+        <p>If you enjoy my work, consider supporting me. Your tip fuels my late-night coding and next journey!</p>
+
+        <div class="toggle-container">
+            <div class="toggle-bg" id="toggle-bg"></div>
+            <button class="toggle-btn active wechat" onclick="switchQR('wechat')">
+                <i class="bi bi-wechat"></i> WeChat Pay
+            </button>
+            <button class="toggle-btn alipay" onclick="switchQR('alipay')">
+                <i class="bi bi-alipay"></i> Alipay
+            </button>
+        </div>
+
+        <div class="qr-wrapper">
+            <img id="qr-img" class="qr-code" src="img/wechat.jpg" alt="Scan to tip">
+        </div>
+
+        <div class="thank-you" id="thank-msg">
+            Scan with WeChat to support
+        </div>
+
+        <a href="https://buymeacoffee.com/hanglin" target="_blank" class="coffee-btn">
+            🌍 Global / Credit Card
+        </a>
+    </div>
+
+    <script>
+        // 配置你的二维码图片路径
+        const qrData = {
+            wechat: {
+                src: "img/wechat.jpg", 
+                msg: "Scan with WeChat to support",
+                transform: "translateX(0)"
+            },
+            alipay: {
+                src: "img/alipay.jpg", 
+                msg: "Scan with Alipay to support",
+                transform: "translateX(100%)" 
+            }
+        };
+
+        function switchQR(type) {
+            const img = document.getElementById('qr-img');
+            const bg = document.getElementById('toggle-bg');
+            const msg = document.getElementById('thank-msg');
+            const btns = document.querySelectorAll('.toggle-btn');
+
+            // 1. 切换按钮激活状态
+            btns.forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.toggle-btn.${type}`).classList.add('active');
+
+            // 2. 移动白色滑块背景
+            bg.style.transform = qrData[type].transform;
+
+            // 3. 淡出二维码 -> 替换图片 -> 淡入二维码
+            img.style.opacity = 0;
+            setTimeout(() => {
+                img.src = qrData[type].src;
+                msg.innerText = qrData[type].msg;
+                img.style.opacity = 1;
+            }, 300); // 等待淡出动画完成
+        }
+    </script>
+    <!-- Language toggle (floating) -->
+    <a id="lang-toggle" href="#" role="button" aria-label="Switch language" style="position:fixed; top:16px; right:16px; z-index:9999; width:40px; height:40px; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); color:#fff; border-radius:50%; font-weight:bold; text-decoration:none; cursor:pointer;">中</a>
+    <script src="js/lang.js"></script>
+</body>
+</html>

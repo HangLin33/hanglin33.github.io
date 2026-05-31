@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Releases | Hang Lin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <link rel="stylesheet" href="css/releases.css">
+</head>
+<body>
+
+    <a href="index.html" class="back-btn">
+        <i class="bi bi-chevron-left"></i> Back to Home
+    </a>
+
+    <header class="release-hero fade-item">
+        <h1>Innovation, Delivered.</h1>
+        <p>Explore the evolution of my work. Every release brings new features, refined performance, and a better experience.</p>
+    </header>
+
+    <main class="container-fluid px-4" style="padding-bottom: 40px;"> <section class="release-section">
+            <div class="release-image-box fade-item">
+                <img src="assets/img/releases/browseragentpro.jpg" alt="Version 1.0 Screenshot" class="release-image">
+            </div>
+            <div class="release-text-box">
+                <span class="version-tag fade-item">Latest Release</span>
+                
+                <div class="fade-item" style="margin-bottom: 20px;">
+                    <img src="https://img.shields.io/github/downloads/HangLin33/hanglin33.github.io/total?style=for-the-badge&logo=github&color=0071e3" alt="Github All Releases" style="border-radius: 8px;">
+                </div>
+
+                <h2 class="release-title fade-item">Version 1.0: The Beginning</h2>
+                <p class="release-desc fade-item">
+                    An intelligent browser assistant powered by any API or local LLM that seamlessly translates your text instructions into automated web actions.
+                </p>
+                
+                <div class="fade-item d-flex flex-wrap gap-3" style="margin-top: 30px;">
+                    <a href="https://github.com/HangLin33/hanglin33.github.io/releases/download/v1.0.0/BrowserAgent.Pro.exe" class="download-btn">
+                        <i class="bi bi-windows"></i> Windows Download v1.0
+                    </a>
+                    <a href="https://github.com/HangLin33/hanglin33.github.io/releases/download/v1.0.0/BrowserAgent.Pro.zip" class="download-btn" style="background-color: #1d1d1f; border: 1px solid #1d1d1f;">
+                        <i class="bi bi-apple"></i> Mac Download v1.0
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                } 
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-item').forEach((item) => {
+            observer.observe(item);
+        });
+    </script>
+
+    <!-- Language toggle (floating) -->
+    <a id="lang-toggle" href="#" role="button" aria-label="Switch language" style="position:fixed; top:16px; right:16px; z-index:9999; width:40px; height:40px; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); color:#fff; border-radius:50%; font-weight:bold; text-decoration:none; cursor:pointer;">中</a>
+    <script src="js/lang.js"></script>
+</body>
+</html>
