@@ -6,358 +6,255 @@
     <title>Travel: Ithaca | Hang Lin</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <!-- 仅在支持滚动动画的浏览器启用入场动画；否则图片默认可见，防止不显示 -->
     <script>if ('IntersectionObserver' in window) { document.documentElement.classList.add('js-anim'); }</script>
-
     <style>
         :root {
-            --bg-color: #f0f2f5;
-            --glass-bg: rgba(255, 255, 255, 0.65);
+            --bg-color: #f0f2f5; --glass-bg: rgba(255, 255, 255, 0.65);
             --glass-border: 1px solid rgba(255, 255, 255, 0.5);
             --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
             --shadow-glass-hover: 0 20px 40px rgba(0, 0, 0, 0.2);
-            --text-main: #1d1d1f;
-            --text-sub: #86868b;
+            --text-main: #1d1d1f; --text-sub: #86868b;
         }
-
-        body {
-            background-color: var(--bg-color);
-            background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+        body { background-color: var(--bg-color); background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
-            color: var(--text-main);
-            margin: 0;
-            padding-top: 60px;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* --- 导航栏 --- */
-        .navbar {
-            background-color: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            height: 60px;
-            position: fixed;
-            top: 0; width: 100%;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            width: 100%;
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 0 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 100%;
-        }
-
-        .brand-logo {
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--text-main);
-            text-decoration: none;
-            letter-spacing: -0.02em;
-        }
-
-        .close-btn {
-            color: var(--text-main);
-            border: 1px solid rgba(0,0,0,0.2);
-            padding: 6px 18px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-        .close-btn:hover {
-            background: var(--text-main);
-            color: white;
-            border-color: var(--text-main);
-        }
-
-        /* --- 页面大标题动画 --- */
-        @keyframes title-pop-in {
-            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
-            60% { opacity: 1; transform: scale(1.05); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        .hero-header {
-            text-align: center;
-            padding: 100px 20px 60px;
-        }
-        .hero-header h1 {
-            font-size: clamp(3rem, 6vw, 5rem);
-            font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: -0.03em;
-            animation: title-pop-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-            opacity: 0;
-        }
-        .hero-header p {
-            font-size: 1.3rem;
-            color: var(--text-sub);
-            font-weight: 400;
-            animation: title-pop-in 0.8s ease-out 0.2s forwards;
-            opacity: 0;
-        }
-
-        /* --- 分区样式 (Sticky Header) --- */
+            color: var(--text-main); margin: 0; padding-top: 60px; -webkit-font-smoothing: antialiased; }
+        .navbar { background-color: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3); height: 60px; position: fixed; top: 0; width: 100%; z-index: 1000; }
+        .nav-container { width: 100%; max-width: 1600px; margin: 0 auto; padding: 0 40px;
+            display: flex; justify-content: space-between; align-items: center; height: 100%; }
+        .brand-logo { font-weight: 700; font-size: 1.1rem; color: var(--text-main); text-decoration: none; letter-spacing: -0.02em; }
+        .close-btn { color: var(--text-main); border: 1px solid rgba(0,0,0,0.2); padding: 6px 18px; border-radius: 20px;
+            font-size: 0.85rem; text-decoration: none; transition: all 0.2s ease; }
+        .close-btn:hover { background: var(--text-main); color: white; border-color: var(--text-main); }
+        @keyframes title-pop-in { 0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+            60% { opacity: 1; transform: scale(1.05); } 100% { opacity: 1; transform: scale(1); } }
+        .hero-header { text-align: center; padding: 100px 20px 60px; }
+        .hero-header h1 { font-size: clamp(3rem, 6vw, 5rem); font-weight: 700; margin-bottom: 10px; letter-spacing: -0.03em;
+            animation: title-pop-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; opacity: 0; }
+        .hero-header p { font-size: 1.3rem; color: var(--text-sub); font-weight: 400;
+            animation: title-pop-in 0.8s ease-out 0.2s forwards; opacity: 0; }
         .gallery-section { margin-bottom: 80px; }
-        .section-header {
-            position: sticky; top: 60px; z-index: 800;
-            background: rgba(245, 245, 247, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            margin-bottom: 30px;
-        }
-        .header-inner {
-            max-width: 1400px; margin: 0 auto; padding: 0 40px;
-            display: flex; align-items: baseline; gap: 15px;
-        }
+        .section-header { position: sticky; top: 60px; z-index: 800; background: rgba(245, 245, 247, 0.85);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3); margin-bottom: 30px; }
+        .header-inner { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; align-items: baseline; gap: 15px; }
         .section-header h2 { font-size: 1.8rem; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
         .section-header span { font-size: 0.95rem; color: var(--text-sub); }
-
-        /* --- 瀑布流网格 --- */
-        .gallery-grid {
-            column-count: 3; column-gap: 40px;
-            max-width: 1400px; margin: 0 auto; padding: 0 40px;
-        }
-
-        /* --- 核心：玻璃拟态画框卡片 --- */
-        .photo-card {
-            break-inside: avoid;
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px) saturate(180%);
-            -webkit-backdrop-filter: blur(12px) saturate(180%);
-            border: var(--glass-border);
-            padding: 12px;
-            border-radius: 16px;
-            margin-bottom: 40px;
-            box-shadow: var(--shadow-glass);
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                        box-shadow 0.4s ease, background 0.4s;
-            cursor: zoom-in;
-        }
-
-        /* 滚动入场动画：仅在 <head> 内联脚本添加 .js-anim 后才隐藏待动画。
-           默认图片可见，修复 Safari 多列布局下部分图片需点击/滚动才显示的问题。 */
-        .js-anim .photo-card {
-            opacity: 0;
-            transform: translateY(40px) scale(0.98);
-        }
-        .js-anim .photo-card.visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        .photo-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: var(--shadow-glass-hover);
-            background: rgba(255, 255, 255, 0.75);
-            z-index: 2;
-        }
-
-        .photo-card img {
-            width: 100%; height: auto; display: block;
-            border-radius: 6px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-        }
-
+        .gallery-grid { column-count: 3; column-gap: 40px; max-width: 1400px; margin: 0 auto; padding: 0 40px; }
+        .photo-card { break-inside: avoid; background: var(--glass-bg); backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%); border: var(--glass-border); padding: 12px; border-radius: 16px;
+            margin-bottom: 40px; box-shadow: var(--shadow-glass);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease, background 0.4s; cursor: zoom-in; }
+        .js-anim .photo-card { opacity: 0; transform: translateY(40px) scale(0.98); }
+        .js-anim .photo-card.visible { opacity: 1; transform: translateY(0) scale(1); }
+        .photo-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: var(--shadow-glass-hover);
+            background: rgba(255, 255, 255, 0.75); z-index: 2; }
+        .photo-card img { width: 100%; height: auto; display: block; border-radius: 6px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
         .caption { margin-top: 12px; padding: 0 4px; }
         .caption h4 { font-size: 0.95rem; font-weight: 600; margin: 0 0 2px 0; color: var(--text-main); }
         .caption p { font-size: 0.8rem; color: var(--text-sub); margin: 0; }
-
-        /* --- Lightbox (全屏灯箱) 样式 --- */
-        #lightbox {
-            position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
+        #lightbox { position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         #lightbox.active { opacity: 1; pointer-events: all; }
-
-        #lightbox img {
-            max-width: 90%; max-height: 85vh;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
+        #lightbox img { max-width: 90%; max-height: 85vh; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
         #lightbox.active img { transform: scale(1); }
-
-        #lightbox-close {
-            position: absolute; top: 30px; right: 40px;
-            color: white; font-size: 2rem; cursor: pointer;
-            transition: transform 0.2s;
-        }
+        #lightbox-close { position: absolute; top: 30px; right: 40px; color: white; font-size: 2rem; cursor: pointer; transition: transform 0.2s; }
         #lightbox-close:hover { transform: scale(1.1); }
-
-        /* --- 响应式适配 --- */
         @media (max-width: 1024px) { .gallery-grid { column-count: 2; column-gap: 30px; } }
-        @media (max-width: 768px) {
-            .nav-container { padding: 0 20px; }
-            .hero-header h1 { font-size: 2.5rem; }
-            .section-header { top: 60px; }
-            .header-inner, .gallery-grid { padding: 0 20px; }
-            .gallery-grid { column-count: 1; }
-            #lightbox-close { top: 20px; right: 20px; }
-        }
+        @media (max-width: 768px) { .nav-container { padding: 0 20px; } .hero-header h1 { font-size: 2.5rem; }
+            .section-header { top: 60px; } .header-inner, .gallery-grid { padding: 0 20px; } .gallery-grid { column-count: 1; }
+            #lightbox-close { top: 20px; right: 20px; } }
     </style>
 </head>
 <body>
-
     <nav class="navbar">
         <div class="nav-container">
             <a href="../../index.html" class="brand-logo">HANG LIN</a>
             <a href="/journey/usa/usa.html" class="close-btn">Close</a>
         </div>
     </nav>
-
     <header class="hero-header">
         <h1>Ithaca</h1>
-        <p>A Place to Think Slowly</p>
+        <p>A Year on the Hill</p>
     </header>
 
     <section class="gallery-section">
-        <div class="section-header">
-            <div class="header-inner">
-                <h2>Campus</h2>
-                <span>Cornell Through the Seasons</span>
-            </div>
-        </div>
-
+        <div class="section-header"><div class="header-inner">
+            <h2>Cornell &mdash; Autumn</h2><span>October&ndash;November 2025</span>
+        </div></div>
         <div class="gallery-grid">
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-01.jpg" alt="Ithaca"><div class="caption"><h4>The Road Through Autumn</h4><p>October 2025</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-02.jpg" alt="Ithaca"><div class="caption"><h4>Autumn on Beebe Lake</h4><p>October 2025</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-03.jpg" alt="Ithaca"><div class="caption"><h4>October&rsquo;s Last Fire</h4><p>October 2025</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-04.jpg" alt="Ithaca"><div class="caption"><h4>Where Old Stone Meets Sky</h4><p>October 2025</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-24.jpg" alt="Ithaca"><div class="caption"><h4>Game Day at Schoellkopf</h4><p>October 2025</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-05.jpg" alt="Ithaca"><div class="caption"><h4>Still Water, Turning Season</h4><p>November 2025</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-06.jpg" alt="Ithaca"><div class="caption"><h4>A Red Note in the Snow</h4><p>December 2025</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-07.jpg" alt="Ithaca"><div class="caption"><h4>Two Snowmen Keep Watch</h4><p>December 2025</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-08.jpg" alt="Ithaca"><div class="caption"><h4>Between the Stacks</h4><p>December 2025</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-09.jpg" alt="Ithaca"><div class="caption"><h4>Snowlight Through the Trees</h4><p>January 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-10.jpg" alt="Ithaca"><div class="caption"><h4>The Falls Held in Ice</h4><p>January 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-11.jpg" alt="Ithaca"><div class="caption"><h4>A Lake Turned to Glass</h4><p>January 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-12.jpg" alt="Ithaca"><div class="caption"><h4>The Old Reading Room</h4><p>January 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-13.jpg" alt="Ithaca"><div class="caption"><h4>The Tower in Winter White</h4><p>January 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-14.jpg" alt="Ithaca"><div class="caption"><h4>A Room Built for Thinking</h4><p>February 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-15.jpg" alt="Ithaca"><div class="caption"><h4>The Cathedral of Books</h4><p>February 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-16.jpg" alt="Ithaca"><div class="caption"><h4>Glass, Light, and Study</h4><p>April 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-17.jpg" alt="Ithaca"><div class="caption"><h4>The Quad in Spring Green</h4><p>April 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-18.jpg" alt="Ithaca"><div class="caption"><h4>Spring Returns to the Tower</h4><p>April 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-19.jpg" alt="Ithaca"><div class="caption"><h4>Quiet Company of Statues</h4><p>May 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-20.jpg" alt="Ithaca"><div class="caption"><h4>A Slow Afternoon on the Water</h4><p>May 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-21.jpg" alt="Ithaca"><div class="caption"><h4>The Gorge in Full Leaf</h4><p>June 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-22.jpg" alt="Ithaca"><div class="caption"><h4>Where the Bridge Meets the Falls</h4><p>June 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-23.jpg" alt="Ithaca"><div class="caption"><h4>Sundown Over the Hills</h4><p>June 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-07.jpg" alt="Ithaca"><div class="caption"><h4>Game Day at Schoellkopf</h4><p>October 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-08.jpg" alt="Ithaca"><div class="caption"><h4>An Autumn Gathering</h4><p>October 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-09.jpg" alt="Ithaca"><div class="caption"><h4>Inside the Atrium</h4><p>October 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-10.jpg" alt="Ithaca"><div class="caption"><h4>First Colors of Fall</h4><p>October 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-11.jpg" alt="Ithaca"><div class="caption"><h4>A Trail Through the Reds</h4><p>October 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-12.jpg" alt="Ithaca"><div class="caption"><h4>The Gorge in Autumn</h4><p>October 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-13.jpg" alt="Ithaca"><div class="caption"><h4>Reflections at the Pond</h4><p>October 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-14.jpg" alt="Ithaca"><div class="caption"><h4>Mirror of October</h4><p>October 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-15.jpg" alt="Ithaca"><div class="caption"><h4>An Orange Crown</h4><p>October 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-16.jpg" alt="Ithaca"><div class="caption"><h4>The Stone Tower in Fall</h4><p>October 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-17.jpg" alt="Ithaca"><div class="caption"><h4>First Snow on the Leaves</h4><p>November 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-18.jpg" alt="Ithaca"><div class="caption"><h4>When Snow Meets Autumn</h4><p>November 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-19.jpg" alt="Ithaca"><div class="caption"><h4>The First White Morning</h4><p>November 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-20.jpg" alt="Ithaca"><div class="caption"><h4>Still Water, Bare Branches</h4><p>November 2025</p></div></div>
         </div>
     </section>
-
     <section class="gallery-section">
-        <div class="section-header">
-            <div class="header-inner">
-                <h2>Town</h2>
-                <span>Gorges, the Lake &amp; the Commons</span>
-            </div>
-        </div>
-
+        <div class="section-header"><div class="header-inner">
+            <h2>Cornell &mdash; Winter</h2><span>December 2025&ndash;February 2026</span>
+        </div></div>
         <div class="gallery-grid">
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-11.jpg" alt="Ithaca"><div class="caption"><h4>Where Water Finds Its Way</h4><p>August 2025</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-12.jpg" alt="Ithaca"><div class="caption"><h4>A Swing Above the Valley</h4><p>August 2025</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-01.jpg" alt="Ithaca"><div class="caption"><h4>Two Trees Before Winter</h4><p>November 2025</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-02.jpg" alt="Ithaca"><div class="caption"><h4>The Frozen Gorge from Above</h4><p>January 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-03.jpg" alt="Ithaca"><div class="caption"><h4>Sun Over the Frozen Gorge</h4><p>January 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-04.jpg" alt="Ithaca"><div class="caption"><h4>Boats Waiting for Spring</h4><p>January 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-05.jpg" alt="Ithaca"><div class="caption"><h4>Cayuga at Last Light</h4><p>January 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-06.jpg" alt="Ithaca"><div class="caption"><h4>When the Falls Stood Still</h4><p>February 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-07.jpg" alt="Ithaca"><div class="caption"><h4>The Long Road Through Snow</h4><p>February 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-08.jpg" alt="Ithaca"><div class="caption"><h4>A Lake Without End</h4><p>February 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-09.jpg" alt="Ithaca"><div class="caption"><h4>Spring on the Commons</h4><p>May 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-10.jpg" alt="Ithaca"><div class="caption"><h4>The Commons Comes Alive</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-21.jpg" alt="Ithaca"><div class="caption"><h4>Empty Seats in the Snow</h4><p>December 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-22.jpg" alt="Ithaca"><div class="caption"><h4>Crossing Campus in Winter</h4><p>December 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-23.jpg" alt="Ithaca"><div class="caption"><h4>A Hillside Under Snow</h4><p>December 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-24.jpg" alt="Ithaca"><div class="caption"><h4>Snowbound Rooftops</h4><p>December 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-25.jpg" alt="Ithaca"><div class="caption"><h4>Footsteps in Fresh Snow</h4><p>December 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-26.jpg" alt="Ithaca"><div class="caption"><h4>The Quiet Quad</h4><p>December 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-27.jpg" alt="Ithaca"><div class="caption"><h4>A Street Gone White</h4><p>December 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-28.jpg" alt="Ithaca"><div class="caption"><h4>Pausing at the Overlook</h4><p>December 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-29.jpg" alt="Ithaca"><div class="caption"><h4>Gothic Walls in Winter</h4><p>December 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-30.jpg" alt="Ithaca"><div class="caption"><h4>The Pavilion in Snow</h4><p>December 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-31.jpg" alt="Ithaca"><div class="caption"><h4>A Spot of Red in the Snow</h4><p>December 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-32.jpg" alt="Ithaca"><div class="caption"><h4>Towers Above the Snow</h4><p>December 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-33.jpg" alt="Ithaca"><div class="caption"><h4>An Open Field of White</h4><p>December 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-34.jpg" alt="Ithaca"><div class="caption"><h4>Spines in Red and White</h4><p>December 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-35.jpg" alt="Ithaca"><div class="caption"><h4>Two Snowmen Keep Watch</h4><p>December 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-36.jpg" alt="Ithaca"><div class="caption"><h4>Between the Stacks</h4><p>December 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-37.jpg" alt="Ithaca"><div class="caption"><h4>The Tower Beyond the Snow</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-38.jpg" alt="Ithaca"><div class="caption"><h4>Winter on the Quad</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-39.jpg" alt="Ithaca"><div class="caption"><h4>Lamplight and Blue Windows</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-40.jpg" alt="Ithaca"><div class="caption"><h4>Where the Hours Pass</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-41.jpg" alt="Ithaca"><div class="caption"><h4>Winter Light Through the Branches</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-42.jpg" alt="Ithaca"><div class="caption"><h4>The Gorge in January</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-43.jpg" alt="Ithaca"><div class="caption"><h4>Red Roof Over the Gorge</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-44.jpg" alt="Ithaca"><div class="caption"><h4>A Red Building in the Snow</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-45.jpg" alt="Ithaca"><div class="caption"><h4>Modern Lines in Winter</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-46.jpg" alt="Ithaca"><div class="caption"><h4>A Frozen Waterfall</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-47.jpg" alt="Ithaca"><div class="caption"><h4>Ice Along the Creek</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-48.jpg" alt="Ithaca"><div class="caption"><h4>The Frozen Lake</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-49.jpg" alt="Ithaca"><div class="caption"><h4>Scrolls on the Wall</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-50.jpg" alt="Ithaca"><div class="caption"><h4>Under the Library Dome</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-51.jpg" alt="Ithaca"><div class="caption"><h4>Arches of the Old Library</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-52.jpg" alt="Ithaca"><div class="caption"><h4>McGraw Tower in Snow</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-53.jpg" alt="Ithaca"><div class="caption"><h4>Behind the Table</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-54.jpg" alt="Ithaca"><div class="caption"><h4>The Lecture Hall</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-55.jpg" alt="Ithaca"><div class="caption"><h4>An Evening Performance</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-03.jpg" alt="Ithaca"><div class="caption"><h4>A Wall of Books</h4><p>February 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-04.jpg" alt="Ithaca"><div class="caption"><h4>The Reading Room</h4><p>February 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-05.jpg" alt="Ithaca"><div class="caption"><h4>The A.D. White Library</h4><p>February 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-06.jpg" alt="Ithaca"><div class="caption"><h4>Dusk Along the Snowy Path</h4><p>February 2026</p></div></div>
         </div>
     </section>
-
     <section class="gallery-section">
-        <div class="section-header">
-            <div class="header-inner">
-                <h2>Market</h2>
-                <span>A Taste of Home</span>
-            </div>
-        </div>
-
+        <div class="section-header"><div class="header-inner">
+            <h2>Cornell &mdash; Spring &amp; Summer</h2><span>April&ndash;June 2026</span>
+        </div></div>
         <div class="gallery-grid">
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-market-01.jpg" alt="Ithaca"><div class="caption"><h4>Aisles That Feel Like Home</h4><p>January 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-market-02.jpg" alt="Ithaca"><div class="caption"><h4>Warmth in the Cold Months</h4><p>January 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-market-03.jpg" alt="Ithaca"><div class="caption"><h4>Fresh Greens, Far from Home</h4><p>January 2026</p></div></div>
-            <div class="photo-card"><img src="../../img/usa/ithaca/ith-market-04.jpg" alt="Ithaca"><div class="caption"><h4>A Familiar Sign on a Cold Day</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-56.jpg" alt="Ithaca"><div class="caption"><h4>Floors of the Johnson Museum</h4><p>April 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-57.jpg" alt="Ithaca"><div class="caption"><h4>Spring Returns to the Quad</h4><p>April 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-58.jpg" alt="Ithaca"><div class="caption"><h4>Blossoms Beneath the Tower</h4><p>April 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-59.jpg" alt="Ithaca"><div class="caption"><h4>A Stage on the Slope</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-01.jpg" alt="Ithaca"><div class="caption"><h4>Cornell From Above</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-02.jpg" alt="Ithaca"><div class="caption"><h4>The Hill and the Lake</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-60.jpg" alt="Ithaca"><div class="caption"><h4>Among the Sculptures</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-61.jpg" alt="Ithaca"><div class="caption"><h4>The Museum Garden in Bloom</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-62.jpg" alt="Ithaca"><div class="caption"><h4>Azaleas by the Glass</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-63.jpg" alt="Ithaca"><div class="caption"><h4>A Salon of Frames</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-64.jpg" alt="Ithaca"><div class="caption"><h4>Small Treasures</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-65.jpg" alt="Ithaca"><div class="caption"><h4>An Open Manuscript</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-66.jpg" alt="Ithaca"><div class="caption"><h4>Ancient Bronzes</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-67.jpg" alt="Ithaca"><div class="caption"><h4>Porcelain Behind Glass</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-68.jpg" alt="Ithaca"><div class="caption"><h4>Ink Plum Blossoms</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-69.jpg" alt="Ithaca"><div class="caption"><h4>A Pair of Couplets</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-70.jpg" alt="Ithaca"><div class="caption"><h4>A Canvas of Age</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-71.jpg" alt="Ithaca"><div class="caption"><h4>The Arcade Glow</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-72.jpg" alt="Ithaca"><div class="caption"><h4>A Spiral and the Light</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-73.jpg" alt="Ithaca"><div class="caption"><h4>Room to Think</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-74.jpg" alt="Ithaca"><div class="caption"><h4>Red Under the Glass Roof</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-81.jpg" alt="Ithaca"><div class="caption"><h4>Cayuga in Summer</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-75.jpg" alt="Ithaca"><div class="caption"><h4>The Glass Walkway</h4><p>June 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-76.jpg" alt="Ithaca"><div class="caption"><h4>A Seat by the Window</h4><p>June 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-77.jpg" alt="Ithaca"><div class="caption"><h4>The Stone Arch in Summer</h4><p>June 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-78.jpg" alt="Ithaca"><div class="caption"><h4>Steps Beside the Falls</h4><p>June 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-79.jpg" alt="Ithaca"><div class="caption"><h4>Summer at the Falls</h4><p>June 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-80.jpg" alt="Ithaca"><div class="caption"><h4>Green Along the Gorge</h4><p>June 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-82.jpg" alt="Ithaca"><div class="caption"><h4>Sunset Over the Valley</h4><p>June 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ithaca.jpg" alt="Ithaca"><div class="caption"><h4>Turrets of Sage Hall</h4><p>June 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-83.jpg" alt="Ithaca"><div class="caption"><h4>The Clocktower and the Library</h4><p>June 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-84.jpg" alt="Ithaca"><div class="caption"><h4>The Gorge Below the Bridge</h4><p>June 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-85.jpg" alt="Ithaca"><div class="caption"><h4>The Brick Manor and Its Garden</h4><p>June 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-86.jpg" alt="Ithaca"><div class="caption"><h4>Across the Arts Quad</h4><p>June 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-87.jpg" alt="Ithaca"><div class="caption"><h4>The View From Libe Slope</h4><p>June 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-campus-88.jpg" alt="Ithaca"><div class="caption"><h4>Above the Valley</h4><p>June 2026</p></div></div>
         </div>
     </section>
-
+    <section class="gallery-section">
+        <div class="section-header"><div class="header-inner">
+            <h2>The Market</h2><span>January 2026</span>
+        </div></div>
+        <div class="gallery-grid">
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-market-01.jpg" alt="Ithaca"><div class="caption"><h4>Down the Grocery Aisle</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-market-02.jpg" alt="Ithaca"><div class="caption"><h4>Open Freezers</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-market-03.jpg" alt="Ithaca"><div class="caption"><h4>The Chilled Case</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-market-04.jpg" alt="Ithaca"><div class="caption"><h4>The Market Storefront</h4><p>January 2026</p></div></div>
+        </div>
+    </section>
+    <section class="gallery-section">
+        <div class="section-header"><div class="header-inner">
+            <h2>Around Town &amp; Cayuga Lake</h2><span>Through the Seasons</span>
+        </div></div>
+        <div class="gallery-grid">
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-01.jpg" alt="Ithaca"><div class="caption"><h4>Storm Over the Valley</h4><p>November 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-11.jpg" alt="Ithaca"><div class="caption"><h4>The Last Gold Tree</h4><p>November 2025</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-13.jpg" alt="Ithaca"><div class="caption"><h4>Rooftops at First Light</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-14.jpg" alt="Ithaca"><div class="caption"><h4>Boats at Dusk</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-15.jpg" alt="Ithaca"><div class="caption"><h4>A Cold Sunset on the Lake</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-12.jpg" alt="Ithaca"><div class="caption"><h4>Snow on the Terraces</h4><p>January 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-02.jpg" alt="Ithaca"><div class="caption"><h4>Ithaca Falls in Winter</h4><p>February 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-03.jpg" alt="Ithaca"><div class="caption"><h4>A Frozen Cliff</h4><p>February 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-04.jpg" alt="Ithaca"><div class="caption"><h4>Ice on the Falls</h4><p>February 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-05.jpg" alt="Ithaca"><div class="caption"><h4>The Tracks in Snow</h4><p>February 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-06.jpg" alt="Ithaca"><div class="caption"><h4>Bare Trees, White Field</h4><p>February 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-07.jpg" alt="Ithaca"><div class="caption"><h4>A Dock in Winter</h4><p>February 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-08.jpg" alt="Ithaca"><div class="caption"><h4>Cayuga Under Cloud</h4><p>February 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-09.jpg" alt="Ithaca"><div class="caption"><h4>The Town Under Snow</h4><p>February 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-10.jpg" alt="Ithaca"><div class="caption"><h4>A Lone Tree in February</h4><p>February 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-18.jpg" alt="Ithaca"><div class="caption"><h4>Inside the Market Hall</h4><p>April 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-16.jpg" alt="Ithaca"><div class="caption"><h4>Strolling the Commons</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-17.jpg" alt="Ithaca"><div class="caption"><h4>A Day on the Commons</h4><p>May 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-19.jpg" alt="Ithaca"><div class="caption"><h4>Ithaca Falls in Summer</h4><p>June 2026</p></div></div>
+            <div class="photo-card"><img src="../../img/usa/ithaca/ith-town-20.jpg" alt="Ithaca"><div class="caption"><h4>A Swing Over Cayuga</h4><p>June 2026</p></div></div>
+        </div>
+    </section>
 
     <div id="lightbox">
         <i class="bi bi-x-lg" id="lightbox-close"></i>
         <img id="lightbox-img" src="" alt="Fullscreen Image">
     </div>
-
-
     <script>
-        // 1. 滚动进入动画 (Intersection Observer) —— 稳健版
-        // 图片默认可见；仅当支持 IntersectionObserver 时才做入场动画，
-        // 并加“加载后兜底”确保任何卡片都不会卡在隐藏状态（修复 Safari 多列布局问题）。
         const cards = document.querySelectorAll('.photo-card');
         const reveal = (el) => el.classList.add('visible');
         if ('IntersectionObserver' in window) {
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        reveal(entry.target);
-                        observer.unobserve(entry.target);
-                    }
-                });
+                entries.forEach(entry => { if (entry.isIntersecting) { reveal(entry.target); observer.unobserve(entry.target); } });
             }, { threshold: 0.05, rootMargin: "0px 0px 100px 0px" });
             cards.forEach(card => observer.observe(card));
-            window.addEventListener('load', () => {
-                setTimeout(() => cards.forEach(reveal), 700);
-            });
-        } else {
-            cards.forEach(reveal);
-        }
-
-        // 2. Lightbox 交互逻辑
+            window.addEventListener('load', () => { setTimeout(() => cards.forEach(reveal), 700); });
+        } else { cards.forEach(reveal); }
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const closeBtn = document.getElementById('lightbox-close');
-
         document.querySelectorAll('.photo-card img').forEach(img => {
-            img.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const imgSrc = img.getAttribute('src');
-                lightboxImg.src = imgSrc;
-                lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
+            img.addEventListener('click', (e) => { e.stopPropagation(); lightboxImg.src = img.getAttribute('src');
+                lightbox.classList.add('active'); document.body.style.overflow = 'hidden'; });
         });
-
-        function closeLightbox() {
-            lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            setTimeout(() => { lightboxImg.src = ''; }, 300);
-        }
-
+        function closeLightbox() { lightbox.classList.remove('active'); document.body.style.overflow = 'auto';
+            setTimeout(() => { lightboxImg.src = ''; }, 300); }
         closeBtn.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) { closeLightbox(); }
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) { closeLightbox(); }
-        });
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) { closeLightbox(); } });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightbox.classList.contains('active')) { closeLightbox(); } });
     </script>
 </body>
 </html>
