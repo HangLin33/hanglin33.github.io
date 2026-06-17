@@ -39,11 +39,11 @@
 
         .journey-grid {
             display: flex; gap: 30px; width: 100%; max-width: 1200px;
-            padding: 40px; box-sizing: border-box; flex-wrap: wrap; justify-content: center;
+            padding: 40px; box-sizing: border-box; flex-wrap: wrap; justify-content: flex-start;
         }
 
         .city-card {
-            position: relative; flex: 1; min-width: 350px; height: 600px;
+            position: relative; flex: 0 1 calc((100% - 60px) / 3); min-width: 280px; height: 600px;
             border-radius: 30px; overflow: hidden; text-decoration: none;
             color: white; transition: transform 0.6s cubic-bezier(0.2, 1, 0.2, 1), box-shadow 0.6s;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
