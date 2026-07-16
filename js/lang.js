@@ -203,7 +203,177 @@
   "If you enjoy my work, consider supporting me. Your tip fuels my late-night coding and next journey!": "如果你喜欢我的作品，欢迎支持我。你的心意，是我深夜敲代码和下一段旅程的动力！",
   "WeChat Pay": "微信支付",
   "Alipay": "支付宝",
-  "Scan with WeChat to support": "用微信扫码支持"
+  "Scan with WeChat to support": "用微信扫码支持",
+
+  /* ========== pro_exp.html 职业经历页 ========== */
+
+  /* — 分类标题 — */
+  "Equity Capital Markets & Investment Banking": "股权资本市场与投资银行",
+  "Investment Research & Consulting": "投资研究与咨询",
+  "Strategy, Audit & Business Analytics": "战略、审计与商业分析",
+  "Client Relations & Wealth Management": "客户关系与财富管理",
+
+  /* — 职位标题 — */
+  "Investment Banking Analyst Intern — Huatai Securities (ECM, Hong Kong Team)": "投资银行分析师实习生 — 华泰证券（股权资本市场部 · 香港团队）",
+  "Investment Banking Intern — CITIC Securities (ECM)": "投资银行实习生 — 中信证券（股权资本市场部）",
+  "Investment Banking Intern — CSC Financial (China Securities)": "投资银行实习生 — 中信建投证券",
+  "Investment Consulting Intern — China Merchants Futures": "投资咨询实习生 — 招商期货",
+  "Industry Research Intern — China Merchants Futures": "行业研究实习生 — 招商期货",
+  "Strategy Intern — PwC (PricewaterhouseCoopers)": "战略咨询实习生 — 普华永道",
+  "Audit Intern — BDO China (Lixin CPAs)": "审计实习生 — 立信会计师事务所（BDO 中国）",
+  "Business Operations Intern — OnePlus Management": "商业运营实习生 — OnePlus Management",
+  "Client Relations Intern — Industrial Securities Co., Ltd.": "客户关系实习生 — 兴业证券股份有限公司",
+
+  /* — 地点 / 办公方式 — */
+  "Hong Kong SAR & Shanghai, China · On-site ·": "中国香港 & 中国上海 · 现场办公 ·",
+  "Shanghai, China · On-site ·": "中国上海 · 现场办公 ·",
+  "Hong Kong SAR · Hybrid ·": "中国香港 · 混合办公 ·",
+  "Shenzhen, China · On-site ·": "中国深圳 · 现场办公 ·",
+  "Shanghai, China · Remote ·": "中国上海 · 远程办公 ·",
+  "Beijing, China · On-site ·": "中国北京 · 现场办公 ·",
+  "Guangzhou, China · On-site ·": "中国广州 · 现场办公 ·",
+
+  /* — 时间 — */
+  "Jul 2026 – Sep 2026": "2026年7月 – 2026年9月",
+  "Dec 2025 – Jan 2026": "2025年12月 – 2026年1月",
+  "Oct 2025 – Dec 2025": "2025年10月 – 2025年12月",
+  "Oct 2024 – Dec 2024": "2024年10月 – 2024年12月",
+  "Jul 2024 – Sep 2024": "2024年7月 – 2024年9月",
+  "Jun 2023 – Aug 2023": "2023年6月 – 2023年8月",
+  "Feb 2025 – Mar 2025": "2025年2月 – 2025年3月",
+  "Jul 2022 – Sep 2022": "2022年7月 – 2022年9月",
+  "May 2025 – Jun 2025": "2025年5月 – 2025年6月",
+
+  /* — 通用 — */
+  "Tools:": "工具：",
+  ".": "。",
+
+  /* — 华泰证券 — */
+  "Live Deal Execution:": "在执行项目：",
+  "Supporting a live": "持续支持一线",
+  "HK IPO deal team": "港股 IPO 项目组",
+  "on roadshow logistics, investor meetings, and syndicate coverage across active transactions.": "的路演统筹、投资者会议与承销团覆盖工作，服务多个在执行项目。",
+  "Market Survey:": "市场调研：",
+  "Conducted a market survey on": "针对",
+  "YTD HK IPOs": "年初至今的港股 IPO 项目",
+  ", aggregating market cap, allocation, convertible bond, and shareholder-reduction data across servicing brokers.": "做了市场调研，汇总各家服务券商的市值、配售、可转债与股东减持数据。",
+  "Diligence & Compliance:": "尽调与合规：",
+  "Performed independence checks on prospective mandates; diligenced": "对潜在项目开展独立性核查；并尽调",
+  "cornerstone investors'": "基石投资者",
+  "historical investment track records across sectors.": "在各行业的历史投资记录。",
+  "Investor Intelligence:": "投资者情报：",
+  "Built investor intelligence profiles supporting": "搭建投资者情报画像，支持项目组在港股 IPO 中的",
+  "book-building strategy": "簿记建档策略",
+  "and cornerstone selection for the deal team on HK IPO transactions.": "与基石投资者遴选。",
+
+  /* — 中信证券 — */
+  "Issuer-Investor Database Construction:": "发行人—投资者数据库搭建：",
+  "Engineered a proprietary database tracking": "搭建自有数据库，追踪",
+  "120+ issuers and 560+ institutional investors": "120+ 家发行人与 560+ 家机构投资者，",
+  "using": "技术栈为",
+  "SQL and Python": "SQL 与 Python",
+  "Process Automation:": "流程自动化：",
+  "Developed automated matching algorithms to tag investor preferences, reducing manual research time by": "开发自动匹配算法，为投资者偏好打标签，把人工研究时间减少了",
+  "Private Placement Execution:": "定增项目执行：",
+  "Supported the execution of A-share private placements (PIPEs) by drafting roadshow materials and analyzing investor subscription sentiment.": "参与 A 股定向增发（PIPE）项目执行，撰写路演材料并分析投资者认购意愿。",
+  "Python (Pandas) · SQL · Wind Terminal · Excel (VBA)": "Python（Pandas）· SQL · Wind 金融终端 · Excel（VBA）",
+
+  /* — 中信建投 — */
+  "Liquidity & Valuation Modeling:": "流动性与估值建模：",
+  "Applied": "运用",
+  "Python and R": "Python 与 R",
+  "to build VAR (Vector Autoregression) models on": "构建 VAR（向量自回归）模型，样本为",
+  "90+ historical PIPE deals": "90+ 个历史 PIPE 交易",
+  "Pricing Strategy:": "定价策略：",
+  "Identified a statistically significant": "发现了具有统计显著性的",
+  "2.1x valuation premium": "2.1 倍估值溢价",
+  "for private firms post-issuance, directly informing pricing strategies for new clients.": "（民营企业发行后），并据此直接指导了新客户的定价策略。",
+  "IPO Advisement:": "IPO 顾问：",
+  "Utilized": "使用",
+  "to screen 30+ equities for potential MSCI index inclusion, providing data-driven advice on liquidity discounts for": "筛选 30+ 只个股纳入 MSCI 指数的可能性，并就流动性折价给出数据驱动的建议，覆盖",
+  "25+ Hong Kong IPOs": "25+ 个香港 IPO 项目",
+  "R (Tidyverse) · Python (Scikit-learn) · Bloomberg · Capital IQ": "R（Tidyverse）· Python（Scikit-learn）· 彭博 · Capital IQ",
+
+  /* — 招商期货 · 投资咨询 — */
+  "Quantitative Backtesting:": "量化回测：",
+  "Executed advanced time-series modeling via": "用",
+  "to backtest technical trading signals.": "做高级时间序列建模，回测技术交易信号。",
+  "Strategy Optimization:": "策略优化：",
+  "Successfully optimized strategy parameters to achieve a": "优化策略参数，实现",
+  "58% win rate": "58% 胜率",
+  "with a controlled": "并把最大回撤控制在",
+  "6% max drawdown": "6%",
+  "in historical simulations.": "（基于历史模拟）。",
+  "Risk Simulation:": "风险模拟：",
+  "Conducted Monte Carlo simulations to stress-test portfolio performance under extreme market volatility scenarios.": "做蒙特卡洛模拟，对组合在极端市场波动情形下的表现做压力测试。",
+  "Python (NumPy, Matplotlib) · Time-Series Analysis · Statistical Modeling": "Python（NumPy、Matplotlib）· 时间序列分析 · 统计建模",
+
+  /* — 招商期货 · 行业研究 — */
+  "Supply Chain Forecasting:": "供应链预测：",
+  "Modeled supply chain costs and inventory decay rates using raw customs data, forecasting a": "基于海关原始数据，对供应链成本与库存损耗率建模，预测区域出口量将保持",
+  "20%+ CAGR": "20%+ 的年复合增长率",
+  "in regional export volumes.": "。",
+  "Industry Publication:": "行业发表：",
+  "Synthesized insights from": "汇总",
+  "30+ market sources": "30+ 个市场信息源",
+  "into strategic industry primers. Published a featured data-driven report in": "的洞察，整理成战略性行业入门报告；并在",
+  "\"SugarTalk\"": "《糖讯》",
+  "magazine.": "杂志上发表了一篇数据驱动的专题报告。",
+  "Market Analysis:": "市场分析：",
+  "Delivered weekly briefs and deep-dive reports; built Excel dashboards to support trade discussions and identify arbitrage opportunities.": "输出每周简报与深度报告；搭建 Excel 看板，支持交易讨论并发掘套利机会。",
+  "Excel (Advanced Modeling) · Data Visualization · Fundamental Analysis": "Excel（高级建模）· 数据可视化 · 基本面分析",
+
+  /* — 普华永道 — */
+  "User Funnel Analytics:": "用户漏斗分析：",
+  "Processed": "处理了",
+  "200k+ user behavior records": "20 万+ 条用户行为记录，",
+  "via": "并用",
+  "to construct granular funnel models, pinpointing critical drop-offs in the purchasing journey.": "构建精细化漏斗模型，定位购买旅程中的关键流失环节。",
+  "Competitive Benchmarking:": "竞品对标：",
+  "Benchmarked": "对标了",
+  "40+ app features": "40+ 项 App 功能",
+  "across leading F&B brands, translating behavioral data into a prioritized roadmap of": "（覆盖头部餐饮品牌），把行为数据转化为优先级明确的路线图，最终锁定",
+  "12 high-ROI features": "12 项高投入产出比功能",
+  "Strategic Impact:": "战略成效：",
+  "Formulated digital engagement strategies projected to increase User Conversion Rate (CVR) by": "制定数字化互动策略，预计可将用户转化率（CVR）提升",
+  "5pp": "5 个百分点，",
+  "and Retention by": "留存率提升",
+  "8pp": "8 个百分点",
+  "SQL (PostgreSQL) · Python · Tableau · PowerPoint": "SQL（PostgreSQL）· Python · Tableau · PowerPoint",
+
+  /* — 立信 / BDO — */
+  "Audit Fieldwork:": "审计现场：",
+  "Performed substantive testing procedures on key financial statement accounts, including Cash & Cash Equivalents, Accounts Receivable, and Fixed Assets.": "对关键财务报表科目执行实质性测试程序，涵盖货币资金、应收账款与固定资产。",
+  "Financial Verification:": "财务核验：",
+  "Conducted bank confirmations and vouching procedures to verify the accuracy of transactions, ensuring compliance with": "执行银行函证与凭证抽查程序，核验交易准确性，确保符合",
+  "CAS (Chinese Accounting Standards)": "《企业会计准则》（CAS）",
+  "Data Validation:": "数据校验：",
+  "to perform analytical reviews on large datasets, identifying variances and potential audit risks for senior auditors.": "对大体量数据做分析性复核，为高级审计师识别异常波动与潜在审计风险。",
+  "Excel · Auditing Standards (CAS) · Financial Statement Analysis": "Excel · 企业会计准则（CAS）· 财务报表分析",
+
+  /* — OnePlus — */
+  "Global Inventory Management:": "全球库存管理：",
+  "Managed cross-functional operations for": "统筹管理",
+  "300+ SKUs globally": "全球 300+ 个 SKU 品类",
+  ", tracking high-volume weekly orders via": "的跨部门运营；每周大批量订单的跟踪依托",
+  "ERP systems": "ERP 系统",
+  "Process Optimization:": "流程优化：",
+  "Aligned operational goals with": "通过 Coupa 与",
+  "50+ external stakeholders": "50+ 个外部相关方",
+  "via Coupa to optimize procurement workflows, boosting order processing accuracy to": "对齐运营目标，优化采购流程，把订单处理准确率提升到",
+  "Data-Driven Resolution:": "数据驱动的问题解决：",
+  "Analyzed operational datasets to identify and resolve supply bottlenecks, successfully reducing shipping errors by": "分析运营数据，定位并解决供应瓶颈，把发货差错率降低了",
+  "and accelerating delivery timelines.": "，同时缩短了交付周期。",
+  "ERP Systems · Excel (Pivot Tables) · Supply Chain Management": "ERP 系统 · Excel（数据透视表）· 供应链管理",
+
+  /* — 兴业证券 — */
+  "CRM Management:": "CRM 管理：",
+  "Maintained and updated the Client Relationship Management (CRM) system, ensuring accurate profiling of client risk preferences and investment history.": "维护并更新客户关系管理（CRM）系统，确保客户风险偏好与投资历史的画像准确。",
+  "Market Communication:": "市场沟通：",
+  "Assisted Investment Advisors in preparing daily market briefings and investment summaries for high-net-worth (VIP) clients.": "协助投资顾问，为高净值（VIP）客户准备每日市场简报与投资总结。",
+  "Client Service:": "客户服务：",
+  "Facilitated account opening procedures and resolved client inquiries regarding trading platforms and wealth management products.": "协助办理开户流程，解答客户关于交易平台与理财产品的咨询。",
+  "CRM Software · Market Research · Client Communication": "CRM 软件 · 市场研究 · 客户沟通"
 };
 
   // 构建反向字典 中文 -> 英文
@@ -214,8 +384,13 @@
 
   const STORAGE_KEY = "site_lang";
 
-  // 遍历页面所有文本节点，按映射表替换
-  function translateNodes(map) {
+  // 记住每个文本节点被翻译前的英文原文。
+  // 切回英文时优先按此还原，避免多个英文映射到同一中文时还原错误
+  // （例如 "HANG LIN" 和 "Hang Lin" 都译作「林航」）。
+  const ORIGINAL = new WeakMap();
+
+  // 遍历页面所有可翻译的文本节点
+  function walkTextNodes(fn) {
     const walker = document.createTreeWalker(
       document.body,
       NodeFilter.SHOW_TEXT,
@@ -235,24 +410,49 @@
     const nodes = [];
     let n;
     while ((n = walker.nextNode())) nodes.push(n);
-    nodes.forEach(function (node) {
+    nodes.forEach(fn);
+  }
+
+  // 英文 -> 中文
+  function toZh() {
+    walkTextNodes(function (node) {
       const raw = node.nodeValue;
       const key = raw.trim();
       if (!key) return;
-      if (Object.prototype.hasOwnProperty.call(map, key)) {
+      if (Object.prototype.hasOwnProperty.call(EN_TO_ZH, key)) {
+        if (!ORIGINAL.has(node)) ORIGINAL.set(node, raw); // 记下英文原文
         // 保留原有前后空白
-        node.nodeValue = raw.replace(key, map[key]);
+        node.nodeValue = raw.replace(key, EN_TO_ZH[key]);
       }
     });
+    document.documentElement.setAttribute("lang", "zh");
+  }
+
+  // 中文 -> 英文
+  function toEn() {
+    walkTextNodes(function (node) {
+      // 优先精确还原
+      if (ORIGINAL.has(node)) {
+        node.nodeValue = ORIGINAL.get(node);
+        ORIGINAL.delete(node);
+        return;
+      }
+      // 兜底：没有记录时（如页面直接以中文载入后又被改动）按反向字典翻
+      const raw = node.nodeValue;
+      const key = raw.trim();
+      if (!key) return;
+      if (Object.prototype.hasOwnProperty.call(ZH_TO_EN, key)) {
+        node.nodeValue = raw.replace(key, ZH_TO_EN[key]);
+      }
+    });
+    document.documentElement.setAttribute("lang", "en");
   }
 
   function applyLang(lang) {
     if (lang === "zh") {
-      translateNodes(EN_TO_ZH);
-      document.documentElement.setAttribute("lang", "zh");
+      toZh();
     } else {
-      translateNodes(ZH_TO_EN);
-      document.documentElement.setAttribute("lang", "en");
+      toEn();
     }
     localStorage.setItem(STORAGE_KEY, lang);
     updateButtonLabel(lang);
@@ -268,8 +468,7 @@
   /*__readyPatch*/(document.readyState!=="loading"?function(f){f();}:function(f){document.addEventListener("DOMContentLoaded",f);})(function () {
     // 页面初始如果记忆为中文，则立即翻译
     if (current === "zh") {
-      translateNodes(EN_TO_ZH);
-      document.documentElement.setAttribute("lang", "zh");
+      toZh();
     }
     updateButtonLabel(current);
 
