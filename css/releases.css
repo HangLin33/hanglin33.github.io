@@ -103,7 +103,7 @@
 
         /* ===== FestiScout screenshot carousel ===== */
         /* the track is a scroll container - let its flex column shrink below content */
-        .release-image-box { min-width: 0; }
+        .release-image-box { min-width: 0; max-width: 100%; }
 
         .fs-carousel {
             --fs-slide-w: clamp(180px, 21vw, 248px);
