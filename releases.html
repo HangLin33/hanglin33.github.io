@@ -26,7 +26,50 @@
              https://apps.apple.com/app/idXXXXXXXXXX -->
         <section class="release-section">
             <div class="release-image-box fade-item">
-                <img src="assets/img/releases/festiscout.jpg" alt="FestiScout app screenshots" class="release-image">
+                <div class="fs-carousel" data-fs-carousel>
+                    <div class="fs-window">
+                        <button class="fs-nav fs-prev" type="button" aria-label="Previous screenshot">
+                            <i class="bi bi-chevron-left"></i>
+                        </button>
+
+                        <div class="fs-track" tabindex="0" role="group" aria-roledescription="carousel" aria-label="FestiScout screenshots">
+                            <figure class="fs-slide">
+                                <img src="assets/img/releases/festiscout1.jpg" width="1284" height="2778"
+                                     alt="Festival calendar with the day's openings">
+                            </figure>
+                            <figure class="fs-slide">
+                                <img src="assets/img/releases/festiscout2.jpg" width="1284" height="2778"
+                                     alt="Spin the globe to browse festivals worldwide">
+                            </figure>
+                            <figure class="fs-slide">
+                                <img src="assets/img/releases/festiscout3.jpg" width="1284" height="2778"
+                                     alt="Notting Hill Carnival detail with official site and tickets" loading="lazy">
+                            </figure>
+                            <figure class="fs-slide">
+                                <img src="assets/img/releases/festiscout4.jpg" width="1284" height="2778"
+                                     alt="The globe zoomed to street level in London" loading="lazy">
+                            </figure>
+                            <figure class="fs-slide">
+                                <img src="assets/img/releases/festiscout5.jpg" width="1284" height="2778"
+                                     alt="Place detail for Borough Market with directions and hotels" loading="lazy">
+                            </figure>
+                            <figure class="fs-slide">
+                                <img src="assets/img/releases/festiscout6.jpg" width="1284" height="2778"
+                                     alt="Community routes shared by other travellers" loading="lazy">
+                            </figure>
+                            <figure class="fs-slide">
+                                <img src="assets/img/releases/festiscout7.jpg" width="1284" height="2778"
+                                     alt="Day-by-day trip plan with smart routing" loading="lazy">
+                            </figure>
+                        </div>
+
+                        <button class="fs-nav fs-next" type="button" aria-label="Next screenshot">
+                            <i class="bi bi-chevron-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="fs-dots"></div>
+                </div>
             </div>
             <div class="release-text-box">
                 <span class="version-tag fade-item">Latest Release</span>
@@ -37,7 +80,7 @@
                 </p>
 
                 <div class="fade-item d-flex flex-wrap gap-3" style="margin-top: 30px;">
-                    <a href="https://festiscout.com" class="download-btn" style="background-color: #1d1d1f; border: 1px solid #1d1d1f;">
+                    <a href="https://apps.apple.com/us/app/festiscout-world-festivals/id6800998250" class="download-btn" style="background-color: #1d1d1f; border: 1px solid #1d1d1f;">
                         <i class="bi bi-apple"></i> Download on the App Store
                     </a>
                     <a href="https://festiscout.com" class="download-btn">
@@ -93,5 +136,70 @@
     <!-- Language toggle (floating) -->
     <a id="lang-toggle" href="#" role="button" aria-label="Switch language" style="position:fixed; top:16px; right:16px; z-index:9999; width:40px; height:40px; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); color:#fff; border-radius:50%; font-weight:bold; text-decoration:none; cursor:pointer;">中</a>
     <script src="js/lang.js"></script>
+    <script>
+        /* ===== FestiScout screenshot carousel ===== */
+        document.querySelectorAll('[data-fs-carousel]').forEach(function (root) {
+            var track = root.querySelector('.fs-track');
+            var slides = Array.prototype.slice.call(track.children);
+            var dotsBox = root.querySelector('.fs-dots');
+            var prev = root.querySelector('.fs-prev');
+            var next = root.querySelector('.fs-next');
+            var current = 0;
+
+            var dots = slides.map(function (slide, i) {
+                var dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'fs-dot';
+                dot.setAttribute('aria-label', 'Screenshot ' + (i + 1) + ' of ' + slides.length);
+                dot.addEventListener('click', function () { go(i); });
+                dotsBox.appendChild(dot);
+                return dot;
+            });
+
+            function go(i) {
+                var slide = slides[Math.max(0, Math.min(i, slides.length - 1))];
+                var delta = slide.getBoundingClientRect().left - track.getBoundingClientRect().left
+                    - (track.clientWidth - slide.clientWidth) / 2;
+                track.scrollBy({ left: delta, behavior: 'smooth' });
+            }
+
+            function sync() {
+                var box = track.getBoundingClientRect();
+                var centre = box.left + box.width / 2;
+                var best = 0;
+                var bestDist = Infinity;
+
+                slides.forEach(function (slide, i) {
+                    var r = slide.getBoundingClientRect();
+                    var dist = Math.abs(r.left + r.width / 2 - centre);
+                    if (dist < bestDist) { bestDist = dist; best = i; }
+                });
+
+                current = best;
+                slides.forEach(function (s, i) { s.classList.toggle('is-active', i === current); });
+                dots.forEach(function (d, i) { d.classList.toggle('is-active', i === current); });
+                prev.disabled = current === 0;
+                next.disabled = current === slides.length - 1;
+            }
+
+            var pending;
+            track.addEventListener('scroll', function () {
+                cancelAnimationFrame(pending);
+                pending = requestAnimationFrame(sync);
+            }, { passive: true });
+
+            prev.addEventListener('click', function () { go(current - 1); });
+            next.addEventListener('click', function () { go(current + 1); });
+
+            track.addEventListener('keydown', function (e) {
+                if (e.key === 'ArrowRight') { e.preventDefault(); go(current + 1); }
+                if (e.key === 'ArrowLeft') { e.preventDefault(); go(current - 1); }
+            });
+
+            window.addEventListener('resize', sync);
+            window.addEventListener('load', sync);
+            sync();
+        });
+    </script>
 </body>
 </html>
